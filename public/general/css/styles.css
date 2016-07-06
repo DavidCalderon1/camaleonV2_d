@@ -1,0 +1,86 @@
+/*-- estilos para es select que se convierte en scroll --*/
+
+.select_scroll .hover {
+    /*background-color: dodgerblue;*/
+    background-color: #0b84fb;
+    color: white;
+}
+
+.content .video {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    margin: auto;
+	margin-top: 10%;
+}
+.form-control.full{
+    width: 100% !important;
+}
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modal_loading {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('../img/loading.svg') 
+                50% 50% 
+                no-repeat;
+}
+
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal_loading {
+    display: block;
+}
+
+.modal hr{
+    width: 100%;
+    color: inherit;
+    margin: 0;
+    border: 0;
+}
+
+button.selectDynamic{
+    top: 25px;
+    position: absolute;
+    right: 15px;
+    height: 32px;
+    margin: 1px;
+}
+
+label.selectDynamic{
+    position: absolute;
+    width: 90%;
+    height: 32px;
+    margin: 1px;
+    border: 0;
+    box-shadow: none;
+    font-weight: normal;
+    line-height: 24px;
+    overflow: hidden;
+}
+
+.btn-group {
+    min-width: 70%;
+}
+
+.btn-group label.btn {
+    min-width: 49%; 
+    width: 49%;
+}
