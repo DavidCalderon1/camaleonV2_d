@@ -8,7 +8,9 @@
 	</div>
 	@include('flash::message')
 	@include('core-templates::common.errors')
-
+    @if($peticion != "normal")
+        @include( 'layouts.alerts' )
+    @endif
 	<div class="row">
 		{!! Form::model($pucCuenta, ['route' => ['admin.puc.'.$ruta.'.update', $pucCuenta->id], 'method' => 'patch', 'class' => 'form_update']) !!}
 

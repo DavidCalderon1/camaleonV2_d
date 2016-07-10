@@ -11,7 +11,6 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 //use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 /*
-
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
@@ -19,7 +18,7 @@ class User extends Model implements AuthenticatableContract,
 class User extends Model implements AuthenticatableContract,
                                     CanResetPasswordContract
 {
-    // use Authenticatable, Authorizable, CanResetPassword;
+    //use Authenticatable, Authorizable, CanResetPassword, SoftDeletes;
     use Authenticatable, CanResetPassword, SoftDeletes;
 
     /**
@@ -32,7 +31,7 @@ class User extends Model implements AuthenticatableContract,
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-    protected $dates = ['deleted_at'];    
+    protected $dates = ['deleted_at'];
     /**
      * The attributes that are mass assignable.
      *
@@ -69,7 +68,7 @@ class User extends Model implements AuthenticatableContract,
      */
     public static $rules = [
         'name' => 'required',
-        'email' => 'required|email',
+        'email' => 'required|email|unique:users',
         'password' => 'required'
     ];
 
@@ -138,6 +137,19 @@ class User extends Model implements AuthenticatableContract,
      */
     public function roles()
     {
-        return $this->belongsToMany('App\Models\Role');
+        return $this->belongsToMany('App\Models\Admin\Role');
+    }
+
+    public function scopeWithTrash($query, $id)
+    {
+        return $query->where('id','=', $id)->withTrashed();
+    }
+
+
+    //para setear la contraseña cada vez que sea cambiada, es decir ser encriptada
+    public function setPasswordAttribute($valor){
+        if( !empty($valor) ){
+            $this->attributes['password'] = \Hash::make($valor);
+        }
     }
 }

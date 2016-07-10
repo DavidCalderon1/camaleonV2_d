@@ -39,7 +39,7 @@ class puc_subcuentaController extends \App\Http\Controllers\AppBaseController
     //metodo find ejecutado por el metodo beforeFilter dentro del constructor
     public function find(Route $route){
         //va a buscar los parametros que estan el esta ruta y que son enviados por el recurso, que en este caso es 'subcuentas' el configurado en las rutas
-        $this->pucCuenta = $this->pucSubcuentaRepository->findWithoutFail( $route->getParameter('subcuentas') );
+        $this->pucCuenta = $this->pucSubcuentaRepository->findWithoutFail( intval( $route->getParameter('subcuentas') ) );
     }
     //metodo selection ejecutado por el metodo beforeFilter dentro del constructor
     public function selection(){
@@ -68,9 +68,9 @@ class puc_subcuentaController extends \App\Http\Controllers\AppBaseController
         }
         // guarda un mensaje en el archivo de log
         if( count($pucCuentas) == 0 ){
-            Log::info('subcuentas, Index, Lista de subcuentas sin resultados: '.$request->fullUrl() );
+            Log::info('Subcuentas, Index, Lista de subcuentas sin resultados: '.$request->fullUrl() );
         }else{
-            Log::info('subcuentas, Index, Mostrando lista de subcuentas: '.$request->fullUrl() );
+            Log::info('Subcuentas, Index, Mostrando lista de subcuentas: '.$request->fullUrl() );
         }
         
         $pucCuentas = $pucCuentas->orderBy('codigo', 'asc')->paginate(15);
@@ -85,7 +85,7 @@ class puc_subcuentaController extends \App\Http\Controllers\AppBaseController
     public function create()
     {
         // guarda un mensaje en el archivo de log
-        Log::info('subcuentas, Create, Mostrando formulario de creación de subcuentas');
+        Log::info('Subcuentas, Create, Mostrando formulario de creación de subcuentas');
         return view('admin.puc.pucCuentas.create', ['peticion' => $this->peticion, 'ruta' => 'subcuentas', 'nombre' => 'subcuenta', 'listClases' => $this->listClases]);
     }
 
@@ -102,7 +102,7 @@ class puc_subcuentaController extends \App\Http\Controllers\AppBaseController
 
         $this->pucCuenta = $this->pucSubcuentaRepository->create($input);
         // guarda un mensaje en el archivo de log
-        Log::info('subcuentas, Store, Se almaceno la subcuenta: '.$this->pucCuenta->id, [$input]);
+        Log::info('Subcuentas, Store, Se almaceno la subcuenta: '.$this->pucCuenta->id, [$input]);
 
         Flash::success('Subcuenta guardada correctamente.');
 
@@ -121,12 +121,12 @@ class puc_subcuentaController extends \App\Http\Controllers\AppBaseController
         if (empty($this->pucCuenta)) {
             Flash::error('Subcuenta no encontrada');
             // guarda un mensaje en el archivo de log
-            Log::notice('subcuentas, Show, Subcuenta no encontrada, id: '.$id);
+            Log::notice('Subcuentas, Show, Subcuenta no encontrada, id: '.$id);
 
             return redirect(route('admin.puc.subcuentas.index'));
         }
         // guarda un mensaje en el archivo de log
-        Log::info('subcuentas, Show, Mostrando subcuenta, id: '.$id);
+        Log::info('Subcuentas, Show, Mostrando subcuenta, id: '.$id);
 
         return view('admin.puc.pucCuentas.show', ['peticion' => $this->peticion, 'ruta' => 'subcuentas', 'nombre' => 'subcuenta', 'pucCuenta' => $this->pucCuenta]);
     }
@@ -143,12 +143,12 @@ class puc_subcuentaController extends \App\Http\Controllers\AppBaseController
         if (empty($this->pucCuenta)) {
             Flash::error('Subcuenta no encontrada');
             // guarda un mensaje en el archivo de log
-            Log::notice('subcuentas, Edit, Subcuenta no encontrada: '.$id);
+            Log::notice('Subcuentas, Edit, Subcuenta no encontrada: '.$id);
 
             return redirect(route('admin.puc.subcuentas.index'));
         }
         // guarda un mensaje en el archivo de log
-        Log::info('subcuentas, Edit, Mostrando edición de subcuenta: '.$id);
+        Log::info('Subcuentas, Edit, Mostrando edición de subcuenta: '.$id);
 
         return view('admin.puc.pucCuentas.edit', ['peticion' => $this->peticion, 'ruta' => 'subcuentas', 'nombre' => 'subcuenta', 'pucCuenta' => $this->pucCuenta, 'listClases' => $this->listClases]);
     
@@ -164,30 +164,24 @@ class puc_subcuentaController extends \App\Http\Controllers\AppBaseController
      */
     public function update($id, Updatepuc_subcuentaRequest $request)
     {
-        //consulta si existe un registro con el codigo enviado
-        $consultaId = $this->pucSubcuentaRepository->findWithoutFail($request->codigo);
+        // realiza la validacion de las reglas antes de actualizar
+        $this->validate($request, [
+            'codigo' => 'unique:puc_subcuenta,codigo,'.$id
+        ]);
 
         if (empty($this->pucCuenta)) {
             Flash::error('Subcuenta no encontrada');
             // guarda un mensaje en el archivo de log
-            Log::notice('subcuentas, Update, Subcuenta no encontrada: '.$id);
+            Log::notice('Subcuentas, Update, Subcuenta no encontrada: '.$id);
 
             return redirect(route('admin.puc.subcuentas.index'));
-        }
-        //valida que no exista un registro con el mismo codigo
-        if( count($consultaId) > 0 && $this->pucCuenta->codigo  != $request->codigo ){
-            Flash::error('Ya existe una Subcuenta con ese código');
-            // guarda un mensaje en el archivo de log
-            Log::error('subcuentas, Update, Ya existe una subcuenta con ese Código: '.$id, [$request->all()] );
-            //regresa al formulario de actualizacion del recurso
-            return redirect(route( 'admin.puc.subcuentas.edit',['id' => $id] ));
         }
 
         $this->pucCuenta = $this->pucSubcuentaRepository->update($request->all(), $id);
 
         Flash::success('Subcuenta actualizada correctamente.');
         // guarda un mensaje en el archivo de log
-        Log::info('subcuentas, Update, Subcuenta actualizada correctamente: '.$id, [$request->all()]);
+        Log::info('Subcuentas, Update, Subcuenta actualizada correctamente: '.$id, [$request->all()]);
 
         return redirect(route('admin.puc.subcuentas.show',['id' => $this->pucCuenta->id, 'peticion' => $this->peticion]) );
     }
@@ -204,16 +198,23 @@ class puc_subcuentaController extends \App\Http\Controllers\AppBaseController
         if (empty($this->pucCuenta)) {
             Flash::error('Subcuenta no encontrada');
             // guarda un mensaje en el archivo de log
-            Log::notice('subcuentas, Destroy, Subcuenta no encontrada: '.$id);
+            Log::notice('Subcuentas, Destroy, Subcuenta no encontrada: '.$id);
 
             return redirect(route('admin.puc.subcuentas.index'));
+        }
+        if ($this->pucCuenta->cuentasauxiliares()->count() > 0 ) {
+            Flash::error('La subcuenta tiene dependencias, no se puede eliminar.');
+            // guarda un mensaje en el archivo de log
+            Log::error('Subcuentas, Destroy, La subcuenta tiene dependencias, no se puede eliminar: '.$id);
+
+            return redirect(route('admin.puc.subcuentas.show',['id' => $id, 'peticion' => $this->peticion]) );
         }
 
         $this->pucSubcuentaRepository->delete($id);
 
         Flash::success('Subcuenta eliminada correctamente.');
         // guarda un mensaje en el archivo de log
-        Log::warning('subcuentas, Destroy, Subcuenta eliminada correctamente: '.$id);
+        Log::warning('Subcuentas, Destroy, Subcuenta eliminada correctamente: '.$id);
 
         return redirect(route('admin.puc.subcuentas.index'));
     }

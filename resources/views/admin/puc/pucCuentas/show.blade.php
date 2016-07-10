@@ -8,13 +8,15 @@
         </div>
     </div>
 	
+    @if($peticion != "normal")
+        @include( 'layouts.alerts' )
+    @endif
 
 	<div class="row ver">
 		@include('admin.puc.pucCuentas.show_fields')
 		
 		{!! Form::open([
-			'route' => ['admin.puc.'.$ruta.'.destroy', 
-			$pucCuenta->id], 
+			'route' => ['admin.puc.'.$ruta.'.destroy', $pucCuenta->id], 
 			'method' => 'delete', 
 			'class' => 'form_delete']) 
 		!!}

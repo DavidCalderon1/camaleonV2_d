@@ -38,6 +38,6 @@ class puc_grupoRepository extends BaseRepository
      */
     public function listaid($busqueda)
     {
-        return $this->model->where('clase_id', '=', $busqueda);
+        return $this->model->where('clase_id', '=', intval( $busqueda ));
     }
 }

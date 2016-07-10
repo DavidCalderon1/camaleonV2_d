@@ -1,25 +1,47 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
-use App\Http\Requests\CreateUserRequest;
-use App\Http\Requests\UpdateUserRequest;
-use App\Repositories\UserRepository;
+use App\Http\Requests\Admin\CreateUserRequest;
+use App\Http\Requests\Admin\UpdateUserRequest;
+use App\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Flash;
-use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Illuminate\Routing\Route;
 use Log;
 
-class UserController extends AppBaseController
+class UserController extends \App\Http\Controllers\AppBaseController
 {
-    /** @var  UserRepository */
-    private $userRepository;
 
-    public function __construct(UserRepository $userRepo)
+    private $listRoles;
+    private $users;
+    private $roles;
+
+    public function __construct(Request $request)
     {
-        $this->userRepository = $userRepo;
+        //filtro que se ejecutara antes de cualquier accion del controlador, se especifica el metodo en el que se desea ejecutar
+        $this->beforeFilter('@find',['only' => ['edit','show','update','destroy'] ]);
+        $this->beforeFilter('@findRole',['only' => ['store','update'] ]);
+        $this->beforeFilter('@selection',['only' => ['create','edit'] ]);
+    }
+    //metodo find ejecutado por el metodo beforeFilter dentro del constructor
+    public function find(Route $route){
+        //va a buscar los parametros que estan el esta ruta y que son enviados por el recurso, que en este caso es 'usuarios' el configurado en las rutas
+        $this->user = User::WithTrash( $route->getParameter('usuarios') )->first();
+        //$this->user = User::find( $route->getParameter('usuarios') );
+    }
+    //metodo find ejecutado por el metodo beforeFilter dentro del constructor
+    public function findRole(Route $route, Request $request){
+        //busca los roles enviados
+        $this->roles = Role::find($request->input('Roles'));
+    }
+    //metodo selection ejecutado por el metodo beforeFilter dentro del constructor
+    public function selection(){
+        //se lista el nombre y el id correspondiente a todas las puc_subcuenta
+        $this->listRoles =  Role::select('role_title', 'id')->orderBy('id', 'asc')->lists('role_title','id');
     }
 
     /**
@@ -30,12 +52,12 @@ class UserController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->userRepository->pushCriteria(new RequestCriteria($request));
-        $users = $this->userRepository->all();
+        $users = User::withTrashed();
+        $users = $users->orderBy('name', 'asc')->paginate(15);
 
         Log::info('Mostrando lista de usuarios.');
 
-        return view('users.index')
+        return view('admin.usuarios.index')
             ->with('users', $users);
     }
 
@@ -46,7 +68,7 @@ class UserController extends AppBaseController
      */
     public function create()
     {
-        return view('users.create');
+        return view('admin.usuarios.create',['listRoles' => $this->listRoles]);
     }
 
     /**
@@ -58,13 +80,14 @@ class UserController extends AppBaseController
      */
     public function store(CreateUserRequest $request)
     {
-        $input = $request->all();
+        //crea el usuario con los datos recibidos
+        $this->user = User::create($request->all());
+        //crea los registros para las relaciones de los roles
+        $this->user->roles()->sync($this->roles);
 
-        $user = $this->userRepository->create($input);
+        Flash::success('Usuario creado correctamente.');
 
-        Flash::success('User saved successfully.');
-
-        return redirect(route('users.index'));
+        return redirect(route('admin.usuarios.show',['id' => $this->user->id]) );
     }
 
     /**
@@ -76,15 +99,15 @@ class UserController extends AppBaseController
      */
     public function show($id)
     {
-        $user = $this->userRepository->findWithoutFail($id);
+        //$user = User::where('id', $id)->withTrashed()->first();
 
-        if (empty($user)) {
-            Flash::error('User not found');
+        if (empty($this->user)) {
+            Flash::error('Usuario no encontrado');
 
-            return redirect(route('users.index'));
+            return redirect(route('admin.usuarios.index'));
         }
 
-        return view('users.show')->with('user', $user);
+        return view('admin.usuarios.show', ['peticion' => 'normal', 'nombre' => 'usuarios', 'user' => $this->user]);
     }
 
     /**
@@ -96,15 +119,13 @@ class UserController extends AppBaseController
      */
     public function edit($id)
     {
-        $user = $this->userRepository->findWithoutFail($id);
+        if (empty($this->user)) {
+            Flash::error('Usuario no encontrado');
 
-        if (empty($user)) {
-            Flash::error('User not found');
-
-            return redirect(route('users.index'));
+            return redirect(route('admin.usuarios.index'));
         }
 
-        return view('users.edit')->with('user', $user);
+        return view('admin.usuarios.edit', ['user' => $this->user,'listRoles' => $this->listRoles]);
     }
 
     /**
@@ -117,19 +138,26 @@ class UserController extends AppBaseController
      */
     public function update($id, UpdateUserRequest $request)
     {
-        $user = $this->userRepository->findWithoutFail($id);
+        if (empty($this->user)) {
+            Flash::error('Usuario no encontrado');
 
-        if (empty($user)) {
-            Flash::error('User not found');
+            return redirect(route('admin.usuarios.index'));
+        }
+        //sincroniza los roles que escoge el usuario
+        $this->user->roles()->sync($this->roles);
+        //almacenar la actualizacion que realiza el usuario, de acuerdo a los campos fillable
+        $this->user->fill($request->all());
+        //guardar el usuario
+        $this->user->save();
 
-            return redirect(route('users.index'));
+        //valida el campo deleted_at y restaura al usuario en dado caso
+        if (isset($request->deleted_at) && $request->deleted_at == '1') {
+           $this->user->restore();
         }
 
-        $user = $this->userRepository->update($request->all(), $id);
+        Flash::success('Usuario actualizado correctamente.');
 
-        Flash::success('User updated successfully.');
-
-        return redirect(route('users.index'));
+        return redirect(route('admin.usuarios.show',['id' => $this->user->id]) );
     }
 
     /**
@@ -141,18 +169,16 @@ class UserController extends AppBaseController
      */
     public function destroy($id)
     {
-        $user = $this->userRepository->findWithoutFail($id);
+        if (empty($this->user)) {
+            Flash::error('Usuario no encontrado');
 
-        if (empty($user)) {
-            Flash::error('User not found');
-
-            return redirect(route('users.index'));
+            return redirect(route('admin.usuarios.index'));
         }
 
-        $this->userRepository->delete($id);
+        $this->user->delete();
 
-        Flash::success('User deleted successfully.');
+        Flash::success('Usuario eliminado correctamente.');
 
-        return redirect(route('users.index'));
+        return redirect(route('admin.usuarios.index'));
     }
 }

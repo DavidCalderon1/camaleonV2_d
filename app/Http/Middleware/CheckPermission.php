@@ -21,9 +21,13 @@ class CheckPermission
             if ($request->user()->can($permission)) {
                 
                 return $next($request);
+            }else{
+                Flash::error('No autorizado.');
+                return $request->ajax ? response('No autorizado.', 401) : redirect(route('inicio'));
             }
+        }else{
+            Flash::error('Debe iniciar sesión.');
+            return $request->ajax ? response('Debe iniciar sesión.', 401) : redirect(route('inicio'));
         }
-        Flash::error('No autorizado.');
-        return $request->ajax ? response('No autorizado.', 401) : redirect('/');
     }
 }

@@ -40,7 +40,7 @@ class puc_grupoController extends \App\Http\Controllers\AppBaseController
     //metodo find ejecutado por el metodo beforeFilter dentro del constructor
     public function find(Route $route){
         //va a buscar los parametros que estan el esta ruta y que son enviados por el recurso, que en este caso es 'grupos' el configurado en las rutas
-        $this->pucCuenta = $this->pucGrupoRepository->findWithoutFail( $route->getParameter('grupos') );
+        $this->pucCuenta = $this->pucGrupoRepository->findWithoutFail( intval( $route->getParameter('grupos') ) );
     }
     //metodo selection ejecutado por el metodo beforeFilter dentro del constructor
     public function selection(){
@@ -164,8 +164,10 @@ class puc_grupoController extends \App\Http\Controllers\AppBaseController
      */
     public function update($id, Updatepuc_grupoRequest $request)
     {
-		//consulta si existe un registro con el codigo enviado
-		$consultaId = $this->pucGrupoRepository->findWithoutFail($request->codigo);
+        // realiza la validacion de las reglas antes de actualizar
+        $this->validate($request, [
+            'codigo' => 'unique:puc_grupo,codigo,'.$id
+        ]);
 
         if (empty($this->pucCuenta)) {
             Flash::error('Grupo no encontrado.');
@@ -173,16 +175,6 @@ class puc_grupoController extends \App\Http\Controllers\AppBaseController
             Log::notice('Grupos, Update, Grupo no encontrado: '.$id);
             return redirect(route('admin.puc.grupos.index'));
         }
-		//valida que no exista un registro con el mismo codigo
-		if( count($consultaId) > 0 && $this->pucCuenta->codigo != $request->codigo ){
-			Flash::error('Ya existe un Grupo con ese Código.');
-            // guarda un mensaje en el archivo de log
-            Log::error('Grupos, Update, Ya existe un Grupo con ese Código: '.$id, [$request->all()] );
-				
-			//regresa al formulario de actualizacion del recurso
-			return redirect(route( 'admin.puc.grupos.edit',['id' => $id] ));
-				
-		}
 
         $this->pucCuenta = $this->pucGrupoRepository->update($request->all(), $id);
 
@@ -209,6 +201,13 @@ class puc_grupoController extends \App\Http\Controllers\AppBaseController
             Log::notice('Grupos, Destroy, Grupo no encontrado: '.$id);
 
             return redirect(route('admin.puc.grupos.index'));
+        }
+        if ($this->pucCuenta->cuentas()->count() > 0 ) {
+            Flash::error('El grupo tiene dependencias, no se puede eliminar.');
+            // guarda un mensaje en el archivo de log
+            Log::error('Grupos, Destroy, El grupo tiene dependencias, no se puede eliminar: '.$id);
+
+            return redirect(route('admin.puc.grupos.show',['id' => $id, 'peticion' => $this->peticion ]) );
         }
 
         $this->pucGrupoRepository->delete($id);

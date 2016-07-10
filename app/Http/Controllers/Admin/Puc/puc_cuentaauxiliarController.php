@@ -39,7 +39,7 @@ class puc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControll
     //metodo find ejecutado por el metodo beforeFilter dentro del constructor
     public function find(Route $route){
         //va a buscar los parametros que estan el esta ruta y que son enviados por el recurso, que en este caso es 'cuentasauxiliares' el configurado en las rutas
-        $this->pucCuenta = $this->pucCuentaauxiliarRepository->findWithoutFail( $route->getParameter('cuentasauxiliares') );
+        $this->pucCuenta = $this->pucCuentaauxiliarRepository->findWithoutFail( intval( $route->getParameter('cuentasauxiliares') ) );
     }
     //metodo selection ejecutado por el metodo beforeFilter dentro del constructor
     public function selection(){
@@ -68,10 +68,9 @@ class puc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControll
         }
         // guarda un mensaje en el archivo de log
         if( count($pucCuentas) == 0 ){
-            Log::info('Cuentas ausiliares, Index, Lista de cuentas auxiliares sin resultados: '.$request->fullUrl() );
+            Log::info('Cuentas auxiliares, Index, Lista de cuentas auxiliares sin resultados: '.$request->fullUrl() );
         }else{
-            Log::info('Cuentas ausiliares, Index, Mostrando lista de cuentas auxiliares
-: '.$request->fullUrl() );
+            Log::info('Cuentas auxiliares, Index, Mostrando lista de cuentas auxiliares: '.$request->fullUrl() );
         }
 
         $pucCuentas = $pucCuentas->orderBy('codigo', 'asc')->paginate(15);
@@ -86,7 +85,7 @@ class puc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControll
     public function create()
     {
         // guarda un mensaje en el archivo de log
-        Log::info('Cuentas ausiliares, Create, Mostrando formulario de creación de cuentas auxiliares');
+        Log::info('Cuentas auxiliares, Create, Mostrando formulario de creación de cuentas auxiliares');
         return view('admin.puc.pucCuentas.create', ['peticion' => $this->peticion, 'ruta' => 'cuentasauxiliares', 'nombre' => 'cuentas auxiliares', 'listClases' => $this->listClases]);
     }
 
@@ -103,7 +102,7 @@ class puc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControll
 
         $this->pucCuenta = $this->pucCuentaauxiliarRepository->create($input);
         // guarda un mensaje en el archivo de log
-        Log::info('Cuentas ausiliares, Store, Se almaceno la cuenta auxiliar: '.$this->pucCuenta->id, [$input]);
+        Log::info('Cuentas auxiliares, Store, Se almaceno la cuenta auxiliar: '.$this->pucCuenta->id, [$input]);
 
         Flash::success('Cuenta Auxiliar guardada correctamente.');
 
@@ -122,12 +121,12 @@ class puc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControll
         if (empty($this->pucCuenta)) {
             Flash::error('Cuenta Auxiliar no encontrada');
             // guarda un mensaje en el archivo de log
-            Log::notice('Cuentas ausiliares, Show, cuenta auxiliar no encontrada, id: '.$id);
+            Log::notice('Cuentas auxiliares, Show, cuenta auxiliar no encontrada, id: '.$id);
 
             return redirect(route('admin.puc.cuentasauxiliares.index'));
         }
         // guarda un mensaje en el archivo de log
-        Log::info('Cuentas ausiliares, Show, Mostrando cuenta auxiliar, id: '.$id);
+        Log::info('Cuentas auxiliares, Show, Mostrando cuenta auxiliar, id: '.$id);
 
         return view('admin.puc.pucCuentas.show', ['peticion' => $this->peticion, 'ruta' => 'cuentasauxiliares', 'nombre' => 'cuentas auxiliares', 'pucCuenta' => $this->pucCuenta]);
     }
@@ -144,12 +143,12 @@ class puc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControll
         if (empty($this->pucCuenta)) {
             Flash::error('Cuenta Auxiliar no encontrada');
             // guarda un mensaje en el archivo de log
-            Log::notice('Cuentas ausiliares, Edit, cuenta auxiliar no encontrada: '.$id);
+            Log::notice('Cuentas auxiliares, Edit, cuenta auxiliar no encontrada: '.$id);
 
             return redirect(route('admin.puc.cuentasauxiliares.index'));
         }
         // guarda un mensaje en el archivo de log
-        Log::info('Cuentas ausiliares, Edit, Mostrando edición de cuenta auxiliar: '.$id);
+        Log::info('Cuentas auxiliares, Edit, Mostrando formulario de edición de cuenta auxiliar: '.$id);
 
         return view('admin.puc.pucCuentas.edit', ['peticion' => $this->peticion, 'ruta' => 'cuentasauxiliares', 'nombre' => 'cuentas auxiliares', 'pucCuenta' => $this->pucCuenta, 'listClases' => $this->listClases]);
     
@@ -165,25 +164,17 @@ class puc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControll
      */
     public function update($id, Updatepuc_cuentaauxiliarRequest $request)
     {
-        //consulta si existe un registro con el codigo enviado
-        $consultaId = $this->pucCuentaauxiliarRepository->findWithoutFail($request->codigo);
+        // realiza la validacion de las reglas antes de actualizar
+        $this->validate($request, [
+            'codigo' => 'unique:puc_cuentaauxiliar,codigo,'.$id
+        ]);
 
         if (empty($this->pucCuenta)) {
             Flash::error('Cuenta Auxiliar no encontrada');
             // guarda un mensaje en el archivo de log
-            Log::notice('Cuentas ausiliares, Update, cuenta auxiliar no encontrada: '.$id);
+            Log::notice('Cuentas auxiliares, Update, cuenta auxiliar no encontrada: '.$id);
 
             return redirect(route('admin.puc.cuentasauxiliares.index'));
-        }
-        //valida que no exista un registro con el mismo codigo
-        if( count($consultaId) > 0 && $this->pucCuenta->codigo != $request->codigo ){
-            Flash::error('Ya existe una Cuenta auxiliar con ese Código');
-            // guarda un mensaje en el archivo de log
-            Log::error('Cuentas ausiliares, Update, Ya existe una cuenta auxiliar con ese Código: '.$id, [$request->all()] );
-                
-            //regresa al formulario de actualizacion del recurso
-            return redirect(route( 'admin.puc.cuentasauxiliares.edit',['id' => $id] ));
-                
         }
 
         $this->pucCuenta = $this->pucCuentaauxiliarRepository->update($request->all(), $id);
@@ -207,7 +198,7 @@ class puc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControll
         if (empty($this->pucCuenta)) {
             Flash::error('Cuenta Auxiliar no encontrada');
             // guarda un mensaje en el archivo de log
-            Log::notice('Cuentas ausiliares, Destroy, cuenta auxiliar no encontrada: '.$id);
+            Log::notice('Cuentas auxiliares, Destroy, cuenta auxiliar no encontrada: '.$id);
 
             return redirect(route('admin.puc.cuentasauxiliares.index'));
         }
@@ -216,7 +207,7 @@ class puc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControll
 
         Flash::success('Cuenta Auxiliar eliminada correctamente.');
         // guarda un mensaje en el archivo de log
-        Log::warning('Cuentas ausiliares, Destroy, cuenta auxiliar eliminada correctamente: '.$id);
+        Log::warning('Cuentas auxiliares, Destroy, cuenta auxiliar eliminada correctamente: '.$id);
 
         return redirect(route('admin.puc.cuentasauxiliares.index'));
     }

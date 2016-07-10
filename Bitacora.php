@@ -1,4 +1,4 @@
-<?php
+<?php 
 Especificar el host y el puerto por el que se quiere iniciar el servidor
 	php artisan serve --host=some.other.domain --port=8001
 Muesra una lista de los puertos que estan activos
@@ -317,6 +317,7 @@ Laravel proyecto camaleon
 	- la vista del menu esta en layouts/menu.blade.php
 				 
 - configurar los roles de usuario
+	http://heera.it/laravel-5-1-x-acl-middleware#.V2DuubvhBki
 	- modificar la migracion de la tabla users:
 		 public function up()
 		{
@@ -696,3 +697,68 @@ Laravel proyecto camaleon
 			Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 			
 		- Go to http://myapp/logs or some other route
+
+
+		- se migraron los archivos del LaravelLogViewer a las carpetas del proyecto
+
+			/views/forms/log.blade.php
+
+			/app/Http/Controllers/LogViewer/LogViewerController.php
+			/app/Http/Controllers/LogViewer/LaravelLogViewer.php
+
+- se crearon las migraciones para las tablas:
+	puc_clase, puc_grupo, puc_cuenta, puc_subcuenta y puc_cuentaauxiliar
+	
+	- para ejecutar las migraciones se ejecuta un comando por la linea de comandos
+	
+		php artisan migrate
+	
+- crear los seed para las tablas: 
+	puc_clase, puc_grupo, puc_cuenta, puc_subcuenta y puc_cuentaauxiliar
+	
+	- se utilizo un laravel package llamado Inverse seed generator (iSeed)
+		https://github.com/orangehill/iseed
+		- en el archivo composer.json requerir el stat de orangehill/iseed
+		
+			"require": {
+				...
+				"orangehill/iseed": "dev-master"
+			}
+			
+		- ejecutar por linea de comandos
+		
+			composer install 
+			o
+			composer update
+			
+		- en el archivo /app/config/app.php agregar un nuevo item en providers.
+
+			Orangehill\Iseed\IseedServiceProvider::class,
+			
+		- una vez hecho lo anterior ya se puede usar, por linea de comando generar los seed para cada tabla
+			
+			php artisan iseed puc_clase
+			php artisan iseed puc_grupo
+			php artisan iseed puc_cuenta
+			php artisan iseed puc_subcuenta
+			
+	- se debe actualizar el autoload con un comando
+		
+		composer dump-autoload
+	
+	- una vez hechos los seeder se ejecutan con un comando
+		
+		php artisan db:seed
+		
+		- el comando php artisan db:seed ejecuta todos los seeder creados a los que se hizo el llamado en el metodo up() del seed DatabaseSeed.php
+			
+- se crea la validacion para que no se permita la eliminacion de los registros que tengan dependencias
+	- se uso la accion ->count() para contar el numero de elementos que dependen de del registro
+		- ejemplo: $this->pucCuenta->grupos()->count()
+		
+- se crean las vistas para el manejo de los usuarios y la asignacion de los roles
+
+- se crean las vistas para el manejo de los roles y permisos
+
+- SOLUCIONADO, agregar los comandos en usuarios y roles para almacenar las acciones en el log
+- SOLUCIONADO, agregar validaciones para la actualizacion de usuarios y roles para los campos unicos

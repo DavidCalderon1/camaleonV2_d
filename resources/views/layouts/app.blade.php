@@ -21,6 +21,9 @@
     <link href="http://blackrockdigital.github.io/startbootstrap-simple-sidebar/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://blackrockdigital.github.io/startbootstrap-simple-sidebar/css/simple-sidebar.css"
           rel="stylesheet">
+    
+    <!-- general styles -->
+    {!! Html::style('/general/css/styles.css') !!}
 
     <style type="text/css">
         .sidebar-nav li.active > a,
@@ -57,7 +60,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    InfyOm Generator
+                    Camaleon
                 </a>
             </div>
 
@@ -71,8 +74,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
+                        <li><a href="{{ url('/login') }}">Iniciar sesión</a></li>
+                        <li><a href="{{ url('/register') }}">Registro</a></li>
                     @endif
                 </ul>
             </div>
@@ -90,7 +93,7 @@
 
             @if (!Auth::guest())
                 <span class="pull-right" style="margin-right: 10px;margin-top: 15px"><a href="{{ url('/logout') }}"><i
-                                class="fa fa-btn fa-sign-out"></i>Logout</a></span>
+                                class="fa fa-btn fa-sign-out"></i>Cerrar sesión</a></span>
             @endif
         </header>
     </div>
@@ -126,6 +129,7 @@
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
+        $("#wrapper").toggleClass("toggled");
 
     </script>
 

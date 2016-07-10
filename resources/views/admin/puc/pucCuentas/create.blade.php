@@ -8,7 +8,9 @@
     </div>
     @include('flash::message')
     @include('core-templates::common.errors')
-
+    @if($peticion != "normal")
+        @include( 'layouts.alerts' )
+    @endif
     <!--laravel genera y requiere un token para verificar que las peticiones ajax no son malintencionadas-->
     <!--input type="hidden" name="_token" value="{{ csrf_token() }}" id="token"-->
 

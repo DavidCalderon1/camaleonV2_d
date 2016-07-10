@@ -50,7 +50,7 @@ class puc_operacionesController extends Controller
         */
         //$tipoCuenta = [1];
         $peticion = 'ajax';
-        return view('admin.puc.buscar', ['results' => $results, 'ruta' => 'puc', 'listClases' => $this->listClases]);
+        return view('admin.puc.buscar', ['peticion' => $peticion, 'results' => $results, 'ruta' => 'puc', 'listClases' => $this->listClases]);
     }
 
     /**

@@ -11,7 +11,7 @@
 	    
 		<div class="row">
 			<form class="navbar-form navbar-left" id="find_form_create" >
-			{!! Form::model(Request::All(), ['method' => 'get', 'class' => 'navbar-form navbar-left', 'id' => 'find_form_create']) !!}
+			{!! Form::model(['method' => 'get', 'class' => 'navbar-form navbar-left', 'id' => 'find_form_create']) !!}
 			<!--action="{ { url('home/searchredirect') } }"-->
 				<div class="form-group">
 					{!! Form::label('tipo_cuenta', 'Tipo de cuenta: ') !!}

@@ -84,3 +84,10 @@ label.selectDynamic{
     min-width: 49%; 
     width: 49%;
 }
+
+spam.rol:before {
+    content: open-quote;
+}
+spam.rol:after {
+    content: close-quote;
+}

@@ -14,8 +14,7 @@
         "jlapp/swaggervel": "dev-master",
         "doctrine/dbal": "~2.3",
         "infyomlabs/generator-builder": "dev-master",
-        "laracasts/flash": "^2.0",
-        "rap2hpoutre/laravel-log-viewer": "^0.7.0"
+        "laracasts/flash": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

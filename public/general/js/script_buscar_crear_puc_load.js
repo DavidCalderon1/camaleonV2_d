@@ -78,7 +78,7 @@ function formEnviar(form,results,type,mostrarMsg = 'no'){
 	var route = $(form).attr('action');
 	var inputData = $(form).serialize();
 	var token = $(form).find('input[name="_token"]').val();
-	//console.log(form + '\n' + results);
+	console.log(form + '\n' + results);
 	//se envia la peticion mediante el metodo DELETE con el id del genero
 	$.ajax({
 		url: route,
@@ -118,6 +118,8 @@ function formEnviar(form,results,type,mostrarMsg = 'no'){
 
             $(results + " #msj").html(row);
             $(results + " #msj-error").fadeIn();
+            var scrollPos =  $(results + " #msj-error").offset().top;
+ 			$(window).scrollTop(scrollPos);
         }
 	}).fail(function(jqXHR, textStatus, errorThrown) {
         //de este modo se redirecciona a la pagina correspondiente

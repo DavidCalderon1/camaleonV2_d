@@ -11,11 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 /*
 |--------------------------------------------------------------------------
 | API routes
@@ -30,50 +25,64 @@ Route::group(['prefix' => 'api', 'namespace' => 'API'], function () {
 
 /*rutas del api generador*/
 Route::get('generator_builder', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@builder');
-
 Route::get('field_template', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@fieldTemplate');
-
 Route::post('generator_builder/generate', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@generate');
 
 /*rutas de la aplicacion camaleon*/
 
 // direcciona al metodo 'index' del controlador PrincipalController
-Route::get('/','PrincipalController@index');
+Route::get('/',['as' => 'inicio','uses' => 'PrincipalController@index']);
 
-// visor de logs Rap2hpoutre\LaravelLogViewer
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
-Route::group(['prefix' => '/admin', 'namespace' => 'Admin'], function() {
+Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function() {
 	//devuelve una pagina por defecto si no se ingresa una url correcta
 	Route::get('/', function () {
-		return view('layouts.default', ['site' => 'Administración']);
+		return view('layouts.default', ['site' => 'AdministraciÃ³n']);
+	});
+	///admin/usuarios/ 
+	//administracion de los usuarios
+	Route::group(['middleware' => 'acl:admin_usuarios'], function () {
+		Route::resource('usuarios', 'UserController');
+	});
+	// /admin/roles/
+	// /admin/roles/permisos
+	//administracion de los roles y permisos
+	Route::group(['middleware' => 'acl:admin_roles'], function () {
+		Route::resource('roles', 'RoleController');
+		Route::resource('permisos', 'PermissionController');
+	});
+	// visor de logs /admin/logs/
+	Route::group(['middleware' => 'acl:admin_logs'], function () {
+		Route::get('logs', 'LogViewer\LogViewerController@index');
 	});
 	//devuelve una pagina por defecto si no se ingresa una url correcta
 	Route::group([
 		'prefix' => 'puc',
 		'namespace' => 'Puc'
-		//'as' => 'puc',
 	], function() {
 		//devuelve una pagina por defecto si no se ingresa una url correcta
 		Route::get('/', function () {
-			return view('layouts.default', ['site' => 'Plan Único de Cuentas']);
+			return view('layouts.default', ['site' => 'Plan Ãšnico de Cuentas']);
 		});
 		// /admin/puc/
-		//admin.puc.buscar 
-		Route::resource('operacion', 'puc_operacionesController');
-		Route::get('buscar', 'puc_operacionesController@index');
-		Route::get('crear', 'puc_operacionesController@create');
-		Route::get('listas', 'puc_operacionesController@lista');
-		//admin.puc.clases 
-		Route::resource('clases', 'puc_claseController');
-		//admin.puc.grupos 
-		Route::resource('grupos', 'puc_grupoController');
-		//admin.puc.cuentas 
-		Route::resource('cuentas', 'puc_cuentaController');
-		//admin.puc.subcuentas 
-		Route::resource('subcuentas', 'puc_subcuentaController');
-		//admin.puc.cuentasauxiliares 
-		Route::resource('cuentasauxiliares', 'puc_cuentaauxiliarController');
+		// requiere que el usuario tenga el permiso de administrar el puc
+		Route::group(['middleware' => 'acl:admin_puc'], function () {
+			//admin.puc.buscar 
+			Route::resource('operacion', 'puc_operacionesController');
+			Route::get('buscar', 'puc_operacionesController@index');
+			Route::get('crear', 'puc_operacionesController@create');
+			Route::get('listas', 'puc_operacionesController@lista');
+			//admin.puc.clases 
+			Route::resource('clases', 'puc_claseController');
+			//admin.puc.grupos 
+			Route::resource('grupos', 'puc_grupoController');
+			//admin.puc.cuentas 
+			Route::resource('cuentas', 'puc_cuentaController');
+			//admin.puc.subcuentas 
+			Route::resource('subcuentas', 'puc_subcuentaController');
+			//admin.puc.cuentasauxiliares 
+			Route::resource('cuentasauxiliares', 'puc_cuentaauxiliarController');
+		});
 	});
 });
 
@@ -95,15 +104,3 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 Route::get('/home', 'HomeController@index');
 
-/*rutas con la implementacion del control de roles, acl (Access Control List)*/
-
-Route::group(['middleware' => 'acl:manage_user'], function () {
-	Route::resource('users', 'UserController');
-});
-
-/*
-Route::get('/users', [
-	'middleware' => 'acl:manage_user',
-	'as' => 'users.all',
-	'uses' => 'UserController@index'
-]);

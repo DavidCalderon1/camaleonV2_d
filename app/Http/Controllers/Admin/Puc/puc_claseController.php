@@ -35,7 +35,7 @@ class puc_claseController extends \App\Http\Controllers\AppBaseController
     //metodo find ejecutado por el metodo beforeFilter dentro del constructor
     public function find(Route $route){
         //va a buscar los parametros que estan el esta ruta y que son enviados por el recurso, que en este caso es 'clases' el configurado en las rutas
-        $this->pucCuenta = $this->pucClaseRepository->findWithoutFail( $route->getParameter('clases') );
+        $this->pucCuenta = $this->pucClaseRepository->findWithoutFail( intval( $route->getParameter('clases') ) );
     }
 
     /**
@@ -162,8 +162,10 @@ class puc_claseController extends \App\Http\Controllers\AppBaseController
      */
     public function update($id, Updatepuc_claseRequest $request)
     {
-        //consulta si existe un registro con el codigo enviado
-        $consultaId = $this->pucClaseRepository->findWithoutFail($request->codigo);
+        // realiza la validacion de las reglas antes de actualizar
+        $this->validate($request, [
+            'codigo' => 'unique:puc_clase,codigo,'.$id
+        ]);
 
         if (empty($this->pucCuenta)) {
             Flash::error('Clase no encontrada.');
@@ -171,15 +173,6 @@ class puc_claseController extends \App\Http\Controllers\AppBaseController
             Log::notice('Clases, Update, Clase no encontrada: '.$id);
 
             return redirect(route('admin.puc.clases.index'));
-        }
-        //valida que no exista un registro con el mismo codigo
-        if( count($consultaId) > 0 && $this->pucCuenta->codigo != $request->codigo ){
-            Flash::error('Ya existe una Clase con ese Código.');
-            // guarda un mensaje en el archivo de log
-            Log::error('Clases, Update, Ya existe una Clase con ese codigo: '.$id, [$request->all()] );
-
-            //regresa al formulario de actualizacion del recurso
-            return redirect(route( 'admin.puc.clases.edit',['id' => $id] ));
         }
 
         $this->pucCuenta = $this->pucClaseRepository->update($request->all(), $id);
@@ -207,6 +200,13 @@ class puc_claseController extends \App\Http\Controllers\AppBaseController
             Log::notice('Clases, Destroy, Clase no encontrada: '.$id);
 
             return redirect(route('admin.puc.clases.index'));
+        }
+        if ($this->pucCuenta->grupos()->count() > 0 ) {
+            Flash::error('La clase tiene dependencias, no se puede eliminar.');
+            // guarda un mensaje en el archivo de log
+            Log::error('Clases, Destroy, La clase tiene dependencias, no se puede eliminar: '.$id);
+
+            return redirect(route('admin.puc.clases.show',['id' => $id, 'peticion' => $this->peticion ]) );
         }
 
         $this->pucClaseRepository->delete($id);

@@ -46,7 +46,7 @@ class puc_claseRepository extends BaseRepository
         if($busqueda == '*' || $busqueda == '' ){
             return $this->model;
         }else{
-            return $this->model->where('id', '=', $busqueda);
+            return $this->model->where('id', '=', intval( $busqueda ));
         }
     }
 }

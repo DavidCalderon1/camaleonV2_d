@@ -39,7 +39,7 @@ class puc_cuentaController extends \App\Http\Controllers\AppBaseController
     //metodo find ejecutado por el metodo beforeFilter dentro del constructor
     public function find(Route $route){
         //va a buscar los parametros que estan el esta ruta y que son enviados por el recurso, que en este caso es 'cuentas' el configurado en las rutas
-        $this->pucCuenta = $this->pucCuentaRepository->findWithoutFail( $route->getParameter('cuentas') );
+        $this->pucCuenta = $this->pucCuentaRepository->findWithoutFail( intval( $route->getParameter('cuentas') ) );
     }
     //metodo selection ejecutado por el metodo beforeFilter dentro del constructor
     public function selection(){
@@ -163,8 +163,10 @@ class puc_cuentaController extends \App\Http\Controllers\AppBaseController
      */
     public function update($id, Updatepuc_cuentaRequest $request)
     {
-        //consulta si existe un registro con el codigo enviado
-        $consultaId = $this->pucCuentaRepository->findWithoutFail($request->codigo);
+        // realiza la validacion de las reglas antes de actualizar
+        $this->validate($request, [
+            'codigo' => 'unique:puc_cuenta,codigo,'.$id
+        ]);
         
         if (empty($this->pucCuenta)) {
             Flash::error('Cuenta no encontrada');
@@ -172,16 +174,6 @@ class puc_cuentaController extends \App\Http\Controllers\AppBaseController
             Log::notice('Cuentas, Update, Cuenta no encontrada: '.$id);
 
             return redirect(route('admin.puc.cuentas.index'));
-        }
-        //valida que no exista un registro con el mismo codigo
-        if( count($consultaId) > 0 && $this->pucCuenta->codigo != $request->codigo ){
-            Flash::error('Ya existe una Cuenta con ese Código');
-            // guarda un mensaje en el archivo de log
-            Log::error('Cuentas, Update, Ya existe una Cuenta con ese Código: '.$id, [$request->all()] );
-                
-            //regresa al formulario de actualizacion del recurso
-            return redirect(route( 'admin.puc.cuentas.edit',['id' => $id] ));
-                
         }
 
         $this->pucCuenta = $this->pucCuentaRepository->update($request->all(), $id);
@@ -208,6 +200,13 @@ class puc_cuentaController extends \App\Http\Controllers\AppBaseController
             Log::notice('Cuentas, Destroy, Cuenta no encontrada: '.$id);
 
             return redirect(route('admin.puc.cuentas.index'));
+        }
+        if ($this->pucCuenta->subcuentas()->count() > 0 ) {
+            Flash::error('La cuenta tiene dependencias, no se puede eliminar.');
+            // guarda un mensaje en el archivo de log
+            Log::error('Cuentas, Destroy, La cuenta tiene dependencias, no se puede eliminar: '.$id);
+
+            return redirect(route('admin.puc.cuentas.show',['id' => $id, 'peticion' => $this->peticion]) );
         }
 
         $this->pucCuentaRepository->delete($id);

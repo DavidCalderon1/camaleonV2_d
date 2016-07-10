@@ -38,6 +38,6 @@ class puc_subcuentaRepository extends BaseRepository
      */
     public function listaid($busqueda)
     {
-        return $this->model->where('cuenta_id', '=', $busqueda);
+        return $this->model->where('cuenta_id', '=', intval( $busqueda ));
     }
 }

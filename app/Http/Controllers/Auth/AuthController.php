@@ -13,7 +13,7 @@ class AuthController extends Controller
     protected $loginPath = '/login';
     protected $redirectTo = '/home';
     protected $redirectAfterLogout = '/login';
-        /*
+    /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
     |--------------------------------------------------------------------------

@@ -146,12 +146,17 @@ return [
         'scnt_id'               => 'Id de la subcuenta',
         'cntaux_id'           	=> 'Id de la cuenta auxiliar',
 				
-        'codigo'          => 'Código',
-        'clase_id'        	=> 'Clase',
-        'grupo_id'        	=> 'Grupo',
-        'cuenta_id'        	=> 'Cuenta',
-        'subcuenta_id'        	=> 'Subcuenta',
-        'tercero_activo'        	=> 'tercero/activo',
+        'codigo'        		=> 'Código',
+        'clase_id'        		=> 'Clase',
+        'grupo_id'        		=> 'Grupo',
+        'cuenta_id'        		=> 'Cuenta',
+        'subcuenta_id'      	=> 'Subcuenta',
+        'tercero_activo'   		=> 'tercero/activo',
+        'role_title'       		=> 'Título',
+        'role_slug'        		=> 'Slug',
+        'permission_title'  	=> 'Título',
+        'permission_slug'   	=> 'Slug',
+        'permission_description'	=> 'Descripción',
     ],
 
 ];

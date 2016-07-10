@@ -1,6 +1,7 @@
 @extends('layouts.principal')
 
 @section('content')
+    @include('flash::message')
 	<div class="contenedor">
 		<div class="contenido">
 			<?php 
