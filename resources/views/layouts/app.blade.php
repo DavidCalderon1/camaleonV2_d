@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{{ '/assets/img/logo-01.ico' }}}">
+    <title>Camale&oacute;n: {{ isset($title_page)? $title_page : 'Mas que un software contable' }}</title>
 
-    <title>Laravel</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.css">
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet'
           type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
-    <!-- Bootstrap -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- DataTable Bootstrap -->
     <link href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css" rel="stylesheet">
-
-    <link href="http://blackrockdigital.github.io/startbootstrap-simple-sidebar/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://blackrockdigital.github.io/startbootstrap-simple-sidebar/css/simple-sidebar.css"
           rel="stylesheet">
     
     <!-- general styles -->
-    {!! Html::style('/general/css/styles.css') !!}
+    {!! Html::style('/assets/css/styles.css') !!}
+
+    @yield('styles')
 
     <style type="text/css">
         .sidebar-nav li.active > a,
@@ -60,7 +70,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Camaleon
+                    Camale&oacute;n
                 </a>
             </div>
 
@@ -74,7 +84,11 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Iniciar sesión</a></li>
+                        <li>
+                            <a href="{{ url('/login') }}">
+                            Iniciar sesi&oacute;n
+                            </a>
+                        </li>
                         <li><a href="{{ url('/register') }}">Registro</a></li>
                     @endif
                 </ul>
@@ -92,8 +106,11 @@
                class="btn btn-default" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a>
 
             @if (!Auth::guest())
-                <span class="pull-right" style="margin-right: 10px;margin-top: 15px"><a href="{{ url('/logout') }}"><i
-                                class="fa fa-btn fa-sign-out"></i>Cerrar sesión</a></span>
+                <span class="pull-right" style="margin-right: 10px;margin-top: 15px">
+                    <a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>
+                        Cerrar sesi&oacute;n
+                    </a>
+                </span>
             @endif
         </header>
     </div>
@@ -111,19 +128,32 @@
             </div>
         </div>
     </div>
+    <div class="modal_loading" id="modal_loading"></div>
     <!-- /#page-content-wrapper -->
 
-    <script src="http://blackrockdigital.github.io/startbootstrap-simple-sidebar/js/jquery.js"></script>
-    <script src="http://blackrockdigital.github.io/startbootstrap-simple-sidebar/js/bootstrap.min.js"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.1/js/bootstrap-toggle.min.js"></script>
 
     <!-- Datatables -->
     <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
 
+
+    <!-- assets scripts -->    
+    {!! Html::script('/assets/js/script_select_dynamic.js') !!}
+    {!! Html::script('/assets/js/script_eliminar_por_ajax.js') !!}
+
     <script>
+        (function() {
+            $body = $("body");
+            $(document).on({
+                ajaxStart: function() { $body.addClass("loading");    },
+                 ajaxStop: function() { $body.removeClass("loading"); }    
+            });
+        })();
 
         $("#menu-toggle").click(function (e) {
             e.preventDefault();
@@ -134,6 +164,5 @@
     </script>
 
     @yield('scripts')
-
 </body>
 </html>

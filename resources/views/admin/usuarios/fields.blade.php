@@ -1,13 +1,13 @@
 <!-- Name Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('name', 'Nombre:') !!}
-    {!! Form::text('name', null, ['class' => 'form-control']) !!}
+    {!! Form::text('name', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
 <!-- Email Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('email', 'Email:') !!}
-    {!! Form::email('email', null, ['class' => 'form-control']) !!}
+    {!! Form::email('email', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
 <!-- Password Field -->
@@ -30,7 +30,7 @@
 <!-- Roles Field -->
 <div class="col-sm-6 form-group">
     {!! Form::label('Roles', 'Roles: ') !!}<i> (ctrl + click)</i>
-    <select class="form-control full" id="Roles[]" name="Roles[]" multiple="multiple">
+    <select class="form-control full" id="Roles[]" name="Roles[]" multiple="multiple" required>
     @foreach($listRoles as $id => $title)
         {{ $selected = '' }}
         @foreach($user->roles as $rol)
@@ -46,7 +46,7 @@
 <!-- listRoles Field -->
 <div class="col-sm-6 form-group">
     {!! Form::label('listRoles', 'Roles: ') !!}<i> (ctrl + click)</i>
-    {!! Form::select('Roles[]', $listRoles, null, ['class' => 'form-control full', 'id' => 'Roles[]', 'multiple' ])!!}
+    {!! Form::select('Roles[]', $listRoles, null, ['class' => 'form-control full', 'id' => 'Roles[]', 'multiple', 'required' ])!!}
 </div>
 @endif
 

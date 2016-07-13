@@ -1,4 +1,4 @@
-@extends( $peticion == "normal" ? 'layouts.principal' : 'layouts.empty' )
+@extends( $peticion == "normal" ? 'layouts.app' : 'layouts.empty' )
  
 @section('content')
     <div class="row clearfix">
@@ -21,10 +21,4 @@
 
         {!! Form::close() !!}
     </div>
-@endsection
-
-@section('scripts')
-    @if( isset($peticion) && $peticion == 'normal' )
-    {!! Html::script('/general/js/script_select_scroll.js') !!}
-    @endif
 @endsection

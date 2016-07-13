@@ -694,17 +694,19 @@ Laravel proyecto camaleon
 			Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 		
 		- Add a route in app/Http/routes.php (or choose another route):
-			Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+			Route::group(['middleware' => 'acl:admin_logs'], function () {
+				Route::get('logs',['as' => 'admin.logs','uses' => 'LogViewer\LogViewerController@index']);
+			});
 			
 		- Go to http://myapp/logs or some other route
 
 
 		- se migraron los archivos del LaravelLogViewer a las carpetas del proyecto
 
-			/views/forms/log.blade.php
+			/views/admin/log.blade.php
 
-			/app/Http/Controllers/LogViewer/LogViewerController.php
-			/app/Http/Controllers/LogViewer/LaravelLogViewer.php
+			/app/Http/Controllers/admin/LogViewer/LogViewerController.php
+			/app/Http/Controllers/admin/LogViewer/LaravelLogViewer.php
 
 - se crearon las migraciones para las tablas:
 	puc_clase, puc_grupo, puc_cuenta, puc_subcuenta y puc_cuentaauxiliar
@@ -762,3 +764,6 @@ Laravel proyecto camaleon
 
 - SOLUCIONADO, agregar los comandos en usuarios y roles para almacenar las acciones en el log
 - SOLUCIONADO, agregar validaciones para la actualizacion de usuarios y roles para los campos unicos
+
+- se modificaron los controladores /Auth/AuthController y /Auth/PasswordController para evitar la ecriptacion del password debido a que en el modelo User ya se esta haciendo
+- se modificaron varias vistas para mejorar su funcionalidad

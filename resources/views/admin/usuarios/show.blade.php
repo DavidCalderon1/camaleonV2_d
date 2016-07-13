@@ -21,7 +21,3 @@
     @include('forms.delete_modal')
 
 @endsection
-
-@section('scripts')
-	{!! Html::script('/general/js/script_eliminar_por_ajax.js') !!}
-@endsection

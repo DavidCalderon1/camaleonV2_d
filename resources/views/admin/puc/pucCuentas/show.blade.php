@@ -1,4 +1,4 @@
-@extends( $peticion == "normal" ? 'layouts.principal' : 'layouts.empty' )
+@extends( $peticion == "normal" ? 'layouts.app' : 'layouts.empty' )
 
 @section('content')
 	@include('flash::message')

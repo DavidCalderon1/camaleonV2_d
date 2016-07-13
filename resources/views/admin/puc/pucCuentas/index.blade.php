@@ -1,4 +1,4 @@
-@extends( $peticion == "normal" ? 'layouts.principal' : 'layouts.empty' )
+@extends( $peticion == "normal" ? 'layouts.app' : 'layouts.empty' )
 @section('content')
     @include('flash::message')
 	<h1 class="pull-left">{{ $title_page=ucfirst($nombre).($nombre != 'cuentas auxiliares'?'s':'') }}</h1>

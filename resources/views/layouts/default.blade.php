@@ -1,4 +1,4 @@
-@extends('layouts.principal')
+@extends('layouts.app')
 
 @section('content')
     @include('flash::message')

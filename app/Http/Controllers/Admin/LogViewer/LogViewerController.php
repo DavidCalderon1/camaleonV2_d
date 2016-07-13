@@ -34,7 +34,7 @@ class LogViewerController extends BaseController
         $logs = LaravelLogViewer::all();
 
         //return View::make('laravel-log-viewer::log', [
-        return View::make('admin.LogViewer.log', [
+        return View::make('admin.log', [
             'logs' => $logs,
             'files' => LaravelLogViewer::getFiles(true),
             'current_file' => LaravelLogViewer::getFileName()

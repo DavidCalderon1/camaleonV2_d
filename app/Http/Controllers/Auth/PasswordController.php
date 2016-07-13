@@ -21,6 +21,25 @@ class PasswordController extends Controller
     use ResetsPasswords;
 
     /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  string  $password
+     * @return void
+     *
+     * se modifica para quitarle la encripcion al password, debido a que ya se esta realizando
+     * $user->password = bcrypt($password);
+     */
+    protected function resetPassword($user, $password)
+    {
+        $user->password = $password;
+
+        $user->save();
+
+        Auth::login($user);
+    }
+
+    /**
      * Create a new password controller instance.
      *
      * @return void

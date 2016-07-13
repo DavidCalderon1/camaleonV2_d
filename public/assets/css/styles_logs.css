@@ -1,0 +1,19 @@
+
+h1 {
+  font-size: 1.5em;
+  margin-top: 0px;
+}
+.stack {
+  font-size: 0.85em;
+}
+.date {
+  min-width: 75px;
+}
+.text {
+  word-break: break-all;
+}
+a.llv-active {
+  z-index: 2;
+  background-color: #f5f5f5;
+  border-color: #777;
+}

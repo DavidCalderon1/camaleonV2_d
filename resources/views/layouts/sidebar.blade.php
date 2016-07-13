@@ -2,7 +2,7 @@
     <ul class="sidebar-nav">
         <li class="sidebar-brand">
             <a href="/">
-                Camaleon
+                Camaleón
             </a>
         </li>
        @include('layouts.menu')

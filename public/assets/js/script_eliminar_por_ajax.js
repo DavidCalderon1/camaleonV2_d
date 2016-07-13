@@ -13,6 +13,6 @@ $(document).on('show.bs.modal','#confirmDelete',function(e){
 // cierra el formulario cuando se da click en el boton de confirmacion y ejecuta el envio 
 $(document).on('click','.modal.fade #confirmar',function(e){
 	//$(this).data('form').submit();
-	$("#confirmDelete").modal('toggle');
+	$("#confirmDelete").modal('toggle'); 
 	$('.form_delete').submit();
 });

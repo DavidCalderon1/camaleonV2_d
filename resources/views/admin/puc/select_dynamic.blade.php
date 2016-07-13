@@ -2,6 +2,7 @@
 	// array para los datos de la ventana modal
 	$modalData = '{
 		"id":"modalselect",
+		"class":"formModalSelect",
 		"title":"Seleccione uno",
 		"buttonCancel":"Cancelar",
 		"buttonConfirm":"Seleccionar"

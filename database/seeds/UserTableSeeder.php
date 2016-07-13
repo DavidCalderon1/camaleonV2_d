@@ -15,7 +15,7 @@ class UserTableSeeder extends Seeder
         
         \DB::table('users')->insert([
 			'name' => 'Soporte',
-			'email' => 'Soporte@camaleon.org',
+			'email' => 'soporte@camaleon.org',
 			'password' => bcrypt('Omega_252'),
 			'created_at' => '0001-01-01 00:00:00',
 			'updated_at' => '0001-01-01 00:00:00',

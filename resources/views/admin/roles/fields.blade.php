@@ -36,7 +36,7 @@
 <!-- Roles Field -->
 <div class="col-sm-6 form-group">
     {!! Form::label('Permissions[]', 'Permisos: ') !!}<i> (ctrl + click)</i>
-    <select class="form-control full" id="Permissions[]" name="Permissions[]" multiple="multiple">
+    <select class="form-control full" id="Permissions[]" name="Permissions[]" multiple="multiple", required>
     @foreach($listPermissions as $id => $title)
         {{ $selected = '' }}
         @foreach($datos->permissions as $permission)
@@ -52,7 +52,7 @@
 <!-- listRoles Field -->
 <div class="col-sm-6 form-group">
     {!! Form::label('Permissions[]', 'Permisos: ') !!}<i>(ctrl + click)</i>
-    {!! Form::select('Permissions[]', $listPermissions, null, ['class' => 'form-control full', 'id' => 'Permissions[]', 'multiple' ])!!}
+    {!! Form::select('Permissions[]', $listPermissions, null, ['class' => 'form-control full', 'id' => 'Permissions[]', 'multiple', 'required' ])!!}
 </div>
 @endif
 

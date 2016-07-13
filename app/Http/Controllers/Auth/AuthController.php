@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 class AuthController extends Controller
 {
     protected $loginPath = '/login';
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
     protected $redirectAfterLogout = '/login';
     /*
     |--------------------------------------------------------------------------
@@ -59,10 +59,16 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        /*
+        *   se modifico la instruccion del password para que no lo encripte dos veces
+        *   debido a que en el modelo User ya lo esta encriptando
+        *   'password' => bcrypt($data['password']),
+        *
+        */
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => $data['password'],
         ]);
     }
 }

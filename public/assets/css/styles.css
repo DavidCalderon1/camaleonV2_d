@@ -91,3 +91,11 @@ spam.rol:before {
 spam.rol:after {
     content: close-quote;
 }
+
+.list-group-item + .submenu {
+    margin-left:10px;
+}
+
+.list-group-item.active {
+    border: 1px solid #ddd !important;
+}

@@ -1,4 +1,4 @@
-@extends('layouts.principal')
+@extends('layouts.app')
 @section('content')
 	<div class="load_form_create" id="form_create">
 		<div class="row">
@@ -34,6 +34,5 @@
 @endsection
 
 @section('scripts')
-    {!! Html::script('/general/js/script_buscar_crear_puc_load.js') !!}
-	{!! Html::script('/general/js/script_select_scroll.js') !!}
+    {!! Html::script('/assets/js/script_buscar_crear_puc_load.js') !!}
 @endsection

@@ -11,6 +11,11 @@
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | API routes
@@ -23,21 +28,22 @@ Route::group(['prefix' => 'api', 'namespace' => 'API'], function () {
     });
 });
 
-/*rutas del api generador*/
 Route::get('generator_builder', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@builder');
+
 Route::get('field_template', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@fieldTemplate');
+
 Route::post('generator_builder/generate', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@generate');
 
 /*rutas de la aplicacion camaleon*/
 
 // direcciona al metodo 'index' del controlador PrincipalController
-Route::get('/',['as' => 'inicio','uses' => 'PrincipalController@index']);
+Route::get('/',['as' => 'inicio','uses' => 'HomeController@index']);
 
 
 Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function() {
 	//devuelve una pagina por defecto si no se ingresa una url correcta
 	Route::get('/', function () {
-		return view('layouts.default', ['site' => 'AdministraciÃ³n']);
+		return view('layouts.default', ['site' => 'Administración']);
 	});
 	///admin/usuarios/ 
 	//administracion de los usuarios
@@ -53,7 +59,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => 'aut
 	});
 	// visor de logs /admin/logs/
 	Route::group(['middleware' => 'acl:admin_logs'], function () {
-		Route::get('logs', 'LogViewer\LogViewerController@index');
+		Route::get('logs',['as' => 'admin.logs','uses' => 'LogViewer\LogViewerController@index']);
 	});
 	//devuelve una pagina por defecto si no se ingresa una url correcta
 	Route::group([
@@ -62,15 +68,15 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => 'aut
 	], function() {
 		//devuelve una pagina por defecto si no se ingresa una url correcta
 		Route::get('/', function () {
-			return view('layouts.default', ['site' => 'Plan Ãšnico de Cuentas']);
+			return view('layouts.default', ['site' => 'Plan Único de Cuentas']);
 		});
 		// /admin/puc/
 		// requiere que el usuario tenga el permiso de administrar el puc
 		Route::group(['middleware' => 'acl:admin_puc'], function () {
 			//admin.puc.buscar 
 			Route::resource('operacion', 'puc_operacionesController');
-			Route::get('buscar', 'puc_operacionesController@index');
-			Route::get('crear', 'puc_operacionesController@create');
+			Route::get('buscar', ['as' => 'admin.puc.buscar','uses' => 'puc_operacionesController@index']);
+			Route::get('crear', ['as' => 'admin.puc.crear','uses' => 'puc_operacionesController@create']);
 			Route::get('listas', 'puc_operacionesController@lista');
 			//admin.puc.clases 
 			Route::resource('clases', 'puc_claseController');
@@ -102,5 +108,5 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
-Route::get('/home', 'HomeController@index');
+//Route::get('/home', 'HomeController@index');
 

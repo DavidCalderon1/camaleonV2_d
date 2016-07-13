@@ -2,7 +2,7 @@
 var listas = {"clases":"grupos,cuentas,subcuentas,cuentasauxiliares", "grupos":"cuentas,subcuentas,cuentasauxiliares", "cuentas":"subcuentas,cuentasauxiliares", "subcuentas":"cuentasauxiliares"};
 
 //modifica el contenido del formulario
-$(document).on('show.bs.modal','.formModal',function(e){
+$(document).on('show.bs.modal','.formModalSelect',function(e){
 	var thisId = $(this).attr('id');
 	var element = $(e.relatedTarget).attr('elementId');
 	var id = $(e.relatedTarget).attr('id');
@@ -13,8 +13,8 @@ $(document).on('show.bs.modal','.formModal',function(e){
 });
 
 <!-- cierra el formulario cuando se da click en el boton de confirmacion y ejecuta el envio -->
-$(document).on('click','.modal.fade #confirmar',function(e){
-	var thisParent =  $(this).parents('.formModal').attr('id');
+$(document).on('click','.modal.fade.formModalSelect #confirmar',function(e){
+	var thisParent =  $(this).parents('.formModalSelect').attr('id');
 	if(thisParent != undefined ){
 		var element = $('#'+thisParent).find('.element').attr('element');
 		var id = $('#'+thisParent).find('.id').attr('id');
@@ -24,7 +24,7 @@ $(document).on('click','.modal.fade #confirmar',function(e){
 		if( value != null ){
 			$('#'+thisParent).parent().find('input#'+id).val(optionVal);
 			$('#'+thisParent).parent().find('label#'+id).text(optionText);
-			$(".formModal").modal('toggle');
+			$(".formModalSelect").modal('toggle');
 		}else{
 			var title = $('#'+thisParent).find('.modal-title').text();
 			$('#'+thisParent).find('#msj').html(title);
@@ -39,7 +39,7 @@ $(document).on('change','select.select_dynamic',function(event){
 	var thisId = $(this).attr('id');
 	var thisVal = $(this).val();
 	var thisText = $(this).find('option:selected').text();
-	var thisParent =  $(this).parents('.formModal').attr('id');
+	var thisParent =  $(this).parents('.formModalSelect').attr('id');
 	if(thisParent == undefined ){
 		thisParent =  $(this).parents('form').attr('id');
 	}
