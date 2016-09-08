@@ -9,12 +9,12 @@ Laravel proyecto camaleon
 	- crear, actualizar y eliminar  grupos, cuentas, subcuentas y cuentas auxiliares
 	- ver clases, grupos, cuentas, subcuentas y cuentas auxiliares
 	- en los formularios colocar primero el campo codigo referente a la cuenta padre
-	- la ruta en la interfaz para la creacion es:  Módulo Administrativo > Manejo de Plan Único de Cuentas > Creación de cuenta
+	- la ruta en la interfaz para la creacion es:  MÃ³dulo Administrativo > Manejo de Plan Ãšnico de Cuentas > CreaciÃ³n de cuenta
 	- la ruta en la url para la creacion es: /admin/puc/.../create
 	- despues de la creacion y actualizacion de un registro mostrar la vista de la informacion registrada
 	- agregar validaciones y autenticacion, ocultar los accesos por interfaz e impedirlo por url, debera estar registrado y con permisos
 	- en la busqueda del puc requerir el tipo de cuenta y con un solo campo de texto buscar por codigo y nombre
-	- la ruta en la interfaz para la busqueda es:  Módulo Administrativo > Manejo de Plan Único de Cuentas > Busqueda de cuenta
+	- la ruta en la interfaz para la busqueda es:  MÃ³dulo Administrativo > Manejo de Plan Ãšnico de Cuentas > Busqueda de cuenta
 	- la ruta en la url para la busqueda es: /admin/puc/.../search
 	- mostrar un mensaje de que no existen registros de acuerdo a la busqueda
 	- la lista de resultados mostraran el codigo, el nombre y un boton para ver el recurso 
@@ -91,7 +91,7 @@ Laravel proyecto camaleon
 			{!! $pucClases->render() !!}
 			...
 		
-- se pueden editar los tamaños de los botones 
+- se pueden editar los tamaÃ±os de los botones 
 	http://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp
 	
 - se pueden editar los iconos de los botones 
@@ -125,7 +125,7 @@ Laravel proyecto camaleon
 - modificar los campos de llaves foraneas por selects
 	//ejemplo	
 	//vista /pucGrupos/fields
-	{!! Form::label('codigo', 'Código:') !!}
+	{!! Form::label('codigo', 'CÃ³digo:') !!}
 	{!! Form::select('codigo', $pucClase, null, ['class' => 'form-control', 'placeholder' => 'Seleccione una clase' ])!!}
 	
 - en el controlador incluir el/los modelo/s de las tablas de referencia de las llaves foraneas
@@ -157,16 +157,16 @@ Laravel proyecto camaleon
 		}
 
 	
-- revizar el texto de las vistas y de los mensajes al usuario, que sea coherente y en español	
+- revizar el texto de las vistas y de los mensajes al usuario, que sea coherente y en espaÃ±ol	
 - ordenar los campos en el modelo, en el request y en las vistas para que salgan las validaciones en un orden mas logico
 - en las vistas colocar los elementos html correctos segun los requisitos de los campos, text, number select 
 - agregar la instruccion @include('flash::message') en vistas como la de edit para que muestre el retorno del controlador
-- ajustar la vista de todos los recursos para que salga la llave primaria cuando ésta es editable
+- ajustar la vista de todos los recursos para que salga la llave primaria cuando Ã©sta es editable
 - cambiar el mensaje de alerta de confirmacion de eliminacion por un mensaje de tipo modal
 
 - revizar eloquent para usarlo desde el modelo y hacer un llamado sencillo desde el controlador
 - ordenar las consultas por el campo representativo
-- añadir una validacion de seguridad a los campos por defecto, se podria colocar el campo created_at con el valor '0001-01-01 00:00:00' evitar que se actualicen o eliminen los campos con esa fecha de creacion
+- aÃ±adir una validacion de seguridad a los campos por defecto, se podria colocar el campo created_at con el valor '0001-01-01 00:00:00' evitar que se actualicen o eliminen los campos con esa fecha de creacion
 - al mostrar las llaves foraneas concatenar el id(si se requiere verlo) y el nombre o en el caso de los tipo boolean mostrar una palabra ilustrativa
 - al crear y tambien al actualizar un recurso redireccionar a la vista del recurso creado
 - intentar guardar la url de la lista de todos los recursos al elegir las opciones de ver, editar o eliminar el recurso, para devolverlo al mismo punto
@@ -246,7 +246,7 @@ Laravel proyecto camaleon
 - modificar la configuracion de postgresql para poder ver un log de las consultas realizadas
 		Edit your /etc/postgresql/9.3/main/postgresql.conf, and change the lines as follows.
 
-		Note: If you didn´t find the postgresql.conf file, then just type $locate postgresql.conf in a terminal
+		Note: If you didnÂ´t find the postgresql.conf file, then just type $locate postgresql.conf in a terminal
 
 		#log_destination = 'syslog' to log_directory = 'pg_log'
 		
@@ -767,3 +767,36 @@ Laravel proyecto camaleon
 
 - se modificaron los controladores /Auth/AuthController y /Auth/PasswordController para evitar la ecriptacion del password debido a que en el modelo User ya se esta haciendo
 - se modificaron varias vistas para mejorar su funcionalidad
+
+
+- se implementaran las NIIF, para esto se realizaran varios cambios
+	- la url cambiara de admin/puc/ a admin/pdc/ refiriendose a plan de cuentas 
+	- se colocaran los regitros de las NIIF en las mismas tablas que las puc 
+	- las tablas cambiaran tambien de nombre, de puc_... a pdc_...
+	- se agregara un campo llamado 'tipo' el cual contendra si es norma local o niif
+		- este campo estara en las tablas de la bd, en el formulario de busqueda y el de creacion de las cuentas
+	- se colocara una funcion para registrar todo en mayusculas, excepto las descripciones
+	- se colocara comentarios en el codigo mencionando al inicio de cada metodo las entradas, la funcion y las salidas
+	- se solucionara el problema de los seeder los cuales no actualizan la secuencia de los campos autoincrementales
+		- se pueden crear queryes como estos:
+			SELECT setval(pg_get_serial_sequence('pdc_clase', 'id'), MAX(id)) FROM pdc_clase;
+			SELECT setval(pg_get_serial_sequence('pdc_grupo', 'id'), MAX(id)) FROM pdc_grupo;
+			SELECT setval(pg_get_serial_sequence('pdc_cuenta', 'id'), MAX(id)) FROM pdc_cuenta;
+			SELECT setval(pg_get_serial_sequence('pdc_subcuenta', 'id'), MAX(id)) FROM pdc_subcuenta;
+			SELECT setval(pg_get_serial_sequence('pdc_cuentaauxiliar', 'id'), MAX(id)) FROM pdc_cuentaauxiliar;
+		- o crear una funcion en posgresql como esta, para actualizar todas las secuencias en public:
+			CREATE OR REPLACE FUNCTION "reset_sequence" (tablename text) RETURNS "pg_catalog"."void" AS 
+				$body$  
+				  DECLARE 
+				  BEGIN 
+				  EXECUTE 'SELECT setval( ''' 
+				  || tablename  
+				  || '_id_seq'', ' 
+				  || '(SELECT id + 1 FROM "' 
+				  || tablename  
+				  || '" ORDER BY id DESC LIMIT 1), false)';  
+				  END;  
+				$body$  LANGUAGE 'plpgsql';
+
+			select sequence_name, reset_sequence(split_part(sequence_name, '_id_seq',1)) from information_schema.sequences
+					where sequence_schema='public';
