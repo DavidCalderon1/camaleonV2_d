@@ -9,13 +9,13 @@ Laravel proyecto camaleon
 	- crear, actualizar y eliminar  grupos, cuentas, subcuentas y cuentas auxiliares
 	- ver clases, grupos, cuentas, subcuentas y cuentas auxiliares
 	- en los formularios colocar primero el campo codigo referente a la cuenta padre
-	- la ruta en la interfaz para la creacion es:  MÃ³dulo Administrativo > Manejo de Plan Ãšnico de Cuentas > CreaciÃ³n de cuenta
-	- la ruta en la url para la creacion es: /admin/pc/.../create
+	- la ruta en la interfaz para la creacion es:  Módulo Administrativo > Manejo de Plan Único de Cuentas > Creación de cuenta
+	- la ruta en la url para la creacion es: /admin/puc/.../create
 	- despues de la creacion y actualizacion de un registro mostrar la vista de la informacion registrada
 	- agregar validaciones y autenticacion, ocultar los accesos por interfaz e impedirlo por url, debera estar registrado y con permisos
-	- en la busqueda del pc requerir el tipo de cuenta y con un solo campo de texto buscar por codigo y nombre
-	- la ruta en la interfaz para la busqueda es:  MÃ³dulo Administrativo > Manejo de Plan Ãšnico de Cuentas > Busqueda de cuenta
-	- la ruta en la url para la busqueda es: /admin/pc/.../search
+	- en la busqueda del puc requerir el tipo de cuenta y con un solo campo de texto buscar por codigo y nombre
+	- la ruta en la interfaz para la busqueda es:  Módulo Administrativo > Manejo de Plan Único de Cuentas > Busqueda de cuenta
+	- la ruta en la url para la busqueda es: /admin/puc/.../search
 	- mostrar un mensaje de que no existen registros de acuerdo a la busqueda
 	- la lista de resultados mostraran el codigo, el nombre y un boton para ver el recurso 
 	- en la vista del recurso estaran las opciones de edicion y eliminacion del mismo
@@ -38,32 +38,32 @@ Laravel proyecto camaleon
 		https://laravel.com/docs/5.1/validation#form-request-validation
 	
 
-- correr el script para crear las tablas: pc_clase, pc_grupo, pc_cuenta, pc_subcuenta, pc_cuentaauxiliar
+- correr el script para crear las tablas: puc_clase, puc_grupo, puc_cuenta, puc_subcuenta, puc_cuentaauxiliar
 	- estas tablas ya contienen los campos created_at, updated_at y deleted_at
-- correr el script para llenar las tablas creadas con la informacion predefinida: Camaleon_data_pc_con_campos.sql
+- correr el script para llenar las tablas creadas con la informacion predefinida: Camaleon_data_puc_con_campos.sql
 - ejecutar los comandos para crear el crud a partir de las tablas creadas:
-	php artisan infyom:scaffold pc_clase --fromTable --tableName=pc_clase
-	php artisan infyom:scaffold pc_grupo --fromTable --tableName=pc_grupo
-	php artisan infyom:scaffold pc_cuenta --fromTable --tableName=pc_cuenta
-	php artisan infyom:scaffold pc_subcuenta --fromTable --tableName=pc_subcuenta
-	php artisan infyom:scaffold pc_cuentaauxiliar --fromTable --tableName=pc_cuentaauxiliar
+	php artisan infyom:scaffold puc_clase --fromTable --tableName=puc_clase
+	php artisan infyom:scaffold puc_grupo --fromTable --tableName=puc_grupo
+	php artisan infyom:scaffold puc_cuenta --fromTable --tableName=puc_cuenta
+	php artisan infyom:scaffold puc_subcuenta --fromTable --tableName=puc_subcuenta
+	php artisan infyom:scaffold puc_cuentaauxiliar --fromTable --tableName=puc_cuentaauxiliar
 
 - las rutas que se han creado y modificado son:
-	Route::resource('clases', 'pc_claseController');
-	Route::resource('grupos', 'pc_grupoController');
-	Route::resource('cuentas', 'pc_cuentaController');
-	Route::resource('subcuentas', 'pc_subcuentaController');
-	Route::resource('cuentasauxiliares', 'pc_cuentaauxiliarController');
+	Route::resource('clases', 'puc_claseController');
+	Route::resource('grupos', 'puc_grupoController');
+	Route::resource('cuentas', 'puc_cuentaController');
+	Route::resource('subcuentas', 'puc_subcuentaController');
+	Route::resource('cuentasauxiliares', 'puc_cuentaauxiliarController');
 	
 - se crean los directorios para los archivos de cada modulo: controllers, requests, models, repositories, views
-	- en el caso de PDC: \Admin\Pc
+	- en el caso de PUC: \Admin\Puc
 	
 - se crean las url por medio de Route::group para los modulos
 	- todo lo que tenga rutas debe ser modificado, normalmente son las vistas y los controladores unicamente 
 	- las url se estan dejando todas en minusculas y los namespace o directorios con la primera letra en mayuscula
-	- en el caso de PDC: 
-		url: /admin/pc/
-		directorios: \Admin\Pc\
+	- en el caso de PUC: 
+		url: /admin/puc/
+		directorios: \Admin\Puc\
 
 - en el Route::group de las rutas, al cambiar de namespace se debe: 
 	- mover el controlador a la carpeta correcta
@@ -80,18 +80,18 @@ Laravel proyecto camaleon
 
 - se coloca la paginacion en 5 registros para cada uno de los modelos
 	- se modifican los controladores de cada uno, en el metodo index se cambia el valor ->all(); por ->paginate(5);
-		pc_claseController
-		pc_grupoController
-		pc_cuentaController
-		pc_subcuentaController
-		pc_cuentaauxiliarController
+		puc_claseController
+		puc_grupoController
+		puc_cuentaController
+		puc_subcuentaController
+		puc_cuentaauxiliarController
 	- se modifican las vistas index de cada uno, justo debajo de la instruccion @include('[$directorio$].table') colocar la instruccion {!! $[$variable$]->render() !!}
-		admin.pc.pcClases.index 
-			@include('pcClases.table')
-			{!! $pcClases->render() !!}
+		admin.puc.pucClases.index 
+			@include('pucClases.table')
+			{!! $pucClases->render() !!}
 			...
 		
-- se pueden editar los tamaÃ±os de los botones 
+- se pueden editar los tamaños de los botones 
 	http://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp
 	
 - se pueden editar los iconos de los botones 
@@ -124,20 +124,20 @@ Laravel proyecto camaleon
 		
 - modificar los campos de llaves foraneas por selects
 	//ejemplo	
-	//vista /pcGrupos/fields
-	{!! Form::label('codigo', 'CÃ³digo:') !!}
-	{!! Form::select('codigo', $pcClase, null, ['class' => 'form-control', 'placeholder' => 'Seleccione una clase' ])!!}
+	//vista /pucGrupos/fields
+	{!! Form::label('codigo', 'Código:') !!}
+	{!! Form::select('codigo', $pucClase, null, ['class' => 'form-control', 'placeholder' => 'Seleccione una clase' ])!!}
 	
 - en el controlador incluir el/los modelo/s de las tablas de referencia de las llaves foraneas
 	//ejemplo
 		
-		use App\Models\pc_clase;
+		use App\Models\puc_clase;
 		
 	- modificar el metodo create
 		//ejemplo
-		//se lista el nombre y el id correspondiente a todos las pc_clase
-				$pcClase = pc_clase::lists('nombre', 'codigo');
-				return view('pcGrupos.create',compact('pcClase'));
+		//se lista el nombre y el id correspondiente a todos las puc_clase
+				$pucClase = puc_clase::lists('nombre', 'codigo');
+				return view('pucGrupos.create',compact('pucClase'));
 	
 - se crear la validacion para el momento de actualizar un registro, metodo update()
 	- se debe crear una consulta por el id enviado y luego validar que no exista o que no sea diferente al actual
@@ -148,25 +148,25 @@ Laravel proyecto camaleon
 		//valida que no exista un registro con el mismo codigo
 		if( count($consultaId) > 0 && $id !== $request->codigo ){
 			Flash::error('Ya existe un Grupo con ese Id');
-			//Flash::error($id.' Ya existe un Grupo con ese Id'. count($pcGrupo) .' - '.$request->codigo .' - '.count($grupoNuevo)  );
+			//Flash::error($id.' Ya existe un Grupo con ese Id'. count($pucGrupo) .' - '.$request->codigo .' - '.count($grupoNuevo)  );
 			//url() .'/'. $request->path() .'/edit'
 			
 			//regresa al formulario de actualizacion del recurso
-            return redirect(route( 'admin.pc.grupos.edit',['id' => $id] ));
-            //return redirect(route( 'admin.pc.grupos.index'));
+            return redirect(route( 'admin.puc.grupos.edit',['id' => $id] ));
+            //return redirect(route( 'admin.puc.grupos.index'));
 		}
 
 	
-- revizar el texto de las vistas y de los mensajes al usuario, que sea coherente y en espaÃ±ol	
+- revizar el texto de las vistas y de los mensajes al usuario, que sea coherente y en español	
 - ordenar los campos en el modelo, en el request y en las vistas para que salgan las validaciones en un orden mas logico
 - en las vistas colocar los elementos html correctos segun los requisitos de los campos, text, number select 
 - agregar la instruccion @include('flash::message') en vistas como la de edit para que muestre el retorno del controlador
-- ajustar la vista de todos los recursos para que salga la llave primaria cuando Ã©sta es editable
+- ajustar la vista de todos los recursos para que salga la llave primaria cuando ésta es editable
 - cambiar el mensaje de alerta de confirmacion de eliminacion por un mensaje de tipo modal
 
 - revizar eloquent para usarlo desde el modelo y hacer un llamado sencillo desde el controlador
 - ordenar las consultas por el campo representativo
-- aÃ±adir una validacion de seguridad a los campos por defecto, se podria colocar el campo created_at con el valor '0001-01-01 00:00:00' evitar que se actualicen o eliminen los campos con esa fecha de creacion
+- añadir una validacion de seguridad a los campos por defecto, se podria colocar el campo created_at con el valor '0001-01-01 00:00:00' evitar que se actualicen o eliminen los campos con esa fecha de creacion
 - al mostrar las llaves foraneas concatenar el id(si se requiere verlo) y el nombre o en el caso de los tipo boolean mostrar una palabra ilustrativa
 - al crear y tambien al actualizar un recurso redireccionar a la vista del recurso creado
 - intentar guardar la url de la lista de todos los recursos al elegir las opciones de ver, editar o eliminar el recurso, para devolverlo al mismo punto
@@ -175,65 +175,65 @@ Laravel proyecto camaleon
 
 - se crearon unas consultas para llenar las tablas con la nueva estructura
 	
-			/* tabla pc_clase */
-			INSERT INTO pc_clase 
+			/* tabla puc_clase */
+			INSERT INTO puc_clase 
 			(codigo, nombre, descripcion, ajuste, naturaleza)
 			SELECT codigo, nombre, descripcion, ajuste, naturaleza
-			FROM apc_clase
+			FROM apuc_clase
 			ORDER BY codigo ASC
 
-			/* tabla pc_grupo */
-			INSERT INTO pc_grupo 
+			/* tabla puc_grupo */
+			INSERT INTO puc_grupo 
 			(codigo, nombre, descripcion, ajuste, nativa, clase_id)
 			SELECT g.codigo, g.nombre, g.descripcion, g.ajuste, '1', cast(c.id as int)
-			FROM apc_grupo g join pc_clase c on(g.clase_id=c.codigo)
+			FROM apuc_grupo g join puc_clase c on(g.clase_id=c.codigo)
 			ORDER BY g.codigo ASC
 
-			/* tabla pc_cuenta */
-			INSERT INTO pc_cuenta 
+			/* tabla puc_cuenta */
+			INSERT INTO puc_cuenta 
 			(codigo, nombre, descripcion, ajuste, nativa, grupo_id)
 			SELECT c.codigo, c.nombre, c.descripcion, c.ajuste, '1', cast(g.id as int)
-			FROM apc_cuenta c join pc_grupo g on(c.grupo_id=g.codigo)
+			FROM apuc_cuenta c join puc_grupo g on(c.grupo_id=g.codigo)
 			ORDER BY c.codigo ASC
 
-			/* tabla pc_subcuenta */
-			INSERT INTO pc_subcuenta 
+			/* tabla puc_subcuenta */
+			INSERT INTO puc_subcuenta 
 			(codigo, nombre, descripcion, ajuste, nativa, cuenta_id)
 			SELECT s.codigo, s.nombre, s.descripcion, s.ajuste, '1', cast(c.id as int)
-			FROM apc_subcuenta s join pc_cuenta c on(s.cuenta_id=c.codigo)
+			FROM apuc_subcuenta s join puc_cuenta c on(s.cuenta_id=c.codigo)
 			ORDER BY s.codigo ASC
 
-			/* actualizar el campo created_at de todas las tablas pc_ */
+			/* actualizar el campo created_at de todas las tablas puc_ */
 
-			update pc_clase set created_at = '0001-01-01 01:01:01';
-			update pc_grupo set created_at = '0001-01-01 01:01:01';
-			update pc_cuenta set created_at = '0001-01-01 01:01:01';
-			update pc_subcuenta set created_at = '0001-01-01 01:01:01';
-			update pc_cuentaauxiliar set created_at = '0001-01-01 01:01:01';
+			update puc_clase set created_at = '0001-01-01 01:01:01';
+			update puc_grupo set created_at = '0001-01-01 01:01:01';
+			update puc_cuenta set created_at = '0001-01-01 01:01:01';
+			update puc_subcuenta set created_at = '0001-01-01 01:01:01';
+			update puc_cuentaauxiliar set created_at = '0001-01-01 01:01:01';
 			
 			
-- se creo un archivo en la carpeta /config llamado 'options' y en el se creo un array con el nombre 'types_pc' y se ingresaron los tipos de pc para volcarlos en los select con el parametro config('options.pc_types'),
+- se creo un archivo en la carpeta /config llamado 'options' y en el se creo un array con el nombre 'types_puc' y se ingresaron los tipos de puc para volcarlos en los select con el parametro config('options.puc_types'),
 			
-- se modifican las vistas para que sean utiles para todas las cuentas pc
+- se modifican las vistas para que sean utiles para todas las cuentas puc
 - configurar las relaciones hasmany ... para las vistas de cada registro
-    //modelo pc_clase
+    //modelo puc_clase
     // cada clase tiene muchos grupos
     public function grupos() {
-        return $this->hasMany('App\Models\Admin\Pc\pc_grupo','clase_id','id');
+        return $this->hasMany('App\Models\Admin\Puc\puc_grupo','clase_id','id');
     }
     
-    //modelo pc_grupo
+    //modelo puc_grupo
 	// cada grupo tiene una clase
     public function clases() {
 		//return $this->belongsTo('model_target','foreign_key','relation');
-        return $this->belongsTo('App\Models\Admin\Pc\pc_clase','clase_id','id');
+        return $this->belongsTo('App\Models\Admin\Puc\puc_clase','clase_id','id');
     }
 	
 - concatenar columnas para volcar en un select
 	use DB;
 	...
-	//se lista el nombre y el id correspondiente a todos los pc_cuenta
-    $this->listCuentas =  pc_cuenta::select(DB::raw("CONCAT(codigo, ' - ', nombre) as nombre"), "id")->orderBy('id', 'asc')->lists('nombre','id');
+	//se lista el nombre y el id correspondiente a todos los puc_cuenta
+    $this->listCuentas =  puc_cuenta::select(DB::raw("CONCAT(codigo, ' - ', nombre) as nombre"), "id")->orderBy('id', 'asc')->lists('nombre','id');
 		
 - se agrego una funcion en el repositorio de cada cuenta para ingresar los parametros de busqueda
 	public function busqueda($busqueda)
@@ -246,7 +246,7 @@ Laravel proyecto camaleon
 - modificar la configuracion de postgresql para poder ver un log de las consultas realizadas
 		Edit your /etc/postgresql/9.3/main/postgresql.conf, and change the lines as follows.
 
-		Note: If you didnÂ´t find the postgresql.conf file, then just type $locate postgresql.conf in a terminal
+		Note: If you didn´t find the postgresql.conf file, then just type $locate postgresql.conf in a terminal
 
 		#log_destination = 'syslog' to log_directory = 'pg_log'
 		
@@ -271,7 +271,7 @@ Laravel proyecto camaleon
 	- se hizo para que se muestre en toda la pantalla al ejecutar una peticion ajax
 - SOLUCIONADO: hace falta unificar los script, determinar los parametros comunes y en lo posible dejar solo uno para todas las peticiones ajax
 - SOLUCIONADO: hace falta configurar botones y motrar las respuestas para todas las peticiones ajax
-- SOLUCIONADO: hace falta configurar el funcionamientos de todos los modelos, como el de pc_grupos
+- SOLUCIONADO: hace falta configurar el funcionamientos de todos los modelos, como el de puc_grupos
 
 
 - configurar la autenticacion
@@ -709,14 +709,14 @@ Laravel proyecto camaleon
 			/app/Http/Controllers/admin/LogViewer/LaravelLogViewer.php
 
 - se crearon las migraciones para las tablas:
-	pc_clase, pc_grupo, pc_cuenta, pc_subcuenta y pc_cuentaauxiliar
+	puc_clase, puc_grupo, puc_cuenta, puc_subcuenta y puc_cuentaauxiliar
 	
 	- para ejecutar las migraciones se ejecuta un comando por la linea de comandos
 	
 		php artisan migrate
 	
 - crear los seed para las tablas: 
-	pc_clase, pc_grupo, pc_cuenta, pc_subcuenta y pc_cuentaauxiliar
+	puc_clase, puc_grupo, puc_cuenta, puc_subcuenta y puc_cuentaauxiliar
 	
 	- se utilizo un laravel package llamado Inverse seed generator (iSeed)
 		https://github.com/orangehill/iseed
@@ -739,10 +739,10 @@ Laravel proyecto camaleon
 			
 		- una vez hecho lo anterior ya se puede usar, por linea de comando generar los seed para cada tabla
 			
-			php artisan iseed pc_clase
-			php artisan iseed pc_grupo
-			php artisan iseed pc_cuenta
-			php artisan iseed pc_subcuenta
+			php artisan iseed puc_clase
+			php artisan iseed puc_grupo
+			php artisan iseed puc_cuenta
+			php artisan iseed puc_subcuenta
 			
 	- se debe actualizar el autoload con un comando
 		
@@ -756,7 +756,7 @@ Laravel proyecto camaleon
 			
 - se crea la validacion para que no se permita la eliminacion de los registros que tengan dependencias
 	- se uso la accion ->count() para contar el numero de elementos que dependen de del registro
-		- ejemplo: $this->pcCuenta->grupos()->count()
+		- ejemplo: $this->pucCuenta->grupos()->count()
 		
 - se crean las vistas para el manejo de los usuarios y la asignacion de los roles
 
@@ -767,3 +767,36 @@ Laravel proyecto camaleon
 
 - se modificaron los controladores /Auth/AuthController y /Auth/PasswordController para evitar la ecriptacion del password debido a que en el modelo User ya se esta haciendo
 - se modificaron varias vistas para mejorar su funcionalidad
+
+
+- se implementaran las NIIF, para esto se realizaran varios cambios
+	- la url cambiara de admin/puc/ a admin/pdc/ refiriendose a plan de cuentas 
+	- se colocaran los regitros de las NIIF en las mismas tablas que las puc 
+	- las tablas cambiaran tambien de nombre, de puc_... a pdc_...
+	- se agregara un campo llamado 'tipo' el cual contendra si es norma local o niif
+		- este campo estara en las tablas de la bd, en el formulario de busqueda y el de creacion de las cuentas
+	- se colocara una funcion para registrar todo en mayusculas, excepto las descripciones
+	- se colocara comentarios en el codigo mencionando al inicio de cada metodo las entradas, la funcion y las salidas
+	- se solucionara el problema de los seeder los cuales no actualizan la secuencia de los campos autoincrementales
+		- se pueden crear queryes como estos:
+			SELECT setval(pg_get_serial_sequence('pdc_clase', 'id'), MAX(id)) FROM pdc_clase;
+			SELECT setval(pg_get_serial_sequence('pdc_grupo', 'id'), MAX(id)) FROM pdc_grupo;
+			SELECT setval(pg_get_serial_sequence('pdc_cuenta', 'id'), MAX(id)) FROM pdc_cuenta;
+			SELECT setval(pg_get_serial_sequence('pdc_subcuenta', 'id'), MAX(id)) FROM pdc_subcuenta;
+			SELECT setval(pg_get_serial_sequence('pdc_cuentaauxiliar', 'id'), MAX(id)) FROM pdc_cuentaauxiliar;
+		- o crear una funcion en posgresql como esta, para actualizar todas las secuencias en public:
+			CREATE OR REPLACE FUNCTION "reset_sequence" (tablename text) RETURNS "pg_catalog"."void" AS 
+				$body$  
+				  DECLARE 
+				  BEGIN 
+				  EXECUTE 'SELECT setval( ''' 
+				  || tablename  
+				  || '_id_seq'', ' 
+				  || '(SELECT id + 1 FROM "' 
+				  || tablename  
+				  || '" ORDER BY id DESC LIMIT 1), false)';  
+				  END;  
+				$body$  LANGUAGE 'plpgsql';
+
+			select sequence_name, reset_sequence(split_part(sequence_name, '_id_seq',1)) from information_schema.sequences
+					where sequence_schema='public'; 
