@@ -1,2 +1,15 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "fonts.scss";
 
+$aldo: Aldo-SemiBold;
+$century: gothic;
+
+@import "main.scss";
+@import "form.scss";
+
+@import "home.scss";
+
+@import "auth/login.scss";
+@import "auth/register.scss";
+@import "auth/password.scss";
+@import "auth/reset.scss";

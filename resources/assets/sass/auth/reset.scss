@@ -1,0 +1,38 @@
+
+#auth_reset{
+
+	.contenedor{
+		@extend .col-xs-12;
+		@extend .col-sm-8;
+		@extend .col-md-6;
+		@extend .col-lg-4;
+	}	
+
+	.fieldbox.textbox{
+		@extend .col-md-12;
+	}
+
+	.fieldbox.checkbox{
+		@extend .col-xs-8;
+		@extend .col-xs-offset-2;
+		@extend .col-sm-6;
+		@extend .col-sm-offset-3;
+		@extend .col-md-6;
+		@extend .col-lg-6;
+	} 
+
+	.button{
+
+		@extend .col-xs-8;
+		@extend .col-xs-offset-2;
+		@extend .col-sm-8;
+		@extend .col-md-8;
+		@extend .col-lg-8;
+
+		.btn{
+			white-space: normal;
+		}
+
+	}
+
+} 

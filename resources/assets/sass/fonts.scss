@@ -1,0 +1,131 @@
+@font-face {
+	font-family:"Aldo-SemiBold";
+	src:url("/assets/font/aldo/Aldo_PC.eot?") format("eot"),
+	url("/assets/font/aldo/Aldo_PC.woff") format("woff"),
+	url("/assets/font/aldo/Aldo_PC.ttf") format("truetype"),
+	url("/assets/font/aldo/Aldo_PC.svg#Aldo-SemiBold") format("svg");
+	font-weight:normal;font-style:normal;
+}
+
+
+@font-face {
+	font-family: 'gothic';
+	src: url('/assets/font/century_gothic/gothic.eot');
+	src: local('gothic'), url('/assets/font/century_gothic/gothic.woff') format('woff'), url('/assets/font/century_gothic/gothic.ttf') format('truetype');
+    font-weight:normal;font-style:normal;
+}
+
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('/assets/font/bootstrap/glyphicons-halflings-regular.eot');
+    src: url('/assets/font/bootstrap/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+         url('/assets/font/bootstrap/glyphicons-halflings-regular.woff2') format('woff2'),
+         url('/assets/font/bootstrap/glyphicons-halflings-regular.woff') format('woff'),
+         url('/assets/font/bootstrap/glyphicons-halflings-regular.ttf') format('truetype'),
+         url('/assets/font/bootstrap/glyphicons-halflings-regular.svg') format('svg');
+}
+
+@font-face {
+  font-family: 'iconfont';
+  src:  url('/assets/font/iconfont/iconfont.eot?2xlftx');
+  src:  url('/assets/font/iconfont/iconfont.eot?2xlftx#iefix') format('embedded-opentype'),
+    url('/assets/font/iconfont/iconfont.ttf?2xlftx') format('truetype'),
+    url('/assets/font/iconfont/iconfont.woff?2xlftx') format('woff'),
+    url('/assets/font/iconfont/iconfont.svg?2xlftx#iconfont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.iconfont {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'iconfont' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-log_a:before {
+  content: "\e905";
+}
+.icon-log_b:before {
+  content: "\e911";
+}
+.icon-arrow_a:before {
+  content: "\e906";
+}
+.icon-save:before {
+  content: "\e907";
+}
+.icon-search:before {
+  content: "\e908";
+}
+.icon-plus:before {
+  content: "\e909";
+}
+.icon-arrow_b:before {
+  content: "\e90a";
+}
+.icon-trash:before {
+  content: "\e90b";
+}
+.icon-tree:before {
+  content: "\e900";
+}
+.icon-minus:before {
+  content: "\e90c";
+}
+.icon-view:before {
+  content: "\e90e";
+}
+.icon-menu:before {
+  content: "\e90f";
+}
+.icon-loading_a:before {
+  content: "\e910";
+}
+.icon-send:before {
+  content: "\e912";
+}
+.icon-home:before {
+  content: "\e913";
+}
+.icon-report:before {
+  content: "\e914";
+}
+.icon-add:before {
+  content: "\e915";
+}
+.icon-success:before {
+  content: "\e916";
+}
+.icon-arrow_up:before {
+  content: "\e917";
+}
+.icon-edit:before {
+  content: "\e919";
+}
+.icon-close:before {
+  content: "\e91a";
+}
+.icon-arrow_e:before {
+  content: "\e91b";
+}
+.icon-radiobutton_uncheck:before {
+  content: "\e904";
+}
+.icon-radiobutton_check:before {
+  content: "\e901";
+}
+.icon-checkbox_uncheck:before {
+  content: "\e902";
+}
+.icon-checkbox_check:before {
+  content: "\e903";
+}

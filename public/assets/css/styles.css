@@ -17,6 +17,16 @@
     width: 100% !important;
 }
 
+.div-form-control {
+    width: 100%;
+    height: 34px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+}
+
 /* Start by setting display:none to make this hidden.
    Then we position it in relation to the viewport window
    with position:fixed. Width, height, top and left speak
@@ -25,7 +35,7 @@
 .modal_loading {
     display:    none;
     position:   fixed;
-    z-index:    1000;
+    z-index:    2000;
     top:        0;
     left:       0;
     height:     100%;
@@ -49,7 +59,7 @@ body.loading .modal_loading {
     display: block;
 }
 
-.modal hr{
+.modal hr, .hr{
     width: 100%;
     color: inherit;
     margin: 0;
@@ -85,10 +95,10 @@ label.selectDynamic{
     width: 49%;
 }
 
-spam.rol:before {
+spam.rol:before, .comillas:before {
     content: open-quote;
 }
-spam.rol:after {
+spam.rol:after, .comillas:after {
     content: close-quote;
 }
 
@@ -98,4 +108,8 @@ spam.rol:after {
 
 .list-group-item.active {
     border: 1px solid #ddd !important;
+}
+
+.oculto{
+    display: none !important;
 }

@@ -1,12 +1,23 @@
 <?php
 
 return [
-	'puc_types' => [
-		''				=> 'Seleccione un tipo de cuenta',
+	'pc_types' => [
+		''				=> 'Seleccione un tipo',
+		'LOCAL'			=> 'LOCAL',
+		'NIIF'			=> 'NIIF'
+	],
+	'pc_subtypes' => [
+		''					=> 'Seleccione un subtipo',
 		'clases'			=> 'Clase',
 		'grupos'			=> 'Grupo',
-		'cuentas'		=> 'Cuenta',
+		'cuentas'			=> 'Cuenta',
 		'subcuentas'		=> 'Subcuenta',
-		'cuentasauxiliares'		=> 'Cuenta auxiliar'
+		'cuentasauxiliares'	=> 'Cuenta auxiliar'
+	],
+	'trans_busq_types' => [
+		''				=> 'Seleccione un tipo de búsqueda',
+		'fecha'			=> 'Fecha',
+		'tdc_id'	=> 'Tipo de transacción',
+		'descripcion'	=> 'Descripción'
 	],
 ];

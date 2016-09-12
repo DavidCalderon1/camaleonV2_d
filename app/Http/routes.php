@@ -43,7 +43,7 @@ Route::get('/',['as' => 'inicio','uses' => 'HomeController@index']);
 Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function() {
 	//devuelve una pagina por defecto si no se ingresa una url correcta
 	Route::get('/', function () {
-		return view('layouts.default', ['site' => 'Administración']);
+		return view('layouts.default', ['site' => 'AdministraciÃ³n']);
 	});
 	///admin/usuarios/ 
 	//administracion de los usuarios
@@ -63,33 +63,60 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => 'aut
 	});
 	//devuelve una pagina por defecto si no se ingresa una url correcta
 	Route::group([
-		'prefix' => 'puc',
-		'namespace' => 'Puc'
+		'prefix' => 'pc',
+		'namespace' => 'Pc'
 	], function() {
 		//devuelve una pagina por defecto si no se ingresa una url correcta
 		Route::get('/', function () {
-			return view('layouts.default', ['site' => 'Plan Único de Cuentas']);
+			return view('layouts.default', ['site' => 'Plan de Cuentas']);
 		});
-		// /admin/puc/
-		// requiere que el usuario tenga el permiso de administrar el puc
-		Route::group(['middleware' => 'acl:admin_puc'], function () {
-			//admin.puc.buscar 
-			Route::resource('operacion', 'puc_operacionesController');
-			Route::get('buscar', ['as' => 'admin.puc.buscar','uses' => 'puc_operacionesController@index']);
-			Route::get('crear', ['as' => 'admin.puc.crear','uses' => 'puc_operacionesController@create']);
-			Route::get('listas', 'puc_operacionesController@lista');
-			//admin.puc.clases 
-			Route::resource('clases', 'puc_claseController');
-			//admin.puc.grupos 
-			Route::resource('grupos', 'puc_grupoController');
-			//admin.puc.cuentas 
-			Route::resource('cuentas', 'puc_cuentaController');
-			//admin.puc.subcuentas 
-			Route::resource('subcuentas', 'puc_subcuentaController');
-			//admin.puc.cuentasauxiliares 
-			Route::resource('cuentasauxiliares', 'puc_cuentaauxiliarController');
+		// /admin/pc/
+		// requiere que el usuario tenga el permiso de administrar el pc
+		Route::group(['middleware' => 'acl:admin_pc'], function () {
+			//modulo PDC
+			//admin.pc.buscar 
+			Route::resource('operacion', 'pc_operacionesController');
+			Route::get('buscar', ['as' => 'admin.pc.buscar','uses' => 'pc_operacionesController@index']);
+			Route::get('crear', ['as' => 'admin.pc.crear','uses' => 'pc_operacionesController@create']);
+			Route::get('listas', 'pc_operacionesController@lista');
+			//admin.pc.clases 
+			Route::resource('clases', 'pc_claseController');
+			//admin.pc.grupos 
+			Route::resource('grupos', 'pc_grupoController');
+			//admin.pc.cuentas 
+			Route::resource('cuentas', 'pc_cuentaController');
+			//admin.pc.subcuentas 
+			Route::resource('subcuentas', 'pc_subcuentaController');
+			//admin.pc.cuentasauxiliares 
+			Route::resource('cuentasauxiliares', 'pc_cuentaauxiliarController');
 		});
+
 	});
+
+	//modulo Transacciones
+	Route::resource('transacciones', 'transaccionController');
+
+	Route::get('transaccion/buscar', ['as' => 'admin.transaccion.buscar','uses' => 'transaccionController@buscar']);
+	Route::get('transaccion/crear', ['as' => 'admin.transaccion.crear','uses' => 'transaccionController@crear']);
+	Route::get('transaccion', function () {
+			return view('layouts.default', ['site' => 'Transacciones']);
+		});
+
+	//modulo movimientos Contables
+	Route::resource('movimientosContables', 'movimiento_contableController');
+	
+	Route::get('movimientoContable/lista', ['as' => 'admin.movimientosContables.lista','uses' => 'movimiento_contableController@lista']);
+
+	//modulo activosFijos
+	Route::resource('activosFijos', 'activo_fijoController');
+
+	Route::get('activoFijo/buscar', ['as' => 'admin.activoFijo.buscar','uses' => 'activo_fijoController@buscar']);
+	Route::get('activoFijo/crear', ['as' => 'admin.activoFijo.crear','uses' => 'activo_fijoController@crear']);
+	Route::get('activoFijo', function () {
+			return view('layouts.default', ['site' => 'Activos Fijos']);
+		});
+
+
 });
 
 /*rutas de la autenticacion*/
@@ -109,4 +136,30 @@ Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 //Route::get('/home', 'HomeController@index');
+Route::group(['middleware' => 'auth'], function () {
+	/*Localizacion*/
+	Route::resource('countries', 'CountryController');
+	Route::resource('states', 'StateController');
 
+	Route::resource('cities', 'CityController');
+	Route::post('cities/listStates', 'CityController@listStates');
+	Route::post('cities/listCities', 'CityController@listCities');
+
+	/*sucursal*/
+	Route::resource('sucursales', 'SucursalController');
+
+	/*Terceros*/
+	Route::resource('terceros', 'TerceroController');
+
+	Route::post("terceros/tercero_tipo", function(Illuminate\Http\Request $request){
+		$countries = App\Models\Country::lists('nombre','id');
+		$states = array(null => null);
+		$cities = array(null => null);
+	    $sendtoview = array('countries' => $countries, 'states' => $states, 'cities' => $cities);
+		if ($request->tipo=='NATURAL') {
+			return View::make("personas.fields")->with($sendtoview)->render();
+		}else{
+			return View::make("empresas.fields")->with($sendtoview)->render();
+		}
+	});
+});

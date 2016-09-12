@@ -1,0 +1,268 @@
+#board{
+
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+
+    #header{
+
+		@extend .row;
+	    position: absolute;
+	    height: 100px; left: 0; right: 0;
+	    margin: 0;
+	    background-color: #3F51B5;
+	    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 0px 2px 2px rgba(0, 0, 0, 0.098), 0px 0px 5px 1px rgba(0, 0, 0, 0.084);
+
+	    #header_a{
+
+			@extend .container-fluid;
+			@extend .col-md-3;
+			@extend .col-sm-4;
+			@extend .col-xs-6;
+		    height: 100%;
+			display: flex;
+			
+			img{
+				margin-top: auto;
+				margin-bottom: auto;
+			}
+
+			#img_logo{
+	            height: 80px;
+	        }
+
+	        #img_logotipo{
+	            height: 60px;
+	            @extend .hidden-xs;
+	        }
+
+		}
+
+		#header_a.onsession{
+			background-color: #e8eaf6;
+		}
+
+		#header_b{
+
+			@extend .container-fluid;
+			@extend .col-md-9;
+			@extend .col-sm-8;
+			@extend .col-xs-6;
+		    height: 100%;
+		    display: flex;
+
+		    #infuser{
+
+				@extend .btn-group;
+				@extend .text-center;
+				margin-top: auto; margin-bottom: auto;
+				width: 100%;
+				text-align: right;
+
+				i{
+					color:#FFF;
+					font-size: 4em;
+					margin-left: 10px;
+					margin-right: 10px;
+				}
+
+				ul{ 
+
+					font: 16px $aldo;
+					color: #00b0d9;
+
+					#rol{
+						text-align: center;
+						color: #D6D4C6;
+						font-size:18px;
+						margin-top: 8px;
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+	#body{
+
+		@extend .row;
+	    position: absolute;
+	    top: 100px; bottom: 0; left: 0; right: 0;
+	    margin: 0;
+
+	    #menu{
+
+	    	@extend .container-fluid;
+			@extend .col-md-3;
+			@extend .col-sm-4;
+		    background-color: #e8eaf6;
+		    font-family: 'Avenir Next', Avenir, 'Helvetica Neue', 'Lato', 'Segoe UI', Helvetica, Arial, sans-serif;
+		    font-weight: 600;
+
+		    nav{
+
+                padding-top: 30px; padding-bottom: 30px;
+
+                #route{
+
+            		span{
+            			font-size: 0.75em;
+            			cursor: pointer;
+            			color: #999999;
+            		}
+
+            		span.glyphicon{
+            			cursor: normal;
+            			margin-left: 5px;
+						margin-right: 5px;
+            		}
+
+            		//B3B3B3
+            		//00e676
+
+            	}
+
+                .nav{
+
+                	display: none;
+
+                	li{
+                		margin-top: 20px;
+                		cursor: pointer;
+                		font-size: 1.1em;
+                		color:#666666;
+
+                		.nonestylelink{
+	                		outline: none !important; 
+	                		-moz-outline-style: none !important;
+	                		background-color: transparent;
+	                	}
+
+	                	a{
+	                		color:#666666;
+	                		padding: 0;
+	                	}
+
+	                	a:hover, a:hover * { 
+	                		@extend .nonestylelink;
+	                		color: #4f6ce8;
+	                	}
+
+				    	a:active, a:active * { @extend .nonestylelink }
+		                a:focus, a:focus * { @extend .nonestylelink }
+
+	                }
+
+	                li:hover{
+	                	color:#4f6ce8;
+	                }
+
+			    }
+
+            }
+		    
+		}
+
+		#subbody{
+
+			@extend .container-fluid;
+			background-color: rgba(255,255,255,0.6);
+
+		    .contenido{
+
+				@extend .row;
+			    width: 100%;
+			    overflow-y: scroll;
+			    display: flex;
+
+			    .contenedor{
+			    	margin: auto;
+			    }
+
+			}	
+		}
+	}
+}
+
+@media screen and (min-width: 992px){
+
+	#board{
+		background-image: url(/assets/resources/img/fondo_invertido.png);
+		background-repeat: no-repeat;
+		background-position: right; 
+		#header #header_b #infuser #mode_b{
+			.glyphicon-user{
+				cursor: default;
+			}
+		}
+	}
+
+}
+
+@media screen and (max-width: 991px){
+
+	#board{
+		#header{
+			#header_b #infuser #mode_b{
+				.glyphicon-user{
+					cursor: pointer;
+				}
+			}
+		}
+	}
+
+}
+
+@media screen and (min-width: 768px){
+	#board{
+		#body{
+			#menu{
+				height: 100%;
+			}
+			#subbody{
+		    	height: 100%;
+		    	.contenido{
+					position: absolute;
+					top: 0; bottom: 0;
+					padding-top: 20px;
+				}   
+		    }
+		}
+	}
+}
+
+@media screen and (max-width: 767px){
+	
+	#board{
+		#header{
+			height: 80px;
+			#header_a{
+				#img_logo{
+		            height: 60px;
+		        }
+			}
+			#header_a.onsession{
+				background-color: transparent;
+			}
+		}
+		#body{
+			#menu{
+		    	margin: 15px;
+		    }
+		    #subbody{
+		    	.contenido{
+					padding-bottom: 30px;
+					margin: 0;
+				} 
+		    } 
+		}
+	}
+
+}
+
+@media screen and (max-width: 319px){ 
+    #board{
+        display: none;
+    }
+}

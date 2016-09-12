@@ -38,9 +38,9 @@ class PermissionsSeeder extends Seeder
             3 => 
             array (
             'id' => 4,
-            'permission_title' => 'Administrar puc',
-            'permission_slug' => 'admin_puc',
-            'permission_description' => 'Administrar puc',
+            'permission_title' => 'Administrar pc',
+            'permission_slug' => 'admin_pc',
+            'permission_description' => 'Administrar pc',
             ),
         ));
     }

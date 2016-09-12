@@ -38,7 +38,7 @@ class UserController extends \App\Http\Controllers\AppBaseController
     }
     //metodo selection ejecutado por el metodo beforeFilter dentro del constructor
     public function selection(){
-        //se lista el nombre y el id correspondiente a todas las puc_subcuenta
+        //se lista el nombre y el id correspondiente a todas las pc_subcuenta
         $this->listRoles =  Role::select('role_title', 'id')->orderBy('id', 'asc')->lists('role_title','id');
     }
 

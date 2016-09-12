@@ -1,5 +1,5 @@
 //este array se usara para devolver al estado inicial los selects de la busqueda dinamica
-var listas = {"clases":"grupos,cuentas,subcuentas,cuentasauxiliares", "grupos":"cuentas,subcuentas,cuentasauxiliares", "cuentas":"subcuentas,cuentasauxiliares", "subcuentas":"cuentasauxiliares"};
+var listas = {"cuenta_tipo":"clases,grupos,cuentas,subcuentas,cuentasauxiliares", "clases":"grupos,cuentas,subcuentas,cuentasauxiliares", "grupos":"cuentas,subcuentas,cuentasauxiliares", "cuentas":"subcuentas,cuentasauxiliares", "subcuentas":"cuentasauxiliares"};
 
 //modifica el contenido del formulario
 $(document).on('show.bs.modal','.formModalSelect',function(e){
@@ -20,10 +20,13 @@ $(document).on('click','.modal.fade.formModalSelect #confirmar',function(e){
 		var id = $('#'+thisParent).find('.id').attr('id');
 		var optionVal = $('#'+thisParent).find('.id').val();
 		var optionText = $('#'+thisParent).find('.element').val();
+		var cuenta_tipo = $('#'+thisParent).find('.cuenta_tipo').val();
 		var value = $('#'+thisParent).find('select.select_dynamic#'+element ).val();
 		if( value != null ){
 			$('#'+thisParent).parent().find('input#'+id).val(optionVal);
 			$('#'+thisParent).parent().find('label#'+id).text(optionText);
+			$('#'+thisParent).parent().parent().find('select#tipo').val(cuenta_tipo);
+			$('#'+thisParent).parent().parent().find('input#tipo').val(cuenta_tipo);
 			$(".formModalSelect").modal('toggle');
 		}else{
 			var title = $('#'+thisParent).find('.modal-title').text();
@@ -55,7 +58,7 @@ $(document).on('change','select.select_dynamic',function(event){
 	//se obtiene el componente en el cual se esta generando el evento
 	//se obtiene el id (event.target.value) y se envia concatenado a la url 
 	//esta peticion tendra una respuesta y un estado
-	$.get("/admin/puc/listas?cuenta="+para+"&id="+event.target.value+"", function(response, state){
+	$.get("/admin/pc/listas?cuenta="+para+"&id="+event.target.value+"", function(response, state){
 		//se puede ver que es lo que esta recibiendo
 		//console.log(response);
 		

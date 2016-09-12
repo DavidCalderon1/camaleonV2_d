@@ -1,12 +1,9 @@
 @extends( isset($modal) ? 'forms.modal' : 'layouts.empty', ['tipo' => 'otro'])
 	@section( isset($modal) ? 'modal_content' : 'data')
-	  @if( isset($first_select))
-		<div class="col-sm-6 form-group">
-			<!-- Field -->
-		    {!! Form::label($first_select->id, $first_select->label.': ') !!}
-		    {!! Form::select($first_select->id, $first_select->list, null, ['class' => 'form-control full select_dynamic', 'para' => $first_select->para, 'name' => $first_select->id, 'placeholder' => $first_select->placeholder ])!!}
-		</div>
-	  @endif
+	  <div class="col-sm-6 form-group">
+		  {!! Form::label('cuenta_tipo', 'Tipo: ') !!}
+		  {!! Form::select('cuenta_tipo', config('options.pc_types'), null, ['class' => 'form-control full select_dynamic cuenta_tipo', 'para' => 'clases', 'name' => 'cuenta_tipo'])!!}
+	  </div>
 
 	  @if( isset($lists))
 		@foreach ($lists as $key => $list)
