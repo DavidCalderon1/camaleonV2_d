@@ -63,6 +63,10 @@ class pc_claseController extends \App\Http\Controllers\AppBaseController
         $vista = "admin.pc.pcCuentas.index";
 
         //si hay un request con el nombre tipo_cuenta y busqueda se envia el parametro para realizar la busqueda
+        if ( isset($request->tipo_cuenta) && (!isset($request->busqueda) && !isset($request->listaid)) ) {
+            $pcCuentas = $pcCuentas->tipoCuenta($request->tipo_cuenta);
+        }
+        //si hay un request con el nombre tipo_cuenta y busqueda se envia el parametro para realizar la busqueda
         if ( isset($request->tipo_cuenta) && isset($request->busqueda) ) {
             $pcCuentas = $pcCuentas->busqueda($request->tipo_cuenta, $request->busqueda);
             /*
@@ -84,7 +88,7 @@ class pc_claseController extends \App\Http\Controllers\AppBaseController
         }
 
         //$pcCuentas = $pcCuentas->orderBy('codigo', 'asc')->paginate(15);
-        if ( isset($request->tipo_cuenta) && ( isset($request->listaid) || isset($request->busqueda) ) ) {
+        if ( isset($request->tipo_cuenta) || isset($request->listaid) || isset($request->busqueda) ) {
             $pcCuentas = $pcCuentas->orderBy('codigo', 'asc')->orderBy('nombre', 'asc')->paginate(15);
         }else{
             $pcCuentas = $pcCuentas->ordenarPor(array('codigo' => 'asc', 'nombre' => 'asc'))->paginate(15);

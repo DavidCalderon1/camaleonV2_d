@@ -10,7 +10,7 @@ use App\Http\Requests\CreateEmpresaRequest;
 use App\Http\Requests\UpdateTerceroRequest;
 use App\Http\Requests\UpdatePersonaRequest;
 use App\Http\Requests\UpdateEmpresaRequest;
-use App\Repositories\cityRepository;
+use App\Repositories\CityRepository;
 use App\Http\Controllers\AppBaseController as InfyOmBaseController;
 use Illuminate\Http\Request;
 use Flash;

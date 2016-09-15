@@ -1,9 +1,9 @@
 @extends( isset($modal) ? 'forms.modal' : 'layouts.empty', ['tipo' => 'otro'])
+
 	@section( isset($modal) ? 'modal_content' : 'data')
-	  <div class="col-sm-6 form-group">
-		  {!! Form::label('cuenta_tipo', 'Tipo: ') !!}
-		  {!! Form::select('cuenta_tipo', config('options.pc_types'), null, ['class' => 'form-control full select_dynamic cuenta_tipo', 'para' => 'clases', 'name' => 'cuenta_tipo'])!!}
-	  </div>
+	  
+	  @yield('urlDestino') 
+	  @yield('first_select') 
 
 	  @if( isset($lists))
 		@foreach ($lists as $key => $list)

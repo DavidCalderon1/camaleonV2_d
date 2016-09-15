@@ -4,12 +4,26 @@ namespace App\Http\Controllers\Traits;
 use DB;
     
 trait funcionesComunes{
+    
     /**
+     * @param $busqueda
+     * @return mixed
+     */
+    public function tipoCuenta($tipo_cuenta)
+    {
+        if( strtoupper($tipo_cuenta) =='%%' ){
+            $tipo_cuenta = '';
+        }
+        return $this->model->where('tipo', 'like', '%'.strtoupper($tipo_cuenta).'%');
+    }
+	
+	/**
      * @param $busqueda
      * @return mixed
      */
     public function busqueda($tipo_cuenta, $busqueda)
     {	
+        
 		if( strtoupper($tipo_cuenta) =='%%' ){
 			$tipo_cuenta = '';
 		}
@@ -36,7 +50,7 @@ trait funcionesComunes{
         if($busqueda == '*' || $busqueda == '' || $busqueda == $tipo_cuenta ){
             return $this->model->where('tipo', 'like', '%'.strtoupper($tipo_cuenta).'%');
         }else{
-            return $this->model->where('tipo', 'like', '%'.strtoupper($tipo_cuenta).'%')->where('id', '=', intval( $busqueda ));
+            return $this->model->where('tipo', 'like', '%'.strtoupper($tipo_cuenta).'%')->where($this->llave_foranea, '=', intval( $busqueda ));
         }
     }
 

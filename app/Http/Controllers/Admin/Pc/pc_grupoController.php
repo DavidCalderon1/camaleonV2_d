@@ -59,6 +59,11 @@ class pc_grupoController extends \App\Http\Controllers\AppBaseController
         $this->pcGrupoRepository->pushCriteria(new RequestCriteria($request));
         $pcCuentas = $this->pcGrupoRepository;
         $vista = "admin.pc.pcCuentas.index";
+
+        //si hay un request con el nombre tipo_cuenta y busqueda se envia el parametro para realizar la busqueda
+        if ( isset($request->tipo_cuenta) && (!isset($request->busqueda) && !isset($request->listaid)) ) {
+            $pcCuentas = $pcCuentas->tipoCuenta($request->tipo_cuenta);
+        }
         //si hay un request con el nombre busqueda se envia el parametro para realizar la busqueda
         if ( isset($request->tipo_cuenta) && isset($request->busqueda) ) {
             $pcCuentas = $pcCuentas->busqueda($request->tipo_cuenta, $request->busqueda);
@@ -160,7 +165,7 @@ class pc_grupoController extends \App\Http\Controllers\AppBaseController
         }
 
         //agrega el nombre de la clase
-        $this->pcCuenta['clase_nombre'] = $this->pcCuenta->clases->codigo . ' - ' . $this->pcCuenta->clases->nombre;
+        $this->pcCuenta['clase_nombre'] = $this->pcCuenta->clases->codigo . ' - ' . $this->pcCuenta->clases->nombre . ' - ' . $this->pcCuenta->clases->tipo;
 
         // guarda un mensaje en el archivo de log
         Log::info('Grupos, Edit, Mostrando edición de grupo: '.$id);

@@ -6,7 +6,7 @@ use App\Http\Requests;
 use App\Http\Requests\CreateSucursalRequest;
 use App\Http\Requests\UpdateSucursalRequest;
 use App\Repositories\SucursalRepository;
-use App\Repositories\cityRepository;
+use App\Repositories\CityRepository;
 use App\Http\Controllers\AppBaseController as InfyOmBaseController;
 use Illuminate\Http\Request;
 use Flash;

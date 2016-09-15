@@ -44,7 +44,7 @@ class pc_cuentaController extends \App\Http\Controllers\AppBaseController
     //metodo selection ejecutado por el metodo beforeFilter dentro del constructor
     public function selection(){
         //se lista el nombre y el id correspondiente a todos los pc_clase
-        $this->listClases =  pc_clase::select(DB::raw("CONCAT(codigo, ' - ', nombre) as nombre, id"))->orderBy('id', 'asc')->lists('nombre','id');
+        //$this->listClases =  pc_clase::select(DB::raw("CONCAT(codigo, ' - ', nombre) as nombre, id"))->orderBy('id', 'asc')->lists('nombre','id');
     }
 
     /**
@@ -58,6 +58,11 @@ class pc_cuentaController extends \App\Http\Controllers\AppBaseController
         $this->pcCuentaRepository->pushCriteria(new RequestCriteria($request));
         $pcCuentas = $this->pcCuentaRepository;
         $vista = "admin.pc.pcCuentas.index";
+
+        //si hay un request con el nombre tipo_cuenta y busqueda se envia el parametro para realizar la busqueda
+        if ( isset($request->tipo_cuenta) && (!isset($request->busqueda) && !isset($request->listaid)) ) {
+            $pcCuentas = $pcCuentas->tipoCuenta($request->tipo_cuenta);
+        }
         //si hay un request con el nombre busqueda se envia el parametro para realizar la busqueda
         if ( isset($request->tipo_cuenta) && isset($request->busqueda) ) {
             $pcCuentas = $pcCuentas->busqueda($request->tipo_cuenta, $request->busqueda);
@@ -159,7 +164,7 @@ class pc_cuentaController extends \App\Http\Controllers\AppBaseController
         }
 
         //agrega el nombre del grupo
-        $this->pcCuenta['grupo_nombre'] = $this->pcCuenta->grupos->codigo . ' - ' . $this->pcCuenta->grupos->nombre;
+        $this->pcCuenta['grupo_nombre'] = $this->pcCuenta->grupos->codigo . ' - ' . $this->pcCuenta->grupos->nombre . ' - ' . $this->pcCuenta->grupos->tipo;
 
         // guarda un mensaje en el archivo de log
         Log::info('Cuentas, Edit, Mostrando edición de cuenta: '.$id);

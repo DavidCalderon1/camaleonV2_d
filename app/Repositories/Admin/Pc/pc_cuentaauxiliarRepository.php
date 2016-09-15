@@ -9,6 +9,8 @@ use App\Http\Controllers\Traits\funcionesComunes;
 
 class pc_cuentaauxiliarRepository extends BaseRepository
 {
+    private $llave_foranea = 'subcuenta_id';
+    
     /**
      * @var array
      */

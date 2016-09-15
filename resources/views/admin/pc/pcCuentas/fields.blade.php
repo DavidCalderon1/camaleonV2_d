@@ -4,7 +4,7 @@
 <!-- Codigo Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('codigo', 'Código:') !!}
-    {!! Form::number('codigo', null, ['class' => 'form-control text-uppercase', 'required']) !!}
+    {!! Form::number('codigo', null, ['class' => 'form-control text-uppercase codigo', 'required']) !!}
 </div>
 
 <!-- Nombre Field -->

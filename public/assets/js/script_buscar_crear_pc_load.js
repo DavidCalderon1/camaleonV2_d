@@ -6,6 +6,8 @@ $("#find_form_create").submit(function(e){
 	CargaForm(route,results);
 });
 
+
+
 //se encarga de la paginacion por ajax, evita que se recargue la pagina por el link de los botones 
 $(document).on('click','.pagination a',function(e){
 	//prevenir que ese evento desencadene algo

@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call('PcCuentaauxiliarTableSeeder');
 	
         $this->call('TipodocContableTableSeeder');
-
+        
         Model::reguard();
     }
 }

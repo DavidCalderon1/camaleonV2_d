@@ -9,6 +9,8 @@ use App\Http\Controllers\Traits\funcionesComunes;
 
 class pc_claseRepository extends BaseRepository
 {
+    private $llave_foranea = 'id';
+    
     /**
      * @var array
      */
