@@ -11,7 +11,6 @@ use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use DB;
-use App\Models\Admin\Pc\pc_clase;
 // esta libreria va a dar la facilidad de obtener parametros que se encuentran en nuestra ruta
 use Illuminate\Routing\Route;
 use Log;
@@ -20,7 +19,6 @@ class pc_cuentaController extends \App\Http\Controllers\AppBaseController
 {
     /** @var  pc_cuentaRepository */
     private $pcCuentaRepository;
-    private $listClases;
     private $pcCuenta;
     private $peticion;
 
@@ -29,7 +27,6 @@ class pc_cuentaController extends \App\Http\Controllers\AppBaseController
         $this->pcCuentaRepository = $pcCuentaRepo;
         //filtro que se ejecutara antes de cualquier accion del controlador, se especifica el metodo en el que se desea ejecutar
         $this->beforeFilter('@find',['only' => ['edit','show','update','destroy'] ]);
-        $this->beforeFilter('@selection',['only' => ['create','edit'] ]);
         $this->peticion = "normal";
         //va a mostrar la vista 'tables' en el caso de ser una peticion de tipo ajax
         if ($request->ajax() || $request->peticion == "ajax") {
@@ -40,11 +37,6 @@ class pc_cuentaController extends \App\Http\Controllers\AppBaseController
     public function find(Route $route){
         //va a buscar los parametros que estan el esta ruta y que son enviados por el recurso, que en este caso es 'cuentas' el configurado en las rutas
         $this->pcCuenta = $this->pcCuentaRepository->findWithoutFail( intval( $route->getParameter('cuentas') ) );
-    }
-    //metodo selection ejecutado por el metodo beforeFilter dentro del constructor
-    public function selection(){
-        //se lista el nombre y el id correspondiente a todos los pc_clase
-        //$this->listClases =  pc_clase::select(DB::raw("CONCAT(codigo, ' - ', nombre) as nombre, id"))->orderBy('id', 'asc')->lists('nombre','id');
     }
 
     /**
@@ -96,7 +88,7 @@ class pc_cuentaController extends \App\Http\Controllers\AppBaseController
     {
         // guarda un mensaje en el archivo de log
         Log::info('Cuentas, Create, Mostrando formulario de creación de cuentas');
-        return view('admin.pc.pcCuentas.create', ['peticion' => $this->peticion, 'ruta' => 'cuentas', 'nombre' => 'cuenta', 'listClases' => $this->listClases]);
+        return view('admin.pc.pcCuentas.create', ['peticion' => $this->peticion, 'ruta' => 'cuentas', 'nombre' => 'cuenta']);
     }
 
     /**
@@ -164,12 +156,12 @@ class pc_cuentaController extends \App\Http\Controllers\AppBaseController
         }
 
         //agrega el nombre del grupo
-        $this->pcCuenta['grupo_nombre'] = $this->pcCuenta->grupos->codigo . ' - ' . $this->pcCuenta->grupos->nombre . ' - ' . $this->pcCuenta->grupos->tipo;
+        $this->pcCuenta['cuenta_fk_nombre'] = $this->pcCuenta->grupos->codigo . ' - ' . $this->pcCuenta->grupos->nombre . ' - ' . $this->pcCuenta->grupos->tipo;
 
         // guarda un mensaje en el archivo de log
         Log::info('Cuentas, Edit, Mostrando edición de cuenta: '.$id);
 
-        return view('admin.pc.pcCuentas.edit', ['peticion' => $this->peticion, 'ruta' => 'cuentas', 'nombre' => 'cuenta', 'pcCuenta' => $this->pcCuenta, 'listClases' => $this->listClases]);
+        return view('admin.pc.pcCuentas.edit', ['peticion' => $this->peticion, 'ruta' => 'cuentas', 'nombre' => 'cuenta', 'pcCuenta' => $this->pcCuenta]);
     }
 
     /**

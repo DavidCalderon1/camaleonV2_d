@@ -7,7 +7,7 @@
 
 	  @if( isset($lists))
 		@foreach ($lists as $key => $list)
-			<div class="col-sm-6 form-group">
+			<div class="form-group">
 				<label for="{{ $list->id }}">{{ $list->label }}: </label>
 				<select class="form-control full select_dynamic" id="{{ $list->id }}" name="{{ $list->id }}" para="{{ $list->para }}" disabled>
 					<option value="" disabled selected>{{ $list->placeholder }}</option>

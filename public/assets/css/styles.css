@@ -1,32 +1,6 @@
-/*-- estilos para es select que se convierte en scroll --*/
-
-.select_scroll .hover {
-    /*background-color: dodgerblue;*/
-    background-color: #0b84fb;
-    color: white;
-}
-
-.content .video {
-    position: relative;
-    width: 80%;
-    height: 80%;
-    margin: auto;
-	margin-top: 10%;
-}
-.form-control.full{
-    width: 100% !important;
-}
-
-.div-form-control {
-    width: 100%;
-    height: 34px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-}
-
+/*--------------------------------------------------------------------*/
+/* ESTILOS DE LA PANTALLA QUE SE MUESTRA AL EJECUTARSE UNA PETICION AJAX */
+/**/
 /* Start by setting display:none to make this hidden.
    Then we position it in relation to the viewport window
    with position:fixed. Width, height, top and left speak
@@ -65,35 +39,12 @@ body.loading .modal_loading {
     margin: 0;
     border: 0;
 }
+/*--------------------------------------------------------------------*/
 
-button.selectDynamic{
-    top: 25px;
-    position: absolute;
-    right: 15px;
-    height: 32px;
-    margin: 1px;
-}
-
-label.selectDynamic{
-    position: absolute;
-    width: 90%;
-    height: 32px;
-    margin: 1px;
-    border: 0;
-    box-shadow: none;
-    font-weight: normal;
-    line-height: 24px;
-    overflow: hidden;
-}
-
-.btn-group {
-    min-width: 70%;
-}
-
-.btn-group label.btn {
-    min-width: 49%; 
-    width: 49%;
-}
+/*--------------------------------------------------------------------*/
+/* ESTILOS DE LOS ROLES Y PERMISOS MOSTRADOS EN LA VISTA DEL USUARIO Y PERMISOS */
+/* APLICA PARA LO QUE SE QUIERA ENCERRAR ENTRE COMILLAS */
+/**/
 
 spam.rol:before, .comillas:before {
     content: open-quote;
@@ -102,6 +53,9 @@ spam.rol:after, .comillas:after {
     content: close-quote;
 }
 
+/*--------------------------------------------------------------------*/
+/* ESTILOS DE LOS ITEMS DEL MENU DE NAVEGACION */
+/**/
 .list-group-item + .submenu {
     margin-left:10px;
 }
@@ -110,6 +64,9 @@ spam.rol:after, .comillas:after {
     border: 1px solid #ddd !important;
 }
 
+/*--------------------------------------------------------------------*/
+/* ESTILO PARA LO QUE SE QUIERA OCULTAR */
+/**/
 .oculto{
     display: none !important;
 }

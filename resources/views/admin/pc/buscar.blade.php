@@ -24,12 +24,7 @@
 				<!--action="{ { url('home/searchredirect') } }"-->
 					<div class="form-group">
 						{!! Form::label('cuenta_tipo', 'Tipo: ') !!}
-						<select name="cuenta_tipo" id="cuenta_tipo" class="form-control" required="required">
-							<option value="" selected="selected">Seleccione un tipo</option>
-							<option value="LOCAL">LOCAL</option>
-							<option value="NIIF">NIIF</option>
-							<option value="%%">TODOS</option>
-						</select>
+						{!! Form::select('cuenta_tipo', config('options.pc_types_all'), null, ['class' => 'form-control', 'required'])!!}
 						{!! Form::label('cuenta_busqueda', 'Subtipo de cuenta: ') !!}
 						{!! Form::select('cuenta_busqueda', config('options.pc_subtypes'), null, ['class' => 'form-control', 'required'])!!}
 						<input type="text" class="form-control text-uppercase" name='busqueda' id='busqueda' placeholder="Busqueda ..." />

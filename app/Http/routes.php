@@ -68,7 +68,8 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => 'aut
 	], function() {
 		//devuelve una pagina por defecto si no se ingresa una url correcta
 		Route::get('/', function () {
-			return view('layouts.default', ['site' => 'Plan de Cuentas']);
+			//return view('layouts.default', ['site' => 'Plan de Cuentas']);
+			return redirect()->route('admin.pc.buscar');
 		});
 		// /admin/pc/
 		// requiere que el usuario tenga el permiso de administrar el pc

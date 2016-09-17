@@ -11,7 +11,6 @@ use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use DB;
-use App\Models\Admin\Pc\pc_clase;
 // esta libreria va a dar la facilidad de obtener parametros que se encuentran en nuestra ruta
 use Illuminate\Routing\Route;
 use Log;
@@ -20,7 +19,6 @@ class pc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControlle
 {
     /** @var  pc_cuentaauxiliarRepository */
     private $pcCuentaauxiliarRepository;
-    private $listClases;
     private $pcCuenta;
     private $peticion;
 
@@ -29,7 +27,6 @@ class pc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControlle
         $this->pcCuentaauxiliarRepository = $pcCuentaauxiliarRepo;
         //filtro que se ejecutara antes de cualquier accion del controlador, se especifica el metodo en el que se desea ejecutar
         $this->beforeFilter('@find',['only' => ['edit','show','update','destroy'] ]);
-        $this->beforeFilter('@selection',['only' => ['create','edit'] ]);
         $this->peticion = "normal";
         //va a mostrar la vista 'tables' en el caso de ser una peticion de tipo ajax
         if ($request->ajax() || $request->peticion == "ajax") {
@@ -40,11 +37,6 @@ class pc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControlle
     public function find(Route $route){
         //va a buscar los parametros que estan el esta ruta y que son enviados por el recurso, que en este caso es 'cuentasauxiliares' el configurado en las rutas
         $this->pcCuenta = $this->pcCuentaauxiliarRepository->findWithoutFail( intval( $route->getParameter('cuentasauxiliares') ) );
-    }
-    //metodo selection ejecutado por el metodo beforeFilter dentro del constructor
-    public function selection(){
-        //se lista el nombre y el id correspondiente a todas las pc_subcuenta
-        //$this->listClases =  pc_clase::select(DB::raw("CONCAT(codigo, ' - ', nombre) as nombre, id"))->orderBy('id', 'asc')->lists('nombre','id');
     }
 
     /**
@@ -95,7 +87,7 @@ class pc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControlle
     {
         // guarda un mensaje en el archivo de log
         Log::info('Cuentas auxiliares, Create, Mostrando formulario de creación de cuentas auxiliares');
-        return view('admin.pc.pcCuentas.create', ['peticion' => $this->peticion, 'ruta' => 'cuentasauxiliares', 'nombre' => 'cuentas auxiliares', 'listClases' => $this->listClases]);
+        return view('admin.pc.pcCuentas.create', ['peticion' => $this->peticion, 'ruta' => 'cuentasauxiliares', 'nombre' => 'cuentas auxiliares']);
     }
 
     /**
@@ -162,12 +154,12 @@ class pc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControlle
             return redirect(route('admin.pc.cuentasauxiliares.index'));
         }
         //agrega el nombre de la subcuenta
-        $this->pcCuenta['subcuenta_nombre'] = $this->pcCuenta->subcuentas->codigo . ' - ' . $this->pcCuenta->subcuentas->nombre . ' - ' . $this->pcCuenta->subcuentas->tipo;
+        $this->pcCuenta['cuenta_fk_nombre'] = $this->pcCuenta->subcuentas->codigo . ' - ' . $this->pcCuenta->subcuentas->nombre . ' - ' . $this->pcCuenta->subcuentas->tipo;
 
         // guarda un mensaje en el archivo de log
         Log::info('Cuentas auxiliares, Edit, Mostrando formulario de edición de cuenta auxiliar: '.$id);
 
-        return view('admin.pc.pcCuentas.edit', ['peticion' => $this->peticion, 'ruta' => 'cuentasauxiliares', 'nombre' => 'cuentas auxiliares', 'pcCuenta' => $this->pcCuenta, 'listClases' => $this->listClases]);
+        return view('admin.pc.pcCuentas.edit', ['peticion' => $this->peticion, 'ruta' => 'cuentasauxiliares', 'nombre' => 'cuentas auxiliares', 'pcCuenta' => $this->pcCuenta]);
     
     }
 

@@ -6,6 +6,12 @@ return [
 		'LOCAL'			=> 'LOCAL',
 		'NIIF'			=> 'NIIF'
 	],
+	'pc_types_all' => [
+		''				=> 'Seleccione un tipo',
+		'LOCAL'			=> 'LOCAL',
+		'NIIF'			=> 'NIIF',
+		'%%'			=> 'TODOS'
+	],
 	'pc_subtypes' => [
 		''					=> 'Seleccione un subtipo',
 		'clases'			=> 'Clase',

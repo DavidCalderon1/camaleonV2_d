@@ -13,7 +13,6 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
 use DB;
-use App\Models\Admin\Pc\pc_clase;
 use App\Models\Admin\transaccion;
 use App\Models\Tercero;
 use App\Models\Admin\activo_fijo;
@@ -29,7 +28,6 @@ class movimiento_contableController extends InfyOmBaseController
     private $movimientoContableRepository;
     private $listTransaccion;
     private $listSucursal;
-    private $listClases;
     private $listTerceroActivo;
     private $movimientoContable;
     private $terceros;
@@ -74,9 +72,6 @@ class movimiento_contableController extends InfyOmBaseController
 
         //se lista el nombre y el id correspondiente a todos los sucursal
         $this->listSucursal =  Sucursal::select(DB::raw("CONCAT(id, ' - ', nombre) as nombre, id"))->orderBy('id', 'asc')->lists('nombre','id');
-
-        //se lista el nombre y el id correspondiente a todos los pc_clase
-        $this->listClases =  pc_clase::select(DB::raw("CONCAT(codigo, ' - ', nombre) as nombre, id"))->orderBy('id', 'asc')->lists('nombre','id');
     }
     //metodo selection ejecutado por el metodo beforeFilter dentro del constructor
     public function TerceroActivo(){
@@ -152,12 +147,9 @@ class movimiento_contableController extends InfyOmBaseController
             $this->movimientoContable['trs_id'] = $request->transaccion;
         }
 
-        //agrega el nombre de la cuenta auxiliar
-        $this->movimientoContable['cntaux_nombre'] = '';
-
         // guarda un mensaje en el archivo de log
         Log::info('movimientosContables, Create, Mostrando formulario de creación de movimientos contables');
-        return view('admin.movimientosContables.create', ['peticion' => $this->peticion, 'ruta' => 'movimientosContables', 'nombre' => 'movimiento contable', 'listTransaccion' => $this->listTransaccion, 'listSucursal' => $this->listSucursal, 'listTerceroActivo' => $this->listTerceroActivo, 'listClases' => $this->listClases, 'accion' => 'create', 'movimientoContable' => $this->movimientoContable]);
+        return view('admin.movimientosContables.create', ['peticion' => $this->peticion, 'ruta' => 'movimientosContables', 'nombre' => 'movimiento contable', 'listTransaccion' => $this->listTransaccion, 'listSucursal' => $this->listSucursal, 'listTerceroActivo' => $this->listTerceroActivo, 'accion' => 'create', 'movimientoContable' => $this->movimientoContable]);
     }
 
     /**
@@ -235,12 +227,12 @@ class movimiento_contableController extends InfyOmBaseController
             return redirect(route('admin.movimientosContables.index'));
         }
         //agrega el nombre de la cuenta auxiliar
-        $this->movimientoContable['cntaux_nombre'] = $this->movimientoContable->pc_cuentaauxiliar->codigo . ' - ' . $this->movimientoContable->pc_cuentaauxiliar->nombre;
+        $this->movimientoContable['cuenta_fk_nombre'] = $this->movimientoContable->pc_cuentaauxiliar->codigo . ' - ' . $this->movimientoContable->pc_cuentaauxiliar->nombre;
 
         // guarda un mensaje en el archivo de log
         Log::info('movimientosContables, Edit, Mostrando edición de movimiento contable: '.$id);
 
-        return view('admin.movimientosContables.edit', ['peticion' => $this->peticion, 'ruta' => 'movimientosContables', 'nombre' => 'movimiento contable', 'movimientoContable' => $this->movimientoContable, 'listTransaccion' => $this->listTransaccion, 'listSucursal' => $this->listSucursal, 'listTerceroActivo' => $this->listTerceroActivo, 'listClases' => $this->listClases, 'accion' => 'edit']);
+        return view('admin.movimientosContables.edit', ['peticion' => $this->peticion, 'ruta' => 'movimientosContables', 'nombre' => 'movimiento contable', 'movimientoContable' => $this->movimientoContable, 'listTransaccion' => $this->listTransaccion, 'listSucursal' => $this->listSucursal, 'listTerceroActivo' => $this->listTerceroActivo, 'accion' => 'edit']);
     }
 
     /**

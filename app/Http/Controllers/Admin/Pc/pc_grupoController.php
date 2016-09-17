@@ -11,7 +11,6 @@ use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use DB;
-use App\Models\Admin\Pc\pc_clase;
 // esta libreria va a dar la facilidad de obtener parametros que se encuentran en nuestra ruta
 use Illuminate\Routing\Route;
 use Log;
@@ -20,7 +19,6 @@ class pc_grupoController extends \App\Http\Controllers\AppBaseController
 {
     /** @var  pc_grupoRepository */
     private $pcGrupoRepository;
-    private $listClases;
     private $pcCuenta;
     private $peticion;
 
@@ -29,7 +27,6 @@ class pc_grupoController extends \App\Http\Controllers\AppBaseController
         $this->pcGrupoRepository = $pcGrupoRepo;
         //filtro que se ejecutara antes de cualquier accion del controlador, se especifica el metodo en el que se desea ejecutar
         $this->beforeFilter('@find',['only' => ['edit','show','update','destroy'] ]);
-        $this->beforeFilter('@selection',['only' => ['create','edit'] ]);
         
         $this->peticion = "normal";
         //va a mostrar la vista 'tables' en el caso de ser una peticion de tipo ajax
@@ -41,11 +38,6 @@ class pc_grupoController extends \App\Http\Controllers\AppBaseController
     public function find(Route $route){
         //va a buscar los parametros que estan el esta ruta y que son enviados por el recurso, que en este caso es 'grupos' el configurado en las rutas
         $this->pcCuenta = $this->pcGrupoRepository->findWithoutFail( intval( $route->getParameter('grupos') ) );
-    }
-    //metodo selection ejecutado por el metodo beforeFilter dentro del constructor
-    public function selection(){
-        //se lista el nombre y el id correspondiente a todas las pc_clase
-        //$this->listClases =  pc_clase::select(DB::raw("CONCAT(codigo, ' - ', nombre) as nombre, id"))->orderBy('id', 'asc')->lists('nombre','id');
     }
 
     /**
@@ -97,7 +89,7 @@ class pc_grupoController extends \App\Http\Controllers\AppBaseController
     {
         // guarda un mensaje en el archivo de log
         Log::info('Grupos, Create, Mostrando formulario de creación de grupos');
-        return view('admin.pc.pcCuentas.create', ['peticion' => $this->peticion, 'ruta' => 'grupos', 'nombre' => 'grupo', 'listClases' => $this->listClases]);
+        return view('admin.pc.pcCuentas.create', ['peticion' => $this->peticion, 'ruta' => 'grupos', 'nombre' => 'grupo']);
     }
 
     /**
@@ -165,12 +157,12 @@ class pc_grupoController extends \App\Http\Controllers\AppBaseController
         }
 
         //agrega el nombre de la clase
-        $this->pcCuenta['clase_nombre'] = $this->pcCuenta->clases->codigo . ' - ' . $this->pcCuenta->clases->nombre . ' - ' . $this->pcCuenta->clases->tipo;
+        $this->pcCuenta['cuenta_fk_nombre'] = $this->pcCuenta->clases->codigo . ' - ' . $this->pcCuenta->clases->nombre . ' - ' . $this->pcCuenta->clases->tipo;
 
         // guarda un mensaje en el archivo de log
         Log::info('Grupos, Edit, Mostrando edición de grupo: '.$id);
 
-        return view('admin.pc.pcCuentas.edit', ['peticion' => $this->peticion, 'ruta' => 'grupos', 'nombre' => 'grupo', 'pcCuenta' => $this->pcCuenta, 'listClases' => $this->listClases]);
+        return view('admin.pc.pcCuentas.edit', ['peticion' => $this->peticion, 'ruta' => 'grupos', 'nombre' => 'grupo', 'pcCuenta' => $this->pcCuenta]);
     }
 
     /**

@@ -210,6 +210,8 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
 
+        'PcSelectParametros'     => 'App\Http\Controllers\Traits\PcSelectParametros',
+
     ],
 
 ];

@@ -2,20 +2,20 @@
 
 
 <!-- Codigo Field -->
-<div class="form-group col-sm-6">
+<div class="form-group">
     {!! Form::label('codigo', 'Código:') !!}
     {!! Form::number('codigo', null, ['class' => 'form-control text-uppercase codigo', 'required']) !!}
 </div>
 
 <!-- Nombre Field -->
-<div class="form-group col-sm-6">
+<div class="form-group">
     {!! Form::label('nombre', 'Nombre:') !!}
     {!! Form::text('nombre', null, ['class' => 'form-control text-uppercase', 'required']) !!}
 </div>
 
 
 <!-- Naturaleza Field -->
-<div class="form-group col-sm-6">
+<div class="form-group">
     {!! Form::label('tipo', 'Tipo: ') !!}
   @if($ruta != 'clases')
     {!! Form::select('tipo', config('options.pc_types'), null, ['class' => 'form-control', 'required', 'disabled' => 'disabled' ])!!}
@@ -26,13 +26,13 @@
 </div>
 
 <!-- Descripcion Field -->
-<div class="form-group col-sm-10 col-lg-10">
+<div class="form-group">
     {!! Form::label('descripcion', 'Descripción:') !!}
     {!! Form::textarea('descripcion', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
 <!-- Ajuste Field -->
-<div class="form-group col-sm-6">
+<div class="form-group">
     {!! Form::label('ajuste', 'Ajuste:') !!}
     <br/>
     <div class="btn-group">
@@ -49,7 +49,7 @@
 
 @if($ruta == 'clases')
 <!-- Naturaleza Field -->
-<div class="form-group col-sm-6">
+<div class="form-group">
     {!! Form::label('naturaleza', 'Naturaleza:') !!}
     <br/>
     <div class="btn-group">
@@ -67,7 +67,7 @@
 
 @if($ruta == 'cuentasauxiliares')
 <!-- Tercero Activo Field -->
-<div class="form-group col-sm-6">
+<div class="form-group">
     {!! Form::label('tercero_activo', 'Requiere Tercero/Activo:') !!}
     <br/>
     <div class="btn-group">
@@ -85,7 +85,7 @@
 
 @if($ruta == 'cuentasauxiliares')
 <!-- Estado Field -->
-<div class="form-group col-sm-6">
+<div class="form-group">
     {!! Form::label('estado', 'Estado:') !!}
     <br/>
     <div class="btn-group">
@@ -103,7 +103,7 @@
 
 
 <!-- Submit Field -->
-<div class="form-group col-sm-12">
+<div class="form-group">
     {!! Form::submit('Guardar', ['class' => 'btn btn-primary enviar', 'peticion' => $peticion]) !!}
     <a href="{{ URL::previous() }}" class="btn btn-default cancelar" peticion="{{$peticion}}" >Cancelar</a>
     <!--a href="{!! route('admin.pc.'.$ruta.'.index') !!}" class="btn btn-default">Cancelar</a-->

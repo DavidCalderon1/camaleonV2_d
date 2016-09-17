@@ -22,15 +22,17 @@ class pc_operacionesController extends Controller
     public function __construct()
     {
         //filtro que se ejecutara antes de cualquier accion del controlador, se especifica el metodo en el que se desea ejecutar
-        $this->beforeFilter('@selection',['only' => ['index','create'] ]);
+        //$this->beforeFilter('@selection',['only' => ['index','create'] ]);
         
     }
     //metodo selection ejecutado por el metodo beforeFilter dentro del constructor
+    /*
     public function selection(){
         //se implementa para los select dinamicos
         //se lista el nombre y el id correspondiente a todas las pc_clase
         $this->listClases =  pc_clase::select(DB::raw("CONCAT(codigo, ' - ', nombre) as nombre, id"))->orderBy('id', 'asc')->lists('nombre','id');
     }
+    */
     /**
      * Display a listing of the resource.
      *
@@ -50,7 +52,8 @@ class pc_operacionesController extends Controller
         */
         //$tipoCuenta = [1];
         $peticion = 'ajax';
-        return view('admin.pc.buscar', ['peticion' => $peticion, 'results' => $results, 'ruta' => 'pc', 'listClases' => $this->listClases]);
+        return view('admin.pc.buscar', ['peticion' => $peticion, 'results' => $results, 'ruta' => 'pc']);
+        /*return view('admin.pc.buscar', ['peticion' => $peticion, 'results' => $results, 'ruta' => 'pc', 'listClases' => $this->listClases]);*/
     }
 
     /**

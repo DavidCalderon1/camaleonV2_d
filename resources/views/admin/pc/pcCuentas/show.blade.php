@@ -3,9 +3,7 @@
 @section('content')
 	@include('flash::message')
 	<div class="row clearfix">
-        <div class="col-sm-12">
             <h1 class="pull-left">{{ $title_page=ucfirst($nombre) }}</h1>
-        </div>
     </div>
 	
     @if($peticion != "normal")
