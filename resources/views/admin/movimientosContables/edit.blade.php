@@ -12,7 +12,7 @@
         @endif
 
         <div class="row">
-            {!! Form::model($movimientoContable, ['route' => ['admin.transacciones.movimientosContables.update', $movimientoContable->id], 'method' => 'patch', 'id' => 'form_update', 'class' => 'form_update']) !!}
+            {!! Form::model($movimientoContable, ['route' => ['admin.transacciones.movimientosContables.update', $movimientoContable->trs_id, $movimientoContable->id], 'method' => 'patch', 'id' => 'form_update', 'class' => 'form_update']) !!}
 
             @include('admin.movimientosContables.fields')
 

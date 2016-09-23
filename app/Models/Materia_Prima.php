@@ -92,6 +92,6 @@ class Materia_Prima extends Model
      */
     public function terceros()
     {
-        return $this->belongsToMany(Tercero::class, 'materiaPrima_proveedor', 'materiaPrima_id', 'tercero_id');
+        return $this->belongsToMany(Tercero::class, 'materia_prima_proveedor', 'materiaPrima_id', 'tercero_id');
     }
 }

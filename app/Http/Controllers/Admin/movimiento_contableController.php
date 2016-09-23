@@ -104,7 +104,7 @@ class movimiento_contableController extends InfyOmBaseController
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request)
+    public function index($transaccionId, Request $request)
     {
         $this->movimientoContableRepository->pushCriteria(new RequestCriteria($request));
         $movimientoContables = $this->movimientoContableRepository;
@@ -117,7 +117,7 @@ class movimiento_contableController extends InfyOmBaseController
         }
         $movimientoContables = $movimientoContables->orderBy('id', 'asc')->paginate(15);
 
-        return view($vista, ['peticion' => $this->peticion, 'ruta' => 'movimientosContables', 'nombre' => 'movimiento contable', 'movimientoContables' => $movimientoContables]);
+        return view($vista, ['peticion' => $this->peticion, 'ruta' => 'movimientosContables', 'nombre' => 'movimiento contable', 'movimientoContables' => $movimientoContables, 'transaccion' => $transaccionId]);
     }
 
     /**
@@ -150,13 +150,11 @@ class movimiento_contableController extends InfyOmBaseController
      *
      * @return Response
      */
-    public function create(Request $request)
+    public function create($transaccionId, Request $request)
     {
         $this->movimientoContable = '';
-        if(isset($request->transaccion)){
-            $this->movimientoContable['trs_id'] = $request->transaccion;
-            $this->movimientoContable['trs_nombre'] = $request->transaccion;
-        }
+        $this->movimientoContable['trs_id'] = $transaccionId;
+        $this->movimientoContable['trs_nombre'] = $transaccionId;
 
         // guarda un mensaje en el archivo de log
         Log::info('movimientosContables, Create, Mostrando formulario de creación de movimientos contables');
@@ -197,7 +195,7 @@ class movimiento_contableController extends InfyOmBaseController
 
         Flash::success('Movimiento contable almacenado correctamente.');
 
-        return redirect(route('admin.movimientosContables.show',['id' => $this->movimientoContable->id, 'peticion' => $this->peticion ]) );
+        return redirect(route('admin.transacciones.movimientosContables.show',['transaccionId' => $this->movimientoContable->trs_id, 'id' => $this->movimientoContable->id ]) );
         
     }
 
@@ -306,7 +304,7 @@ class movimiento_contableController extends InfyOmBaseController
         // guarda un mensaje en el archivo de log
         Log::info('movimientosContables, Update, Movimiento contable actualizado correctamente: '.$id, [$request->all()]);
 
-        return redirect(route('admin.transacciones.movimientosContables.show',['transacciones' => $transaccionId, 'id' => $this->movimientoContable->id, 'peticion' => $this->peticion ]) );
+        return redirect(route('admin.transacciones.movimientosContables.show',['transacciones' => $transaccionId, 'id' => $this->movimientoContable->id ]) );
     }
 
     /**

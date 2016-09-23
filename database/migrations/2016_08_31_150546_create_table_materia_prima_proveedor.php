@@ -12,7 +12,7 @@ class CreateTableMateriaPrimaProveedor extends Migration
      */
     public function up()
     {
-        Schema::create('materiaPrima_proveedor', function (Blueprint $table) {
+        Schema::create('materia_prima_proveedor', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('tercero_id')->unsigned();
             $table->foreign('tercero_id')->references('id')->on('tercero');
@@ -28,6 +28,6 @@ class CreateTableMateriaPrimaProveedor extends Migration
      */
     public function down()
     {
-        Schema::drop('materiaPrima_proveedor');
+        Schema::drop('materia_prima_proveedor');
     }
 }

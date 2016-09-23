@@ -2,7 +2,8 @@
 // realiza la carga automatica y dinamica del select para TERCERO / ACTIVO
 $(document).on('change','input[name="TER_ACT"]',function(event){
 	var tipo = $(this).val();
-	var route = "/admin/movimientoContable/lista?" + tipo;
+	var urlDestino = $(this).parent().parent().find('input.urlDestino').val();
+	var route = urlDestino + "?" + tipo;
 	var thisParent =  $(this).parents('form').attr('id');
 	var nombre = "TerceroActivo";
 

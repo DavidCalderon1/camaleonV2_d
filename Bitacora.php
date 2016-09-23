@@ -795,12 +795,14 @@ Laravel proyecto camaleon
 				  || '(SELECT id + 1 FROM "' 
 				  || tablename  
 				  || '" ORDER BY id DESC LIMIT 1), false)';  
-				  RETURN 'Ok';
+				  RETURN;
 				  END;  
 				$body$  LANGUAGE 'plpgsql';
+				
+			- luego de creada se ejecuta la siguente consulta cada vez que se ejecute un seeder:
 
-			select sequence_name, reset_sequence(split_part(sequence_name, '_id_seq',1)) from information_schema.sequences
-					where sequence_schema='public'; 
+				select sequence_name, reset_sequence(split_part(sequence_name, '_id_seq',1)) from information_schema.sequences
+						where sequence_schema='public'; 
 
 
 		

@@ -90,7 +90,7 @@
     {!! Html::script('/assets/js/script_select_dynamic.js') !!}
     {!! Html::script('/assets/js/script_eliminar_por_ajax.js') !!}
     <script>
-    
+    	
         (function() {
             $body = $("body");
             //esta funcion permite, al momento de enviar una peticion ajax, la ejecucion de la pantalla que muestra un gif con tres puntos

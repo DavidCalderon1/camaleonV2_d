@@ -17,6 +17,7 @@
     {!! Form::label('TerceroActivo[]', 'Requerimiento:') !!}
     <br/>
     <div class="btn-group ">
+        {!! Form::hidden('urlDestino', route('admin.transacciones.movimientosContables.lista'), ['class' => 'urlDestino']) !!}
         <label class="btn btn-default">
            {!! Form::radio('TER_ACT', 'TERCERO', false, ['required','class' => 'form-element']) !!}
            TERCERO

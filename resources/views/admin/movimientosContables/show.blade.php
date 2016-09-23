@@ -19,7 +19,7 @@
     	@include('admin.movimientosContables.show_fields')
 
     	{!! Form::open([
-			'route' => ['admin.transacciones.movimientosContables.destroy', $movimientoContable->id], 
+			'route' => ['admin.transacciones.movimientosContables.destroy', $movimientoContable->trs_id, $movimientoContable->id], 
 			'method' => 'delete', 
 			'class' => 'form_delete']) 
 		!!}
@@ -27,7 +27,7 @@
 			@if( isset($peticion) && $peticion == 'normal' )
 				<a href="{{ URL::previous() }}" class="btn btn-default" role="button" id='atras' title='Atras'><i class="glyphicon glyphicon-menu-left"></i> Atras</a>
 			@endif
-				<a href="{!! route('admin.transacciones.movimientosContables.edit', [$movimientoContable->id]) !!}" class='btn btn-primary' id="link_editar" role="button" title='Editar' peticion="{{$peticion}}"><i class="glyphicon glyphicon-edit"></i> Editar</a>
+				<a href="{!! route('admin.transacciones.movimientosContables.edit', [$movimientoContable->trs_id, $movimientoContable->id]) !!}" class='btn btn-primary' id="link_editar" role="button" title='Editar' peticion="{{$peticion}}"><i class="glyphicon glyphicon-edit"></i> Editar</a>
 				{!! Form::button('<i class="glyphicon glyphicon-trash"></i> Eliminar', ['data-toggle' => 'modal', 'data-target' => '#confirmDelete', 'data-title' => 'Eliminar '.$nombre, 'data-message' => '¿Esta seguro de eliminar el registro?', 'class' => 'btn btn-danger', 'id' => 'eliminar', 'title' => "Eliminar ".$nombre, 'peticion' => $peticion ]) !!}
 			</div>
 		{!! Form::close() !!}

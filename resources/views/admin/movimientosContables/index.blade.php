@@ -4,7 +4,7 @@
     <h1 class="pull-left">{{ $title_page=ucfirst('movimientos contables') }}</h1>
 
 	@if( $peticion == "normal" )
-    <a class="btn btn-primary pull-right" style="margin-top: 25px" href="{!! route('admin.transacciones.movimientosContables.create') !!}">Agregar {{ $nombre }}</a>
+    <a class="btn btn-primary pull-right" style="margin-top: 25px" href="{!! route('admin.transacciones.movimientosContables.create', ['transacciones' => $transaccion]) !!}">Agregar {{ $nombre }}</a>
     @endif
 
     <div class="clearfix"></div>

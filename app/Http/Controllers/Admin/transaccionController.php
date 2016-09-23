@@ -157,7 +157,7 @@ class transaccionController extends InfyOmBaseController
 
         Flash::success('transaccion almacenada correctamente.');
 
-        return redirect(route('admin.transacciones.show',['id' => $this->transaccion->id, 'peticion' => $this->peticion ]) );
+        return redirect(route('admin.transacciones.show',['id' => $this->transaccion->id]) );
     }
 
     /**
@@ -228,7 +228,7 @@ class transaccionController extends InfyOmBaseController
         // guarda un mensaje en el archivo de log
         Log::info('transacciones, Update, Transaccion actualizada correctamente: '.$id, [$request->all()]);
 
-        return redirect(route('admin.transacciones.show',['id' => $this->transaccion->id, 'peticion' => $this->peticion ]) );
+        return redirect(route('admin.transacciones.show',['id' => $this->transaccion->id ]) );
     }
 
     /**
@@ -240,12 +240,19 @@ class transaccionController extends InfyOmBaseController
      */
     public function destroy($id)
     {
-        if (empty($this->transacciones)) {
+        if (empty($this->transaccion)) {
             Flash::error('Transaccion no encontrada');
             // guarda un mensaje en el archivo de log
             Log::notice('transacciones, Destroy, Transaccion no encontrada: '.$id);
 
             return redirect(route('admin.transacciones.index'));
+        }
+        if ($this->transaccion->movimiento_contable()->count() > 0 ) {
+            Flash::error('La transacci&oacute;n tiene dependencias, no se puede eliminar.');
+            // guarda un mensaje en el archivo de log
+            Log::error('transacciones, Destroy, La transacci&oacute;n tiene dependencias, no se puede eliminar: '.$id);
+
+            return redirect(route('admin.transacciones.show',['id' => $id]) );
         }
 
         $this->transaccionRepository->delete($id);

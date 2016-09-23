@@ -28,7 +28,7 @@
     <div class="form-group">
     	<h3 class="pull-left">Movimientos contables</h3>
 
-        <a class="btn btn-primary pull-right" style="margin-top: 25px" href="{!! route('admin.transacciones.movimientosContables.create',['transacciones' => $transaccion->id ]) !!}?transaccion={!! $transaccion->id !!}">Agregar movimiento</a>
+        <a class="btn btn-primary pull-right" style="margin-top: 25px" href="{!! route('admin.transacciones.movimientosContables.create',['transacciones' => $transaccion->id ]) !!}">Agregar movimiento</a>
     </div>
     
   </div>
