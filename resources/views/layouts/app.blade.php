@@ -90,12 +90,18 @@
     {!! Html::script('/assets/js/script_select_dynamic.js') !!}
     {!! Html::script('/assets/js/script_eliminar_por_ajax.js') !!}
     <script>
-    	//este script permite, al momento de enviar una peticion ajax, la ejecucion de la pantalla que muestra un gif con tres puntos
+    
         (function() {
             $body = $("body");
+            //esta funcion permite, al momento de enviar una peticion ajax, la ejecucion de la pantalla que muestra un gif con tres puntos
             $(document).on({
                 ajaxStart: function() { $body.addClass("loading");    },
                  ajaxStop: function() { $body.removeClass("loading"); }    
+            });
+
+            //se encarga mostrar la pantalla que muestra un gif con tres puntos cuando se da click en un link que recargue la pagina
+            $(document).on('click','div#menu a',function(e){
+                $body.addClass("loading");
             });
         })();
         /* ESTO OCULTA AUTOMATICAMENTE EL MENU DE BOOTSTRAP AL CARGAR LA PAGINA
