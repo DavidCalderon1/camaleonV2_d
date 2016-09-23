@@ -30,7 +30,7 @@
             <td>{!! $movimientoContable->detalle !!}</td>
             <td>
                 <div class='btn-group'>
-                    <a href="{!! route('admin.movimientosContables.show', [$movimientoContable->id]) !!}" class='btn btn-default btn-sm' id='link_ver' title='Ver'><i class="glyphicon glyphicon-search"></i> Ver</a>
+                    <a href="{!! route('admin.transacciones.movimientosContables.show', ['transacciones' => $transaccion, 'movimientosContables' => $movimientoContable->id]) !!}" class='btn btn-default btn-sm' id='link_ver' title='Ver'><i class="glyphicon glyphicon-search"></i> Ver</a>
                 </div>
             </td>
         </tr>

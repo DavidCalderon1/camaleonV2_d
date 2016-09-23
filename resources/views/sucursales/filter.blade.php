@@ -1,15 +1,14 @@
- <tr>
+ 
     {!! Form::open(['route' => ['sucursales.index'], 'method' => 'get']) !!}
-    <td>
-        <div class="form-group col-sm-6">
+    
+        <div class="fieldbox textbox" id="buscar">
             {!! Form::text('nombre', Input::get('nombre'), ['class' => 'form-control text-uppercase']) !!}
         </div>
-    </td>
-    <td>
+    
+    
         <!-- Submit Field -->
-        <div class="form-group col-sm-12">
+        <div class="button" id="filtro">
             {!! Form::submit('Filtrar', ['class' => 'btn btn-primary']) !!}
         </div>
-    </td>
+    
     {!! Form::close() !!}
-</tr>

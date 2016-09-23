@@ -1,6 +1,5 @@
 <table class="table table-responsive" id="activosFijos-table">
     <thead>
-        <th>Cuenta Aux Id</th>
         <th>Descripcion</th>
         <th>Marca</th>
         <th>Modelo</th>
@@ -12,12 +11,11 @@
     <tbody>
     @foreach($activosFijos as $activoFijo)
         <tr>
-            <td>{!! $activoFijo->cuenta_aux_id !!}</td>
             <td>{!! $activoFijo->descripcion !!}</td>
             <td>{!! $activoFijo->marca !!}</td>
             <td>{!! $activoFijo->modelo !!}</td>
             <td>{!! $activoFijo->fecha_adquisicion !!}</td>
-            <td>{!! $activoFijo->valor_compra !!}</td>
+            <td class="moneda">{!! $activoFijo->valor_compra !!}</td>
             <td>{!! $activoFijo->cantidad !!}</td>
             <td>
                 {!! Form::open(['route' => ['admin.activosFijos.destroy', $activoFijo->id], 'method' => 'delete']) !!}

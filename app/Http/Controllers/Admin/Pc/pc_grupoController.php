@@ -27,7 +27,7 @@ class pc_grupoController extends \App\Http\Controllers\AppBaseController
         $this->pcGrupoRepository = $pcGrupoRepo;
         //filtro que se ejecutara antes de cualquier accion del controlador, se especifica el metodo en el que se desea ejecutar
         $this->beforeFilter('@find',['only' => ['edit','show','update','destroy'] ]);
-        
+        $this->beforeFilter('@mayusculas',['only' => ['store','update'] ]);
         $this->peticion = "normal";
         //va a mostrar la vista 'tables' en el caso de ser una peticion de tipo ajax
         if ($request->ajax() || $request->peticion == "ajax") {
@@ -38,6 +38,14 @@ class pc_grupoController extends \App\Http\Controllers\AppBaseController
     public function find(Route $route){
         //va a buscar los parametros que estan el esta ruta y que son enviados por el recurso, que en este caso es 'grupos' el configurado en las rutas
         $this->pcCuenta = $this->pcGrupoRepository->findWithoutFail( intval( $route->getParameter('grupos') ) );
+    }
+    //metodo mayusculas ejecutado por el metodo beforeFilter dentro del constructor para colocar en mayusculas cada dato
+    public function mayusculas(Route $route, Request $request){
+        //va a obtener los datos recibidos eceptuando algunos, por ejemplo la descripcion la cual no se debe pasar a mayusculas
+        $input = $request->except(['_method','_token','descripcion']);
+        foreach ($input as $key => $value) {
+            $request[$key] = strtoupper($value);
+        }
     }
 
     /**

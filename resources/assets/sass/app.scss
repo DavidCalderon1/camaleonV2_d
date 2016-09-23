@@ -1,11 +1,13 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "fonts.scss";
 
+
 $aldo: Aldo-SemiBold;
 $century: gothic;
 
 @import "main.scss";
 @import "form.scss";
+@import "search.scss";
 
 @import "home.scss";
 
@@ -13,3 +15,12 @@ $century: gothic;
 @import "auth/register.scss";
 @import "auth/password.scss";
 @import "auth/reset.scss";
+
+
+@import "sucursales/sucursales.scss";
+
+@import "materiaPrima/materiaPrima.scss";
+
+@import "cities/cities.scss";
+@import "countries/countries.scss";
+@import "states/states.scss";

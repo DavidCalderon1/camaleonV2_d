@@ -4,12 +4,6 @@
     <p>{!! $activoFijo->id !!}</p>
 </div>
 
-<!-- Cuenta Aux Id Field -->
-<div class="form-group">
-    {!! Form::label('cuenta_aux_id', 'Cuenta Aux Id:') !!}
-    <p>{!! $activoFijo->cuenta_aux_id !!}</p>
-</div>
-
 <!-- Descripcion Field -->
 <div class="form-group">
     {!! Form::label('descripcion', 'Descripcion:') !!}
@@ -37,7 +31,7 @@
 <!-- Valor Compra Field -->
 <div class="form-group">
     {!! Form::label('valor_compra', 'Valor Compra:') !!}
-    <p>{!! $activoFijo->valor_compra !!}</p>
+    <p class="moneda">{!! $activoFijo->valor_compra !!}</p>
 </div>
 
 <!-- Cantidad Field -->

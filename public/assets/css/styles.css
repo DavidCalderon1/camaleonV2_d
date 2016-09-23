@@ -43,7 +43,7 @@ body.loading .modal_loading {
 
 /*--------------------------------------------------------------------*/
 /* ESTILOS DE LOS ROLES Y PERMISOS MOSTRADOS EN LA VISTA DEL USUARIO Y PERMISOS */
-/* APLICA PARA LO QUE SE QUIERA ENCERRAR ENTRE COMILLAS */
+/* APLICA PARA LO QUE SE QUIERA ENCERRAR ENTRE COMILLAS O COLOCAR CARACTERES ESPECIALES */
 /**/
 
 spam.rol:before, .comillas:before {
@@ -51,6 +51,10 @@ spam.rol:before, .comillas:before {
 }
 spam.rol:after, .comillas:after {
     content: close-quote;
+}
+
+.moneda:before {
+    content: "$";
 }
 
 /*--------------------------------------------------------------------*/
@@ -69,4 +73,11 @@ spam.rol:after, .comillas:after {
 /**/
 .oculto{
     display: none !important;
+}
+
+/*--------------------------------------------------------------------*/
+/* ESTILO PARA EL ENLACE DEL LOGO */
+/**/
+a.logo, a.logo:hover{
+    text-decoration: none !important;
 }

@@ -16,6 +16,7 @@
         border-top-right-radius: 1px;
         border-top-left-radius: 1px;
         height: 40px;
+        font-family: 'gothic';
 
         #buton_help{
             position: absolute;
@@ -48,6 +49,7 @@
         box-shadow: 0 1px 3px 0 rgba(0,183,77,.2),0 1px 1px 0 rgba(0,183,77,.14),0 2px 1px -1px rgba(0,183,77,.12);
     }
 
+
     label{
         font-weight: 300;
         position: absolute;
@@ -74,6 +76,23 @@
 
 }
 
+.fieldbox.textarea{
+    
+    @extend .fieldbox.textbox;
+
+    textarea{
+        background-color: transparent;
+        max-width: 100%;
+        min-width: 100%;
+        @extend .shadowfield;
+    }
+
+    textarea.active{
+        box-shadow: 0 1px 3px 0 rgba(0,183,77,.2),0 1px 1px 0 rgba(0,183,77,.14),0 2px 1px -1px rgba(0,183,77,.12);
+    }
+
+}
+
 .fieldbox.textbox.has-error{
 
     span.help-block {
@@ -95,13 +114,68 @@
 
 }
 
-div.datepicker{
+.fieldbox.select{
+
+    select{
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: transparent;
+        @extend .shadowfield;
+    }
+
+    select:focus{
+        box-shadow: 0 1px 3px 0 rgba(0,183,77,.2),0 1px 1px 0 rgba(0,183,77,.14),0 2px 1px -1px rgba(0,183,77,.12);
+    }
+
+    label{
+        font-weight: 300;
+        font-size: 0.8em;
+        position: absolute;
+        top: 0;
+        margin-left: 12px;
+        padding-left: 5px; padding-right: 5px;
+        color:#9e9e9e;
+        background-color: #FFF;
+        -webkit-transition:all .15s;
+        transition:all .15s;
+        cursor: text; 
+    }
+
+    label.active{
+        color: #00b74d;
+    }
+
+}
+
+.fieldbox.date{
     
-    @extend .shadowfield;
-    font-family: 'gothic' !important;
+    .datepicker{
+        @extend .shadowfield;
+        font-family: 'gothic' !important;
+    }
+
+    input{
+        background-color: transparent;
+        @extend .shadowfield;
+    }
 
     td.day.old, td.day.new{
         color: #9E9E9E;
+    }
+
+    label{
+        font-weight: 300;
+        font-size: 0.8em;
+        position: absolute;
+        top: 0;
+        margin-left: 12px;
+        padding-left: 5px; padding-right: 5px;
+        color:#9e9e9e;
+        background-color: #FFF;
+        -webkit-transition:all .15s;
+        transition:all .15s;
+        cursor: text; 
     }
 
 }
@@ -159,40 +233,23 @@ div.datepicker{
 
 }
 
-.bootstrap-select{
-
-    @extend .fieldbox;
-
-    .btn{
-        @extend .shadowfield;
-    }
-
-    div.dropdown-menu{
-
-        @extend .shadowfield;
-
-        .bs-searchbox input{
-            @extend .shadowfield;
-        }
-
-    }
-
-}
-
 .button{
     
     @extend .fieldbox;
 
-    button{
+    button, input, a{
         width: 100%;
         border: none;
         border-radius: 2px;
         box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
-    }
-
-    a{
-        width: 100%;
-        text-align: center;
+        text-align:center;
     }
 
 }
+
+
+
+
+
+
+

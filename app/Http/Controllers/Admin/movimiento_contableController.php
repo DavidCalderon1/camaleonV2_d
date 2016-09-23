@@ -39,6 +39,7 @@ class movimiento_contableController extends InfyOmBaseController
         $this->movimientoContableRepository = $movimientoContableRepo;
         //filtro que se ejecutara antes de cualquier accion del controlador, se especifica el metodo en el que se desea ejecutar
         $this->beforeFilter('@find',['only' => ['edit','show','update','destroy'] ]);
+        $this->beforeFilter('@mayusculas',['only' => ['store','update'] ]);
         $this->beforeFilter('@findTerceroActivo',['only' => ['store','update'] ]);
         $this->beforeFilter('@selection',['only' => ['create','edit'] ]);
         $this->beforeFilter('@TerceroActivo',['only' => ['edit'] ]);
@@ -52,6 +53,15 @@ class movimiento_contableController extends InfyOmBaseController
     public function find(Route $route){
         //va a buscar los parametros que estan el esta ruta y que son enviados por el recurso, que en este caso es 'movimientosContables' el configurado en las rutas
         $this->movimientoContable = $this->movimientoContableRepository->findWithoutFail( intval( $route->getParameter('movimientosContables') ) );
+        //->where('trs_id', intval( $route->getParameter('transacciones') ));
+    }
+    //metodo mayusculas ejecutado por el metodo beforeFilter dentro del constructor para colocar en mayusculas cada dato
+    public function mayusculas(Route $route, Request $request){
+        //va a obtener los datos recibidos eceptuando algunos, por ejemplo la descripcion la cual no se debe pasar a mayusculas
+        $input = $request->except(['_method','_token','TerceroActivo','detalle']);
+        foreach ($input as $key => $value) {
+            $request[$key] = strtoupper($value);
+        }
     }
 
     //metodo find ejecutado por el metodo beforeFilter dentro del constructor
@@ -145,12 +155,13 @@ class movimiento_contableController extends InfyOmBaseController
         $this->movimientoContable = '';
         if(isset($request->transaccion)){
             $this->movimientoContable['trs_id'] = $request->transaccion;
+            $this->movimientoContable['trs_nombre'] = $request->transaccion;
         }
 
         // guarda un mensaje en el archivo de log
         Log::info('movimientosContables, Create, Mostrando formulario de creación de movimientos contables');
         return view('admin.movimientosContables.create', ['peticion' => $this->peticion, 'ruta' => 'movimientosContables', 'nombre' => 'movimiento contable', 'listTransaccion' => $this->listTransaccion, 'listSucursal' => $this->listSucursal, 'listTerceroActivo' => $this->listTerceroActivo, 'accion' => 'create', 'movimientoContable' => $this->movimientoContable]);
-    }
+    } 
 
     /**
      * Store a newly created movimiento_contable in storage.
@@ -161,16 +172,24 @@ class movimiento_contableController extends InfyOmBaseController
      */
     public function store(Createmovimiento_contableRequest $request)
     {
-        $input = $request->all();
+        // realiza la validacion de las reglas antes de actualizar
+        $this->validate($request, [
+            'TER_ACT' => 'required',
+            'TerceroActivo' => 'required'
+        ]);
 
-        $this->movimientoContable = $this->movimientoContableRepository->create($input);
+        $input = $request->all();
         
-        if($input->TER_ACT == 'TERCERO'){
+        $this->movimientoContable = $this->movimientoContableRepository->create($input);
+
+        if($request->input('TER_ACT') == 'TERCERO' && count($this->terceros) > 0 ){
             //crea los registros para las relaciones de los terceros
             $this->movimientoContable->tercero()->sync($this->terceros);
-        }elseif($input->TER_ACT == 'ACTIVO'){
+        }elseif($request->input('TER_ACT') == 'ACTIVO' && count($this->activosFijos) > 0){
             //crea los registros para las relaciones de los activos fijos
             $this->movimientoContable->activo_fijo()->sync($this->activosFijos);
+        }else{
+
         }
 
         // guarda un mensaje en el archivo de log
@@ -179,6 +198,7 @@ class movimiento_contableController extends InfyOmBaseController
         Flash::success('Movimiento contable almacenado correctamente.');
 
         return redirect(route('admin.movimientosContables.show',['id' => $this->movimientoContable->id, 'peticion' => $this->peticion ]) );
+        
     }
 
     /**
@@ -188,18 +208,25 @@ class movimiento_contableController extends InfyOmBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show($transaccionId, $id)
     {
+        
         if (empty($this->movimientoContable)) {
             Flash::error('Movimiento contable no encontrado');
             // guarda un mensaje en el archivo de log
             Log::notice('movimientosContables, Show, Movimiento contable no encontrado, id: '.$id);
 
-            return redirect(route('admin.movimientosContables.index'));
+            return redirect(route('admin.transacciones.movimientosContables.index', ['transacciones' => $transaccionId] ));
         }
         //valida si tiene activos fijos o terceros y los agrega en una variable llamada terceroActivo
         if(count($this->movimientoContable->tercero)>0 ){
-            $this->movimientoContable['terceroActivo'] = Tercero::ListaTerceros()->get();
+            //$this->movimientoContable['terceroActivo'] = $this->movimientoContable->tercero;
+            $terceroId = '';
+            foreach($this->movimientoContable->tercero as $terceroData){
+                $terceroId = $terceroData->id;
+            }
+            $this->movimientoContable['terceroActivo'] = Tercero::ListaTerceros()->where('tercero.id',$terceroId)->get();
+
         }elseif(count($this->movimientoContable->activo_fijo)>0 ){
             $this->movimientoContable['terceroActivo'] = $this->movimientoContable->activo_fijo;
         }
@@ -217,14 +244,14 @@ class movimiento_contableController extends InfyOmBaseController
      *
      * @return Response
      */
-    public function edit($id)
+    public function edit($transaccionId, $id)
     {
         if (empty($this->movimientoContable)) {
             Flash::error('Movimiento contable no encontrado');
             // guarda un mensaje en el archivo de log
             Log::notice('movimientosContables, Edit, Movimiento contable no encontrado: '.$id);
 
-            return redirect(route('admin.movimientosContables.index'));
+            return redirect(route('admin.transacciones.movimientosContables.index', ['transacciones' => $transaccionId] ));
         }
         //agrega el nombre de la cuenta auxiliar
         $this->movimientoContable['cuenta_fk_nombre'] = $this->movimientoContable->pc_cuentaauxiliar->codigo . ' - ' . $this->movimientoContable->pc_cuentaauxiliar->nombre;
@@ -233,6 +260,7 @@ class movimiento_contableController extends InfyOmBaseController
         Log::info('movimientosContables, Edit, Mostrando edición de movimiento contable: '.$id);
 
         return view('admin.movimientosContables.edit', ['peticion' => $this->peticion, 'ruta' => 'movimientosContables', 'nombre' => 'movimiento contable', 'movimientoContable' => $this->movimientoContable, 'listTransaccion' => $this->listTransaccion, 'listSucursal' => $this->listSucursal, 'listTerceroActivo' => $this->listTerceroActivo, 'accion' => 'edit']);
+
     }
 
     /**
@@ -243,28 +271,32 @@ class movimiento_contableController extends InfyOmBaseController
      *
      * @return Response
      */
-    public function update($id, Updatemovimiento_contableRequest $request)
+    public function update($transaccionId, $id, Updatemovimiento_contableRequest $request)
     {
-
+        
         if (empty($this->movimientoContable)) {
             Flash::error('Movimiento contable no encontrado');
             // guarda un mensaje en el archivo de log
             Log::notice('movimientosContables, Update, Movimiento contable no encontrado: '.$id);
 
-            return redirect(route('admin.movimientosContables.index'));
+            return redirect(route('admin.transacciones.movimientosContables.index', ['transacciones' => $transaccionId] ));
         }
 
-        if($request->TER_ACT == 'TERCERO'){
-            if(count($this->movimientoContable->activo_fijo)>0 ){
-                $this->movimientoContable->activo_fijo()->sync([]);
-            }
+        // realiza la validacion de las reglas antes de actualizar
+        $this->validate($request, [
+            'TER_ACT' => 'required',
+            'TerceroActivo' => 'required'
+        ]);
+
+        if($request->input('TER_ACT') == 'TERCERO'){
+            //crea o elimina los registros para las relaciones de los terceros
+            $this->movimientoContable->activo_fijo()->sync([]);
             //crea los registros para las relaciones de los terceros
             $this->movimientoContable->tercero()->sync($this->terceros);
-        }elseif($request->TER_ACT == 'ACTIVO'){
-            if(count($this->movimientoContable->tercero)>0 ){
-                $this->movimientoContable->tercero()->sync([]);
-            }
-            //crea los registros para las relaciones de los activos fijos
+        }elseif($request->input('TER_ACT') == 'ACTIVO'){
+            //crea o elimina los registros para las relaciones de los terceros
+            $this->movimientoContable->tercero()->sync([]);
+            //crea o elimina los registros para las relaciones de los activos fijos
             $this->movimientoContable->activo_fijo()->sync($this->activosFijos);
         }
         
@@ -274,7 +306,7 @@ class movimiento_contableController extends InfyOmBaseController
         // guarda un mensaje en el archivo de log
         Log::info('movimientosContables, Update, Movimiento contable actualizado correctamente: '.$id, [$request->all()]);
 
-        return redirect(route('admin.movimientosContables.show',['id' => $this->movimientoContable->id, 'peticion' => $this->peticion ]) );
+        return redirect(route('admin.transacciones.movimientosContables.show',['transacciones' => $transaccionId, 'id' => $this->movimientoContable->id, 'peticion' => $this->peticion ]) );
     }
 
     /**
@@ -284,14 +316,14 @@ class movimiento_contableController extends InfyOmBaseController
      *
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($transaccionId, $id)
     {
         if (empty($this->movimientoContable)) {
             Flash::error('Movimiento contable no encontrado');
             // guarda un mensaje en el archivo de log
             Log::notice('movimientosContables, Destroy, Movimiento contable no encontrado: '.$id);
 
-            return redirect(route('admin.movimientosContables.index'));
+            return redirect(route('admin.transacciones.movimientosContables.index', ['transacciones' => $transaccionId] ));
         }
 
         $this->movimientoContableRepository->delete($id);
@@ -300,6 +332,6 @@ class movimiento_contableController extends InfyOmBaseController
         // guarda un mensaje en el archivo de log
         Log::warning('movimientosContables, Destroy, Movimiento contable eliminado correctamente: '.$id);
 
-        return redirect(route('admin.movimientosContables.index'));
+        return redirect(route('admin.transacciones.movimientosContables.index', ['transacciones' => $transaccionId] ));
     }
 }

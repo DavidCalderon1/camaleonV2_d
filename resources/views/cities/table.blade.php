@@ -1,30 +1,41 @@
-<table class="table table-responsive" id="cities-table">
-    <thead>
-        <th>Pais</th>
-        <th>Departamento</th>
-        <th>Ciudad</th>
-        <th>Codigo Ref</th>
-        <th>Action</th>
-    </thead>
-    <tbody>
-        @include('cities.filter')
+@include('cities.filter')
+<div class="clearfix"></div>
+
+<div class="result">
+    <h6>RESULTADOS</h6>
+
         @foreach($cities as $city)
-            <tr>
-                <td>{!! $city->state->country->nombre !!}</td>
-                <td>{!! $city->state->nombre !!}</td>
-                <td>{!! $city->nombre !!}</td>
-                <td>{!! $city->state->country->codigo_ref.$city->state->codigo_ref.$city->codigo_ref !!}</td>
-                <td>
+            <div class="resultbox">
+
+                <div class="field">
                     {!! Form::open(['route' => ['cities.destroy', $city->id], 'method' => 'delete']) !!}
-                    <div class='btn-group'>
-                        <a href="{!! route('cities.show', [$city->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
+                        <a href="{!! route('cities.show', [$city->id]) !!}"><i class="iconfont icon-view"></i></a>
                         <!-- <a href="{!! route('cities.edit', [$city->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a> -->
                         <!-- {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!} -->
-                    </div>
                     {!! Form::close() !!}
-                </td>
-            </tr>
+                </div>
+
+                <div class="field" id="pais">
+                    <label>País</label>
+                    {!! $city->state->country->nombre !!}
+                </div>
+
+                <div class="field" id="departamento">
+                    <label>Departamento</label>
+                    {!! $city->state->nombre !!}
+                </div>
+
+                <div class="field" id="ciudad">
+                    <label>Ciudad</label>
+                    {!! $city->nombre !!}
+                </div>
+                
+                <div class="field" id="codigo">
+                    <label>Código</label>
+                    {!! $city->state->country->codigo_ref.$city->state->codigo_ref.$city->codigo_ref !!}
+                </div>
+                
+            </div>
         @endforeach
-    </tbody>
-</table>
+    </div>
 {!! $cities->appends(Input::except('page'))->render() !!}

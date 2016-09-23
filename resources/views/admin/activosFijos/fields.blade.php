@@ -1,9 +1,4 @@
 
-<!-- Cuenta Aux Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('cuenta_aux_id', 'Cuenta Aux Id:') !!}
-    {!! Form::number('cuenta_aux_id', null, ['class' => 'form-control']) !!}
-</div>
 
 <!-- Descripcion Field -->
 <div class="form-group col-sm-12 col-lg-12">

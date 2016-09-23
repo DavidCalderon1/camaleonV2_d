@@ -1,0 +1,66 @@
+#pais{
+
+	/*crear pais y editar*/
+
+	.contenedor{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-8;
+		@extend .col-lg-8;
+
+		.fieldbox.textbox{
+			@extend .col-sm-6;
+		}
+
+		.button{
+			@extend .col-sm-4;
+		}
+
+		#save{
+			@extend .col-sm-offset-2;
+		}
+
+	}
+
+	/*index pais*/
+	.contenedor.index{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		.fieldbox#filtro{
+			@extend .col-xs-12;
+			@extend .col-sm-9;
+		}
+		.fieldbox#button_filtro{
+			@extend .col-xs-12;
+			@extend .col-sm-3;
+		}
+		.field#codigo{
+			@extend .col-xs-12;
+			@extend .col-sm-3;
+		}
+		.field#pais{
+			@extend .col-xs-12;
+			@extend .col-sm-9;
+		}
+	}
+	
+
+	/*vista pais*/
+	.contenedor.show{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-8;
+		@extend .col-lg-8;
+		.field#id{
+			@extend .col-xs-12;
+		}
+		.field{
+			@extend .col-xs-12;
+			@extend .col-sm-6;
+		} 
+		.button{
+			@extend .col-sm-4;
+		}
+	}
+
+}

@@ -1,0 +1,95 @@
+#materiaPrima{
+
+	/*crear departamento y editar*/
+
+	.contenedor{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-8;
+		@extend .col-lg-8;
+
+		.fieldbox.textbox , .fieldbox.select{
+			@extend .col-sm-12;
+			@extend .col-md-6;
+		}
+
+		
+		#textarea{
+			@extend .col-sm-12;
+			
+		}
+
+		.button{
+			@extend .col-sm-4;
+		}
+
+		#save{
+			@extend .col-sm-offset-2;
+		}
+
+		
+	}
+
+	/*index departamento*/
+
+	.contenedor.index{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+
+		.field{
+			@extend .col-xs-12;
+		}
+
+		.field#unidad{
+			@extend .col-xs-12;
+		}
+
+		.field#codigo{
+			@extend .col-sm-3;
+		} 
+
+		.field#nombreFiltro{
+			@extend .col-sm-8;
+		} 
+		
+		.fieldbox#codigo, .fieldbox#nombre{
+			@extend .col-sm-6;
+			@extend .col-md-4;
+		}
+
+		.button#filtro{
+			@extend .col-sm-6;
+			@extend .col-sm-offset-3;
+			@extend .col-md-4;
+			@extend .col-md-offset-0;
+		}
+		
+	}
+	
+
+	/*vista departamento*/
+	.contenedor.show{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-8;
+		@extend .col-lg-8;
+
+		.field{
+			@extend .col-sm-6;
+		}
+		
+		.field#id{
+			@extend .col-xs-12;
+		}
+
+		.field#caracteristica{
+			@extend .col-xs-12;
+		}
+
+		.button{
+			@extend .col-sm-4;
+		}
+
+	}	
+
+}

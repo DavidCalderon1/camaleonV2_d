@@ -1,0 +1,128 @@
+#sucursal{
+	.contenedor{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-8;
+		@extend .col-lg-9;
+		
+		.fieldbox.textbox#nombre{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-12;
+			@extend .col-lg-12;
+		}
+
+		.fieldbox.select#pais{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-12;
+			@extend .col-lg-4;
+		}
+
+		.fieldbox.select#departamento{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-6;
+			@extend .col-lg-4;
+		}
+
+		.fieldbox.select#ciudad{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-6;
+			@extend .col-lg-4;
+		}
+
+		.fieldbox.textbox#direccion{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-6;
+			@extend .col-lg-6;
+		}
+
+		.fieldbox.textbox#telefono{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-6;
+			@extend .col-lg-6;
+		}
+
+		.button{
+			@extend .col-sm-4;
+		}
+
+		#save{
+			@extend .col-sm-offset-2;
+		}
+
+
+	}
+
+
+
+	.contenedor.index{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-10;
+		@extend .col-lg-10;
+
+			.field#iconview{
+				@extend .col-xs-12;
+			}
+			
+			.field#nombre{
+				@extend .col-xs-12;
+			}
+
+			.field{
+				@extend .col-xs-12;
+				@extend .col-sm-6;
+			}
+
+			.fieldbox.textbox#buscar{
+				@extend .col-sm-9;
+			}
+
+			.button#filtro{
+				@extend .col-sm-3;
+			}
+		
+		}
+
+	.contenedor.show{
+
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-7;
+		@extend .col-lg-7;
+
+		.field#id, .field#nombre{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-12;
+			@extend .col-lg-12;
+		}
+
+		.field.loc{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-4;
+		}
+
+		.field{
+			@extend .col-xs-12;
+			@extend .col-sm-6;
+		}
+
+		.button{
+			@extend .col-sm-4;
+		}
+	}
+		
+}
+
+
+		
+	
+
+

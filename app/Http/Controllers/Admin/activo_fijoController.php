@@ -20,6 +20,15 @@ class activo_fijoController extends InfyOmBaseController
     public function __construct(activo_fijoRepository $activoFijoRepo)
     {
         $this->activoFijoRepository = $activoFijoRepo;
+        $this->beforeFilter('@mayusculas',['only' => ['store','update'] ]);
+    }
+    //metodo mayusculas ejecutado por el metodo beforeFilter dentro del constructor para colocar en mayusculas cada dato
+    public function mayusculas(Route $route, Request $request){
+        //va a obtener los datos recibidos eceptuando algunos, por ejemplo la descripcion la cual no se debe pasar a mayusculas
+        $input = $request->except(['_method','_token','descripcion']);
+        foreach ($input as $key => $value) {
+            $request[$key] = strtoupper($value);
+        }
     }
 
     /**

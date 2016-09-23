@@ -52,7 +52,8 @@ $("#search_list").submit(function(e){
 
 //de acuerdo al tipo de busqueda, realiza la peticion y muestra el resultado
 // es usado por varios formularios: para cargar formularios de ver, editar o crear 
-function CargaForm(route,results,search = ""){
+function CargaForm(route,results,search){
+	search = search || "";
 	results.empty();
 	$.get(route + search, function(res){
 		results.append(res);
@@ -82,7 +83,8 @@ $("#lista select").each(function(){
 
 // envia la informacion del formulario 
 // es usado por varios formularios: para cargar formularios de ver, editar o crear 
-function formEnviar(form,results,type,mostrarMsg = 'no'){
+function formEnviar(form,results,type,mostrarMsg){
+	mostrarMsg = mostrarMsg || 'no';
 	//var token = $('.form_delete input[name="_token"]').val();
 	var route = $(form).attr('action');
 	var inputData = $(form).serialize();

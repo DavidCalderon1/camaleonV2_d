@@ -1,34 +1,34 @@
-<table class="table table-responsive" id="sucursales-table">
-    <thead>
-        <th>Nombre</th>
-        <th>Pais</th>
-        <th>Departamento</th>
-        <th>Ciudad</th>
-        <th>Direccion</th>
-        <th>Telefono</th>
-        <th colspan="3">Action</th>
-    </thead>
-    <tbody>
-        @include('sucursales.filter')
+
+@include('sucursales.filter')
+<div class="clearfix"></div>
+<div class="result">
+    <h6>RESULTADOS</h6>
     @foreach($sucursales as $sucursal)
-        <tr>
-            <td>{!! $sucursal->nombre !!}</td>
-            <td>{!! $sucursal->city->state->country->nombre !!}</td>
-            <td>{!! $sucursal->city->state->nombre !!}</td>
-            <td>{!! $sucursal->city->nombre !!}</td>
-            <td>{!! $sucursal->direccion !!}</td>
-            <td>{!! $sucursal->telefono !!}</td>
-            <td>
-                {!! Form::open(['route' => ['sucursales.destroy', $sucursal->id], 'method' => 'delete']) !!}
-                <div class='btn-group'>
-                    <a href="{!! route('sucursales.show', [$sucursal->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <!-- <a href="{!! route('sucursales.edit', [$sucursal->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
-                    {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}-->
-                </div>
-                {!! Form::close() !!}
-            </td>
-        </tr>
-    @endforeach
-    </tbody>
-</table>
+    <div class="resultbox">
+        <div class="field" id="iconview">
+            {!! Form::open(['route' => ['sucursales.destroy', $sucursal->id], 'method' => 'delete']) !!}
+            <a href="{!! route('sucursales.show', [$sucursal->id]) !!}" class="iconfont icon-view"></a>
+            <!-- <a href="{!! route('sucursales.edit', [$sucursal->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
+            {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}-->
+            {!! Form::close() !!}
+
+        </div>
+        <div class="field" id="nombre">
+            <label>Nombre</label>
+            {!! $sucursal->nombre !!}
+        </div>
+        <div class="field">
+            <label>Ciudad</label>
+            {!! $sucursal->city->nombre !!}
+        </div>
+        <div class="field">
+            <label>Direccion</label>
+            {!! $sucursal->direccion !!}
+        </div>               
+    </div>
+     @endforeach
+</div>
+    
+        
+            
 {!! $sucursales->appends(Input::except('page'))->render() !!}

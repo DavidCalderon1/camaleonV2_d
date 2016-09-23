@@ -21,7 +21,8 @@ $("#search_param").submit(function(e){
 
 //de acuerdo al tipo de busqueda, realiza la peticion y muestra el resultado
 // es usado por varios formularios: para cargar formularios de ver, editar o crear 
-function CargaForm(route,results,search = ""){
+function CargaForm(route,results,search){
+	search = search || "";
 	results.empty();
 	$.get(route + search, function(res){
 		results.append(res);

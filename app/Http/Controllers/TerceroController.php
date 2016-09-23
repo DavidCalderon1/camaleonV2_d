@@ -25,6 +25,7 @@ use Log;
 class TerceroController extends InfyOmBaseController
 {
     /** @var  TerceroRepository */
+    private $id;
     private $tercero;
     private $persona;
     private $empresa;
@@ -119,8 +120,7 @@ class TerceroController extends InfyOmBaseController
         }
 
         Flash::success('Tercero saved successfully.');
-
-        return redirect(route('terceros.index'));
+        return redirect(route('terceros.show', [$this->id]));
     }
 
     /**
@@ -144,6 +144,7 @@ class TerceroController extends InfyOmBaseController
         $persona = $this->persona->create($attributes);
         $tercero->personas()->attach($persona->id);
         Log::info('Terceros, storePersona, Se almaceno El tercero: ' . $tercero->id . ', con  la persona: ' . $persona->id, [$attributes]);
+        $this->id = $tercero->id;
         return false;
     }
 
@@ -168,6 +169,7 @@ class TerceroController extends InfyOmBaseController
         $empresa = $this->empresa->create($attributes);
         $tercero->empresas()->attach($empresa->id);
         Log::info('Tercero, storeEmpresa, Se almaceno El tercero: ' . $tercero->id . ', con  la empresa: ' . $empresa->id, [$attributes]);
+        $this->id = $tercero->id;
         return false;
     }
 
@@ -271,9 +273,8 @@ class TerceroController extends InfyOmBaseController
             }
         }
 
-        Flash::success('Tercero updated successfully.');
-
-        return redirect(route('terceros.index'));
+        Flash::success('Tercero saved successfully.');
+        return redirect(route('terceros.show', [$this->id]));
     }
 
     /**
@@ -307,6 +308,7 @@ class TerceroController extends InfyOmBaseController
         $persona->fill($attributes);
         $persona->save();
         Log::info('Terceros, updatePersona, Se editó el tercero: ' . $tercero_id . ', con  la persona: ' . $persona->id, [$attributes]);
+        $this->id = $tercero->id;
         return false;
     }
 
@@ -341,6 +343,7 @@ class TerceroController extends InfyOmBaseController
         $empresa->fill($attributes);
         $empresa->save();
         Log::info('Tercero, updateEmpresa, Se editó el tercero: ' . $tercero_id . ', con  la empresa: ' . $empresa->id, [$attributes]);
+        $this->id = $tercero->id;
         return false;
     }
 

@@ -1,18 +1,16 @@
 @extends('layouts.app')
 @section('content')
 	<div class="row">
-        <div class="col-sm-12">
-            <h1 class="pull-left">{{ $title_page='Busqueda de transacción' }}</h1>
-        </div>
+        <h1 class="pull-left">{{ $title_page='Búsqueda de transacción' }}</h1>
     </div>
 	@include('flash::message')
     @include('core-templates::common.errors')
-	<div class="row ver" id="parametros">
+	<div class="ver" id="parametros">
 		<div class="row">
 			<form class="navbar-form navbar-left" role="search" id="search_param" >
 			<!--action="{ { url('home/searchredirect') } }"-->
 				<div class="form-group">
-					{!! Form::label('tipo_busqueda', 'Tipo de busqueda: ') !!}
+					{!! Form::label('tipo_busqueda', 'Tipo de búsqueda: ') !!}
 					{!! Form::select('tipo_busqueda', config('options.trans_busq_types'), null, ['class' => 'form-control', 'id' => 'tipo_busqueda', 'required'])!!}
 					{!! Form::date('fecha', null, ['id' => 'busqueda', 'class' => 'form-control oculto text-uppercase', 'placeholder' => 'Busqueda ...', 'disabled' => 'disabled', 'required']) !!}
 					{!! Form::select('tdc_id', $listTipoDocC, null, ['id' => 'busqueda', 'class' => 'form-control oculto', 'placeholder' => 'Busqueda ...', 'disabled' => 'disabled', 'required'])!!}
@@ -26,7 +24,7 @@
 		<hr>
 		<div class="row">
 			<div id="msg"></div>
-			<div class="row results transaccion_results" name="transaccion_results" id="results">
+			<div class="results transaccion_results" name="transaccion_results" id="results">
 				
 			</div>
 		</div>

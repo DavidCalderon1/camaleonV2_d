@@ -1,0 +1,82 @@
+#ciudad{
+
+	/*crear ciudad y editar*/
+
+	.contenedor{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-8;
+		@extend .col-lg-8;
+
+		.fieldbox.textbox,.fieldbox.select{
+			@extend .col-sm-6;
+		}
+
+		.button{
+			@extend .col-sm-4;
+		}
+
+		#save{
+			@extend .col-sm-offset-2;
+		}
+		
+	}
+
+	/*index ciudad*/
+
+	.contenedor.index{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+
+		.fieldbox.textbox{
+			@extend .col-sm-6;
+			@extend .col-md-4;
+		}
+		.button#filtro{
+			@extend .col-sm-6;
+			@extend .col-md-4;
+			@extend .col-sm-offset-0;
+			@extend .col-md-offset-4;
+		}
+
+		.field#codigo{
+			@extend .col-sm-3;
+		}
+
+
+		.field#departamento, .field#pais{
+			@extend .col-xs-12;
+		}
+
+		.field#ciudad{
+			@extend .col-sm-9;
+		}
+
+		
+
+	}
+	
+
+	/*vista ciudad*/
+	.contenedor.show{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-7;
+		@extend .col-lg-7;
+
+		.field#id{
+			@extend .col-sm-12;
+		}
+
+		.field{
+			@extend .col-sm-6;
+		}
+
+		.button{
+			@extend .col-sm-4;
+		}
+	}
+
+	
+
+}

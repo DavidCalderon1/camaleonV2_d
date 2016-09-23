@@ -4,9 +4,7 @@
 
     @include('flash::message')
 	<div class="row clearfix">
-        <div class="col-sm-12">
-            <h1 class="pull-left">{{ $title_page=ucfirst($nombre) }}</h1>
-        </div>
+        <h1 class="pull-left">{{ $title_page=ucfirst($nombre) }}</h1>
     </div>
 	
     @if($peticion != "normal")
@@ -21,7 +19,7 @@
 			'method' => 'delete', 
 			'class' => 'form_delete']) 
 		!!}
-			<div class="form-group col-sm-12">
+			<div class="form-group">
 			@if( isset($peticion) && $peticion == 'normal' )
 				<a href="{{ URL::previous() }}" class="btn btn-default" role="button" id='atras' title='Atras'><i class="glyphicon glyphicon-menu-left"></i> Atras</a>
 			@endif

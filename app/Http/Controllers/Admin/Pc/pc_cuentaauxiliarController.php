@@ -27,6 +27,7 @@ class pc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControlle
         $this->pcCuentaauxiliarRepository = $pcCuentaauxiliarRepo;
         //filtro que se ejecutara antes de cualquier accion del controlador, se especifica el metodo en el que se desea ejecutar
         $this->beforeFilter('@find',['only' => ['edit','show','update','destroy'] ]);
+        $this->beforeFilter('@mayusculas',['only' => ['store','update'] ]);
         $this->peticion = "normal";
         //va a mostrar la vista 'tables' en el caso de ser una peticion de tipo ajax
         if ($request->ajax() || $request->peticion == "ajax") {
@@ -37,6 +38,14 @@ class pc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControlle
     public function find(Route $route){
         //va a buscar los parametros que estan el esta ruta y que son enviados por el recurso, que en este caso es 'cuentasauxiliares' el configurado en las rutas
         $this->pcCuenta = $this->pcCuentaauxiliarRepository->findWithoutFail( intval( $route->getParameter('cuentasauxiliares') ) );
+    }
+    //metodo mayusculas ejecutado por el metodo beforeFilter dentro del constructor para colocar en mayusculas cada dato
+    public function mayusculas(Route $route, Request $request){
+        //va a obtener los datos recibidos eceptuando algunos, por ejemplo la descripcion la cual no se debe pasar a mayusculas
+        $input = $request->except(['_method','_token','descripcion']);
+        foreach ($input as $key => $value) {
+            $request[$key] = strtoupper($value);
+        }
     }
 
     /**
@@ -210,6 +219,14 @@ class pc_cuentaauxiliarController extends \App\Http\Controllers\AppBaseControlle
             Log::notice('Cuentas auxiliares, Destroy, cuenta auxiliar no encontrada: '.$id);
 
             return redirect(route('admin.pc.cuentasauxiliares.index'));
+        }
+
+        if ($this->pcCuenta->movimiento_contable()->count() > 0 ) {
+            Flash::error('La cuenta auxiliar tiene dependencias, no se puede eliminar.');
+            // guarda un mensaje en el archivo de log
+            Log::error('Cuentas auxiliares, Destroy, La cuenta auxiliar tiene dependencias, no se puede eliminar: '.$id);
+
+            return redirect(route('admin.pc.cuentasauxiliares.show',['id' => $id, 'peticion' => $this->peticion]) );
         }
 
         $this->pcCuentaauxiliarRepository->delete($id);

@@ -2,9 +2,7 @@
 
 @section('content')
     <div class="row clearfix">
-        <div class="col-sm-12">
-            <h1 class="pull-left">{{ $title_page='Crear '.$nombre }}</h1>
-        </div>
+        <h1 class="pull-left">{{ $title_page='Crear '.$nombre }}</h1>
     </div>
 
     @include('flash::message')
@@ -14,7 +12,7 @@
     @endif
 
     <div class="row">
-        {!! Form::model($movimientoContable, ['route' => 'admin.movimientosContables.store', 'id' => 'form_update', 'class' => 'form_update']) !!}
+        {!! Form::model($movimientoContable, ['route' => 'admin.transacciones.movimientosContables.store', 'id' => 'form_update', 'class' => 'form_update']) !!}
 
             @include('admin.movimientosContables.fields')
 

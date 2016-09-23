@@ -86,7 +86,7 @@ class StateController extends InfyOmBaseController
             Log::info('Departamento, Store, Se almaceno el departamento: '.$state->id, [$input]);
             Flash::success('State saved successfully.');
 
-            return redirect(route('states.index'));
+            return redirect(route('states.show', [$state->id]));
         }
     }
 
@@ -167,7 +167,7 @@ class StateController extends InfyOmBaseController
             Log::info('Departamento, Update, Se edito el departamento: ' . $id, [$input]);
             Flash::success('State updated successfully.');
 
-            return redirect(route('states.index'));
+            return redirect(route('states.show', [$state->id]));
         }
     }
 

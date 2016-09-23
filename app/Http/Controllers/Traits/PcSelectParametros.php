@@ -82,9 +82,9 @@ class PcSelectParametros{
 			"placeholder":"Seleccione un movimiento contable"}
 		,"pc":
 			{"id":"planCuentas",
-			"fkId":"subcuenta_id",
-			"fkNombre":"Subcuenta",
-			"prevKey":"subcuentas",
+			"fkId":"cntaux_id",
+			"fkNombre":"Cuenta auxiliar",
+			"prevKey":"cuentasauxiliares",
 			"label":"Plan de cuentas",
 			"list":"",
 			"para":"",

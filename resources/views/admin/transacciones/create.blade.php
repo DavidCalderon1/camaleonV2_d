@@ -2,9 +2,7 @@
 
 @section('content')
     <div class="row clearfix">
-        <div class="col-sm-12">
-            <h1 class="pull-left">{{ $title_page='Crear '.$nombre }}</h1>
-        </div>
+        <h1 class="pull-left">{{ $title_page='Crear '.$nombre }}</h1>
     </div>
 
     @include('flash::message')

@@ -795,8 +795,29 @@ Laravel proyecto camaleon
 				  || '(SELECT id + 1 FROM "' 
 				  || tablename  
 				  || '" ORDER BY id DESC LIMIT 1), false)';  
+				  RETURN 'Ok';
 				  END;  
 				$body$  LANGUAGE 'plpgsql';
 
 			select sequence_name, reset_sequence(split_part(sequence_name, '_id_seq',1)) from information_schema.sequences
 					where sequence_schema='public'; 
+
+
+		
+- instalar configurar el uso de sass y elixir
+	https://laravel.com/docs/5.3/elixir
+	- instalar nodejs 
+		http://nodejs.org/en/download/
+	- ejecutar en cmd como administrador en la raiz del proyecto
+		- Instalar Gulp
+			npm install --global gulp-cli
+		- Instalar Laravel Elixir
+			npm install --no-bin-links
+		- install the missing presets
+			npm install babel-preset-es2015 --save
+			npm install babel-preset-react --save
+	- correr elixir, comando en la raiz del proyecto
+		gulp [--production]
+
+- cambiar la url sin recargar la pagina con html5 
+	window.history.replaceState("object", "Title", "/new-path2");

@@ -14,8 +14,6 @@ class CreateActivoFijoTable extends Migration
     {
         Schema::create('activo_fijo', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('cuenta_aux_id')->unsigned();
-            $table->foreign('cuenta_aux_id')->references('id')->on('pc_cuentaauxiliar');
             $table->text('descripcion');
             $table->string('marca',100);
             $table->string('modelo',100);

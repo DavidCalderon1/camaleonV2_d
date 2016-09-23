@@ -26,7 +26,7 @@
 		<hr>
 		<div class="row">
 			<div id="msg"></div>
-			<div class="row results form_create_results" name="form_create_results" id="results">
+			<div class="results form_create_results" name="form_create_results" id="results">
 				{!! $results !!}
 			</div>
 		</div>

@@ -1,15 +1,25 @@
- <tr>
+
     {!! Form::open(['route' => ['countries.index'], 'method' => 'get']) !!}
-    <td>
-        <div class="form-group col-sm-6">
+    
+        <div class="fieldbox textbox" id="filtro">
+        	<label>País</label>
             {!! Form::text('country', Input::get('country'), ['class' => 'form-control text-uppercase']) !!}
         </div>
-    </td>
-    <td>
+    
         <!-- Submit Field -->
-        <div class="form-group col-sm-12">
+        <div class="button" id="button_filtro">
             {!! Form::submit('Filtrar', ['class' => 'btn btn-primary']) !!}
         </div>
-    </td>
+
+        
+        
     {!! Form::close() !!}
-</tr>
+
+<script type="text/javascript">
+                    
+    $(document).ready(function(){
+        
+        $(".fieldbox.textbox").animateTextbox();
+    });
+
+</script>

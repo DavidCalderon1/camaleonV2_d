@@ -37,7 +37,7 @@
 			<hr>
 			<div class="row">
 				<div id="msg"></div>
-				<div class="row results parametros_results" name="parametros_results" id="results">
+				<div class="results parametros_results" name="parametros_results" id="results">
 					{!! $results !!}
 				</div>
 			</div>
@@ -60,7 +60,7 @@
 				<!-- aqui se guardan datos para enviar en la consulta -->
 				<input name="cuenta_busqueda" id="cuenta_busqueda" value="clases" llave="" type="hidden">
 				<div id="msg"></div>
-				<div class="row results lista_results" name="lista_results" id="results">
+				<div class="results lista_results" name="lista_results" id="results">
 					
 				</div>
 			</div>

@@ -1,82 +1,88 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
-                        {!! csrf_field() !!}
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Name</label>
+<div id="auth_register" class="contenido">
 
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+    <div class="contenedor">
 
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+        
+    
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <!--Register-->
+                <i id="buton_help" class="glyphicon glyphicon-info-sign" data-toggle="collapse" data-target="#collapseExample"></i> 
+            </div>
+            <div class="panel-body">
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password_confirmation">
-
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-user"></i>Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="collapse" id="collapseExample">
+                    <div class="well">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
                 </div>
+
+                <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
+                    {!! csrf_field() !!}
+
+                    <div class="{{ $errors->has('name') ? ' has-error' : '' }} fieldbox textbox">
+                        <label>Nombre</label>
+                        <input type="email" class="form-control" name="name" value="{{ old('email') }}">
+                        @if ($errors->has('name'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('name') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+
+                    <div class="{{ $errors->has('email') ? ' has-error' : '' }} fieldbox textbox">
+                        <label>E-Mail</label>
+                        <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                        @if ($errors->has('email'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+
+                    <div class="{{ $errors->has('password') ? ' has-error' : '' }} fieldbox textbox">
+                        <label>Contraseña</label>
+                            <input type="password" class="form-control" name="password">
+                            @if ($errors->has('password'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('password') }}</strong>
+                            </span>
+                            @endif
+                    </div>
+
+                    <div class="{{ $errors->has('password_confirmation') ? ' has-error' : '' }} fieldbox textbox">
+                        <label>Confirmar Contraseña</label>
+                            <input type="password" class="form-control" name="password_confirmation">
+                            @if ($errors->has('password_confirmation'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('password_confirmation') }}</strong>
+                            </span>
+                            @endif
+                    </div>
+
+                    <div class="button">
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>
+
 </div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+                    
+        $(".fieldbox.textbox").animateTextbox();
+
+    });
+    
+</script>
+
 @endsection

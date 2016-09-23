@@ -14,8 +14,10 @@ class TestSeeds extends Seeder
     {
         Model::unguard();
 
-        factory(App\User::class, 50)->create();
-        factory(App\Models\Sucursal::class, 50)->create();
+        factory(App\User::class, 20)->create();
+        factory(App\Models\Sucursal::class, 20)->create();
+        factory(App\Models\Admin\activo_fijo::class, 20)->create();
+        factory(App\Models\Tercero::class, 20)->create();
         
         Model::reguard();
     }

@@ -96,6 +96,12 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'TER_ACT' => [
+            'required' => 'Seleccione el requerimiento, tercero o activo',
+        ],
+        'TerceroActivo' => [
+            'required' => 'Seleccione un elemento de la lista del requerimiento de tercero/activo',
+        ],
     ],
 
     /*
@@ -143,7 +149,7 @@ return [
         'role_slug'        		=> 'Slug',
         'permission_title'  	=> 'Título',
         'permission_slug'   	=> 'Slug',
-        'permission_description'	=> 'Descripción',
+        'permission_description'    => 'Descripción',
     ],
 
 ];

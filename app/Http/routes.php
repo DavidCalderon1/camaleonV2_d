@@ -10,11 +10,11 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+/* MUESTRA EN PANTALLA LA FRASE 'LARAVEL 5'
 Route::get('/', function () {
     return view('welcome');
 });
-
+*/
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ Route::get('field_template', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuil
 
 Route::post('generator_builder/generate', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@generate');
 
-/*rutas de la aplicacion camaleon*/
+/*RUTAS DE LA APLICACION CAMALEON*/
 
 // direcciona al metodo 'index' del controlador PrincipalController
 Route::get('/',['as' => 'inicio','uses' => 'HomeController@index']);
@@ -95,18 +95,20 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => 'aut
 	});
 
 	//modulo Transacciones
+	Route::group(['prefix' => 'transacciones'], function (){
+		//modulo Transacciones
+		Route::get('/buscar', ['as' => 'admin.transacciones.buscar','uses' => 'transaccionController@buscar']);
+		Route::get('/crear', ['as' => 'admin.transacciones.crear','uses' => 'transaccionController@crear']);
+
+        //modulo movimientos Contables
+		Route::get('movimientosContables/lista', ['as' => 'admin.transacciones.movimientosContables.lista','uses' => 'movimiento_contableController@lista']);
+    });
+		
+	//modulo Transacciones
 	Route::resource('transacciones', 'transaccionController');
 
-	Route::get('transaccion/buscar', ['as' => 'admin.transaccion.buscar','uses' => 'transaccionController@buscar']);
-	Route::get('transaccion/crear', ['as' => 'admin.transaccion.crear','uses' => 'transaccionController@crear']);
-	Route::get('transaccion', function () {
-			return view('layouts.default', ['site' => 'Transacciones']);
-		});
-
-	//modulo movimientos Contables
-	Route::resource('movimientosContables', 'movimiento_contableController');
-	
-	Route::get('movimientoContable/lista', ['as' => 'admin.movimientosContables.lista','uses' => 'movimiento_contableController@lista']);
+    //modulo movimientos Contables
+	Route::resource('transacciones.movimientosContables', 'movimiento_contableController');
 
 	//modulo activosFijos
 	Route::resource('activosFijos', 'activo_fijoController');
@@ -114,7 +116,8 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => 'aut
 	Route::get('activoFijo/buscar', ['as' => 'admin.activoFijo.buscar','uses' => 'activo_fijoController@buscar']);
 	Route::get('activoFijo/crear', ['as' => 'admin.activoFijo.crear','uses' => 'activo_fijoController@crear']);
 	Route::get('activoFijo', function () {
-			return view('layouts.default', ['site' => 'Activos Fijos']);
+			//return view('layouts.default', ['site' => 'Activos Fijos']);
+			return redirect()->route('admin.activoFijo.buscar');
 		});
 
 
@@ -137,6 +140,9 @@ Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 //Route::get('/home', 'HomeController@index');
+
+
+
 Route::group(['middleware' => 'auth'], function () {
 	/*Localizacion*/
 	Route::resource('countries', 'CountryController');
@@ -163,4 +169,7 @@ Route::group(['middleware' => 'auth'], function () {
 			return View::make("empresas.fields")->with($sendtoview)->render();
 		}
 	});
+
+	/*Materia Prima*/
+	Route::resource('materiaPrima', 'Materia_PrimaController');
 });

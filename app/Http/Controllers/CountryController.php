@@ -83,7 +83,7 @@ class CountryController extends InfyOmBaseController
             Log::info('Pais, Store, Se almaceno el pais: '.$country->id, [$input]);
             Flash::success('Country saved successfully.');
 
-            return redirect(route('countries.index'));
+            return redirect(route('countries.show', [$country->id]));
         }
     }
 
@@ -162,7 +162,7 @@ class CountryController extends InfyOmBaseController
             Log::info('Pais, Update, Se edito el pais: ' . $id, [$input]);
             Flash::success('Country updated successfully.');
 
-            return redirect(route('countries.index'));
+            return redirect(route('countries.show', [$country->id]));
         }
     }
 

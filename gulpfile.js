@@ -12,5 +12,32 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+
+	mix.copy('node_modules/bootstrap-sass/assets/fonts', 'public/assets/font');
+
+    mix.styles([
+      'bootstrap-datepicker3.css',
+    ], 'public/assets/css');
+
+    mix.sass([
+    	//'controllers.scss',
+    	'app.scss',
+    ], 'public/assets/css');
+
+    mix.browserify([
+        //'jquery.js',
+        'app.js',
+        'jquery.animateFrm.js',
+        'bootstrap-datepicker.js',
+        'bootstrap-datepicker.es.min.js',
+    ], 'public/assets/js/app.js');
+
+    mix.version(
+       [
+          'public/assets/css/all.css',
+          'public/assets/css/app.css',
+          'public/assets/js/app.js'
+       ]
+    );
+
 });

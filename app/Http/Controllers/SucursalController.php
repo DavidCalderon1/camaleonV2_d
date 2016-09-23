@@ -89,7 +89,7 @@ class SucursalController extends InfyOmBaseController
             Log::info('Sucursal, Store, Se almaceno la sucursal: '.$sucursal->id, [$input]);
             Flash::success('Sucursal saved successfully.');
 
-            return redirect(route('sucursales.index'));
+            return redirect(route('sucursales.show', [$sucursal->id]));
         }
     }
 
@@ -171,7 +171,7 @@ class SucursalController extends InfyOmBaseController
             Log::info('Sucursal, Update, Se edito la sucursal: ' . $id, [$input]);
             Flash::success('Sucursal updated successfully.');
 
-            return redirect(route('sucursales.index'));
+            return redirect(route('sucursales.show', [$sucursal->id]));
         }
     }
 

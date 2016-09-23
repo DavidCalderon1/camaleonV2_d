@@ -90,7 +90,7 @@ class CityController extends InfyOmBaseController
             Log::info('Ciudad, Store, Se almaceno la ciudad: '.$city->id, [$input]);
             Flash::success('City saved successfully.');
 
-            return redirect(route('cities.index'));
+            return redirect(route('cities.show', [$city->id]));
         }
     }
 
@@ -174,7 +174,7 @@ class CityController extends InfyOmBaseController
             Log::info('Ciudad, Update, Se edito la ciudad: ' . $id, [$input]);
             Flash::success('City updated successfully.');
 
-            return redirect(route('cities.index'));
+            return redirect(route('cities.show', [$city->id]));
         }
     }
 
