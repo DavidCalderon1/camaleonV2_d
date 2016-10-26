@@ -1,6 +1,6 @@
 <!-- Nombre Field -->
 <div class="fieldbox textbox">
-    {!! Form::label('nombre', 'Nombre') !!}
+    {!! Form::label('país', 'País') !!}
     {!! Form::text('nombre', null, ['class' => 'form-control text-uppercase']) !!}
 </div>
 

@@ -18,6 +18,10 @@ class CreateTransaccionTable extends Migration
             $table->integer('tdc_id')->unsigned();
             $table->foreign('tdc_id')->references('id')->on('tipodoc_contable');
             $table->text('descripcion');
+            $table->integer('total_debe')->default(0);
+            $table->integer('total_haber')->default(0);
+            $table->integer('diferencia')->default(0);
+            $table->boolean('auto')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -26,4 +26,14 @@ return [
 		'tdc_id'	=> 'Tipo de transacción',
 		'descripcion'	=> 'Descripción'
 	],
+	'mov_con_busq_types' => [
+		''				=> 'Seleccione un tipo de búsqueda',
+		'SUCURSAL'			=> 'Sucursal',
+		'DETALLE'	=> 'Detalle',
+		'CUENTAAUXILIAR'	=> 'Cuenta auxiliar',
+		'TERCERO'	=> 'Tercero',
+		'ACTIVO'	=> 'Activo',
+		'DEBE'	=> 'Debe',
+		'HABER'	=> 'Haber'
+	],
 ];

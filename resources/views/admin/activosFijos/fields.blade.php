@@ -22,7 +22,7 @@
 <!-- Fecha Adquisicion Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('fecha_adquisicion', 'Fecha Adquisicion:') !!}
-    {!! Form::date('fecha_adquisicion', null, ['class' => 'form-control']) !!}
+    {!! Form::text('fecha_adquisicion', null, ['class' => 'datepicker form-control']) !!}
 </div>
 
 <!-- Valor Compra Field -->

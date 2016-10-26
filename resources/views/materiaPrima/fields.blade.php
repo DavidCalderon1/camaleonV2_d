@@ -1,6 +1,6 @@
 <!-- Codigo Field -->
 <div class="fieldbox textbox">
-    {!! Form::label('codigo', 'Codigo') !!}
+    {!! Form::label('código', 'Código') !!}
     {!! Form::text('codigo', null, ['class' => 'form-control']) !!}
 </div>
 

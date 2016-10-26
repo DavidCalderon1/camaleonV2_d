@@ -14,8 +14,17 @@
             <div class="panel-body">
 
                 <div class="collapse" id="collapseExample">
-                    <div class="well">
-                        Texto de ayuda
+                    <div class="help well">
+                        <ul>
+                            <h5>¿Como consultar un Departamento?</h5>
+                            <li>Diligencie los campos de texto con el nombre del País y Departamento.</li>
+                            <li>De click en el botón “Filtrar”.</li>
+                        </ul>     
+                        <h5>Aquí usted puede:</h5>
+                        <p><i class="iconfont icon-add"></i> Crear un Departamento</p>
+                        <p><i class="iconfont icon-view"></i> Visualizar un Departamento</p>
+                        <br>
+                        <a href="#">Ingrese al manual de usuario Módulo Localización</a>
                     </div>
                 </div>
 

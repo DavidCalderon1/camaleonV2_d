@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-        <h1 class="pull-left">Usuarios</h1>
+        <h1 class="pull-left">{{ $title_page='Usuarios' }}</h1>
         <a class="btn btn-primary pull-right" style="margin-top: 25px" href="{!! route('admin.usuarios.create') !!}">Agregar usuario</a>
 
         <div class="clearfix"></div>

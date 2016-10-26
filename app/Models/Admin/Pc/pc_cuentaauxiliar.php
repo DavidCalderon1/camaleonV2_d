@@ -127,4 +127,11 @@ class pc_cuentaauxiliar extends Model
         //de esta manera se obtienen como tipo json para llenar los registros con jquery
         return $query->select(DB::raw("CONCAT(codigo, ' - ', nombre, ' - ', tipo) as nombre"), "id")->whereRaw($condicion)->orderBy('id', 'asc')->get();
     }
+
+    //añade condiciones en el where
+    public function scopeTerceroActivo($query)
+    {
+        //de esta manera se obtienen como tipo json para llenar los registros con jquery
+        return $query->where('tercero_activo', true )->where('estado', true );
+    }
 }

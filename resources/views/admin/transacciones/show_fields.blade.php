@@ -1,5 +1,4 @@
-<div class="panel panel-default">
-  <div class="panel-body">
+<div class="form-group">
     <!-- Id Field -->
     <div class="form-group">
         {!! Form::label('id', 'Id:') !!}
@@ -23,18 +22,29 @@
         {!! Form::label('descripcion', 'Descripción:') !!}
         <p>{!! $transaccion->descripcion !!}</p>
     </div>
-
-    <!-- Descripcion Field -->
-    <div class="form-group">
-    	<h3 class="pull-left">Movimientos contables</h3>
-
-        <a class="btn btn-primary pull-right" style="margin-top: 25px" href="{!! route('admin.transacciones.movimientosContables.create',['transacciones' => $transaccion->id ]) !!}">Agregar movimiento</a>
-    </div>
     
-  </div>
-  <div class="panel-footer">
 
-    @include('admin.movimientosContables.table', ['transaccion' => $transaccion->id])
+    <!-- Lista movimientos Field -->
 
-  </div>
+    @include('admin.movimientosContables.index', [$peticion = 'busqueda', 'transaccion' => $transaccion->id])
+
+    <!-- total_debe Field -->
+    <div class="form-group">
+        {!! Form::label('total_debe', 'Total debe:') !!}
+        <p class="moneda">{!! $transaccion->total_debe !!}</p>
+    </div>
+
+    <!-- total_haber Field -->
+    <div class="form-group">
+        {!! Form::label('total_haber', 'Total haber:') !!}
+        <p class="moneda">{!! $transaccion->total_haber !!}</p>
+    </div>
+
+    <!-- diferencia Field -->
+    <div class="form-group">
+        {!! Form::label('diferencia', 'Diferencia:') !!}
+        <p class="moneda">{!! $transaccion->diferencia !!}</p>
+    </div>
+
+
 </div>

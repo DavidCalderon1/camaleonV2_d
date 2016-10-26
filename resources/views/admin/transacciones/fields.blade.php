@@ -1,7 +1,7 @@
 <!-- Fecha Field -->
 <div class="form-group">
     {!! Form::label('fecha', 'Fecha:') !!}
-    {!! Form::date('fecha', null, ['class' => 'form-control text-uppercase', 'required']) !!}
+    {!! Form::text('fecha', null, ['class' => 'datepicker form-control text-uppercase', 'required']) !!}
 </div>
 
 <!-- Tdc Id Field -->

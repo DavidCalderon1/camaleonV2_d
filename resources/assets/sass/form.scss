@@ -184,12 +184,13 @@
 
     text-align: center;
 
-    input[type=checkbox]{
+    input[type=checkbox], input[type=radio]{
         visibility: hidden;
     }
 
     label{
         padding-left: 0;
+        font-weight: 300;
     }
 
     label::before{

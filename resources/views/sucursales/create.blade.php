@@ -13,8 +13,18 @@
             <div class="panel-body">
 
                 <div class="collapse" id="collapseExample">
-                    <div class="well">
-                        texto de ayuda
+                    <div class="help well">
+                            <ul>
+                                <h5>¿Como Crear una Sucursal?</h5>
+                                <li>Escribir el nombre de la nueva Sucursal en el campo 'Nombre'.</li>
+                                <li>Seleccionar el nombre del País donde se encuentra esta Sucursal desde el campo 'País'.</li>
+                                <li>Seleccionar el nombre del Departamento donde se encuentra esta Sucursal desde el campo 'Departamento'.</li>
+                                <li>Seleccionar el nombre de la Cuidad donde se encuentra esta Sucursal desde el campo 'Ciudad'.</li>
+                                <li>Escribir la dirección de la nueva Sucursal en el campo 'Direccion'.</li>
+                                <li>Escribir el teléfono de la nueva Sucursal en el campo 'Teléfono'.</li>
+                                <li>Seleccionar el botón 'Guardar' para registrar la información.</li>
+                                <a href="#">Para obtener una guia detallada de este formulario consulte el manual en este link</a>
+                            </ul> 
                     </div>
                     
                 </div>

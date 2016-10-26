@@ -14235,6 +14235,97 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             parameter.select.find("select").on("focusout", focusout);
         });
     };
+
+    $.fn.animateRadiobutton = function (parameters) {
+
+        this.each(function () {
+
+            var parameter = $.extend({
+                radiobutton: $(this)
+            }, parameters);
+
+            var init = function init() {
+                if (parameter.radiobutton.find('input').is(':checked')) {
+                    parameter.radiobutton.find('label').addClass("checked");
+                }
+            };
+
+            var check = function check() {
+
+                var name = parameter.radiobutton.find("input").attr("name");
+                var element = 'input:radio[name=' + name + ']';
+                $(element).parent().find('label').removeClass("checked");
+                parameter.radiobutton.find('label').addClass("checked");
+
+                if (!parameter.radiobutton.find('input').is(':checked')) {
+                    parameter.radiobutton.find('input').prop("checked", true);
+                }
+            };
+
+            parameter.radiobutton.find("label").on("click", check);
+            parameter.radiobutton.on("init", init);
+
+            parameter.radiobutton.trigger("init");
+        });
+    };
+
+    $.fn.animateCheckbox = function (parameters) {
+
+        this.each(function () {
+
+            var parameter = $.extend({
+                checkbox: $(this)
+            }, parameters);
+
+            var init = function init() {
+
+                if (parameter.checkbox.find('input').is(':checked')) {
+                    parameter.checkbox.find('label').addClass("checked");
+                }
+            };
+
+            var check = function check() {
+
+                parameter.checkbox.find('label').toggleClass("checked");
+
+                if (!parameter.checkbox.find('input').is(':checked')) {
+                    parameter.checkbox.find('input').prop("checked", true);
+                }
+            };
+
+            parameter.checkbox.find("label").on("click", check);
+            parameter.checkbox.on("init", init);
+
+            parameter.checkbox.trigger("init");
+        });
+    };
+
+    $.fn.animateDate = function (parameters) {
+
+        this.each(function () {
+
+            var parameter = $.extend({
+                datepicker: $(this)
+            }, parameters);
+
+            var replicatetomobile = function replicatetomobile() {
+
+                if (parameter.datepicker.find(".normal").val() != "") {
+                    parameter.datepicker.find(".mobile").val(parameter.datepicker.find(".normal").val());
+                }
+            };
+
+            var replicatetonormal = function replicatetonormal() {
+
+                if (parameter.datepicker.find(".mobile").val() != "") {
+                    parameter.datepicker.find(".normal").val(parameter.datepicker.find(".mobile").val());
+                }
+            };
+
+            parameter.datepicker.find(".normal").on("change", replicatetomobile);
+            parameter.datepicker.find(".mobile").on("change", replicatetonormal);
+        });
+    };
 })(jQuery);
 
 },{}]},{},[3,6,5,4]);

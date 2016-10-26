@@ -42,7 +42,7 @@ class pc_subcuentaController extends \App\Http\Controllers\AppBaseController
     //metodo mayusculas ejecutado por el metodo beforeFilter dentro del constructor para colocar en mayusculas cada dato
     public function mayusculas(Route $route, Request $request){
         //va a obtener los datos recibidos eceptuando algunos, por ejemplo la descripcion la cual no se debe pasar a mayusculas
-        $input = $request->except(['_method','_token','descripcion']);
+        $input = $request->except(['_method','_token','urlDestino','descripcion']);
         foreach ($input as $key => $value) {
             $request[$key] = strtoupper($value);
         }

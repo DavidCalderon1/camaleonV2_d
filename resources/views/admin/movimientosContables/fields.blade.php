@@ -3,7 +3,7 @@
 <div class="form-group">
     {!! Form::label('trs_id', 'Transacción:') !!}
     {!! Form::hidden('trs_id', null, ['class' => 'form-control full', 'required' ])!!}
-    {!! Form::select('trs_id', $listTransaccion, null, ['class' => 'form-control full', 'name' => 'trs_id', 'placeholder' => 'Seleccione una transacción', 'required' ])!!}
+    {!! Form::label('trs_id', $movimientoContable->tipo_transaccion, ['class' => 'form-control full' ])!!}
 </div>
 
 <!-- Suc Id Field -->
@@ -12,12 +12,21 @@
     {!! Form::select('suc_id', $listSucursal, null, ['class' => 'form-control full', 'name' => 'suc_id', 'placeholder' => 'Seleccione una sucursal', 'required' ])!!}
 </div>
 
+<!-- Detalle Field -->
+<div class="form-group">
+    {!! Form::label('detalle', 'Detalle:') !!}
+    {!! Form::textarea('detalle', null, ['class' => 'form-control', 'rows' => '5', 'required']) !!}
+</div>
+
+@include('admin.pc.select_dynamic')
+
 <!-- Cntaux Id Field -->
 <div class="form-group"> 
     {!! Form::label('TerceroActivo[]', 'Requerimiento:') !!}
     <br/>
     <div class="btn-group ">
-        {!! Form::hidden('urlDestino', route('admin.transacciones.movimientosContables.lista'), ['class' => 'urlDestino']) !!}
+        {{-- el valor de urlDestino es usado para cargar  --}}
+        {!! Form::hidden('urlDestino', route('admin.transacciones.movimientosContables.lista', ['transacciones' => $movimientoContable['trs_id'] ]), ['class' => 'urlDestino']) !!}
         <label class="btn btn-default">
            {!! Form::radio('TER_ACT', 'TERCERO', false, ['required','class' => 'form-element']) !!}
            TERCERO
@@ -27,31 +36,13 @@
            ACTIVO FIJO
         </label>
     </div>
-
-    <select class="form-control full" id="TerceroActivo" name="TerceroActivo[]" size="4" required >
-        @if($listTerceroActivo != '')
-            @foreach($listTerceroActivo as $id => $title)
-                {{ $selected = '' }}
-                @if( count($movimientoContable->tercero) > 0 )
-                    @foreach($movimientoContable->tercero as $tercero)
-                        @if($id == $tercero->id)
-                            {{ $selected = 'selected' }}
-                        @endif
-                    @endforeach
-                @elseif( count($movimientoContable->activo_fijo) > 0 )
-                    @foreach($movimientoContable->activo_fijo as $activo_fijo)
-                        @if($id == $activo_fijo->id)
-                            {{ $selected = 'selected' }}
-                        @endif
-                    @endforeach
-                @endif
-                <option value="{{$id}}" {{ $selected }} >{{$title}}</option>
-            @endforeach
-        @endif
-    </select>
+    {{-- valida y compara datos para evitar que despues de una validacion la opcion TER_ACT quede con un valor que no corresponda con el de la lista TerceroActivo y mostar una lista vacia en dado caso --}}
+    @if( ( isset($movimientoContable->nombre_tercero) && Input::old('TER_ACT') == '' ) || ( Input::old('TER_ACT') == $movimientoContable->TER_ACT )  )
+    {!! Form::select( ( $movimientoContable->id_activo_fijo != '' ? 'id_activo_fijo' : ($movimientoContable->id_tercero != '' ? 'id_tercero' : 'TerceroActivo')), (isset($listTerceroActivo) ? $listTerceroActivo : array('') ), null, ['class' => 'form-control full', 'name' => 'TerceroActivo[]', 'id' => 'TerceroActivo', 'size' => '4', 'required' ])!!}
+    @else
+    {!! Form::select( 'TerceroActivo', array(''), null, ['class' => 'form-control full', 'name' => 'TerceroActivo[]', 'id' => 'TerceroActivo', 'size' => '4', 'required' ])!!}
+    @endif
 </div>
-
-@include('admin.pc.select_dynamic')
 
 <hr class="hr">
 <!-- Debe Field -->
@@ -66,14 +57,8 @@
     {!! Form::number('haber', null, ['class' => 'form-control text-uppercase', 'required']) !!}
 </div>
 
-<!-- Detalle Field -->
-<div class="form-group">
-    {!! Form::label('detalle', 'Detalle:') !!}
-    {!! Form::textarea('detalle', null, ['class' => 'form-control', 'rows' => '5', 'required']) !!}
-</div>
-
 <!-- Submit Field -->
 <div class="form-group">
     {!! Form::submit('Guardar', ['class' => 'btn btn-primary enviar']) !!}
-    <a href="{{ URL::previous() }}" class="btn btn-default cancelar">Cancelar</a>
+    <a href="{!! ($accion == "create") ? route('admin.transacciones.show',['id' => $movimientoContable['trs_id'] ]) : route('admin.transacciones.movimientosContables.show',['transacciones' => $movimientoContable->trs_id, 'movimientosContables' => $movimientoContable->id]) !!}" class="btn btn-default cancelar">Cancelar</a>
 </div>

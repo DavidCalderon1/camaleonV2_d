@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Persona;
 use App\Models\Empresa;
 use DB;
-
+use App\Models\Materia_Prima;
 /**
  * @SWG\Definition(
  *      definition="Tercero",
@@ -117,7 +117,7 @@ class Tercero extends Model
     public function scopeListaTerceros($query)
     {
         //de esta manera se obtienen como tipo json para llenar los registros con jquery
-        return $query->select(DB::raw("CONCAT(tercero.tipo, ' - ', empresa.razon_social, persona.nombre, ' ', persona.apellido) as nombre, tercero.id as id"))
+        return $query->select(DB::raw("tercero.tipo as tipo, CONCAT(empresa.nit, persona.documento, ' - ', empresa.razon_social, persona.nombre, ' ', persona.apellido) as nombre, tercero.id as id"))
                 ->leftJoin('tercero_persona', 'tercero.id', '=', 'tercero_persona.tercero_id')
                 ->leftJoin('persona','tercero_persona.persona_id', '=', 'persona.id')
                 ->leftJoin('tercero_empresa', 'tercero.id', '=', 'tercero_empresa.tercero_id')
@@ -125,5 +125,18 @@ class Tercero extends Model
                 ->whereNull('tercero.deleted_at')->whereNull('persona.deleted_at')
                 ->whereNull('empresa.deleted_at')
                 ->orderBy('tercero.id', 'asc');
+    }
+
+    /**
+     * Especifica la relacion muchos a muchos con el modelo Materia_Prima
+     *
+     */
+    public function materia_prima()
+    {
+        return $this->belongsToMany(Materia_Prima::class, 'materia_prima_proveedor', 'tercero_id', 'materiaPrima_id');
+    }
+     public function terceros()
+    {
+        return $this->belongsToMany(Materia_Prima::class, 'materia_prima_proveedor', 'materiaPrima_id', 'tercero_id');
     }
 }

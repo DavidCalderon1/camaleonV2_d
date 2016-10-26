@@ -48,12 +48,16 @@
 		}
 
 		.button{
-			@extend .col-sm-4;
+			@extend .col-sm-3;
 		}
 
 		#save{
-			@extend .col-sm-offset-2;
+			@extend .col-sm-offset-3;
 		}
+
+
+
+
 
 
 	}
@@ -66,28 +70,30 @@
 		@extend .col-md-10;
 		@extend .col-lg-10;
 
-			.field#iconview{
-				@extend .col-xs-12;
-			}
-			
-			.field#nombre{
-				@extend .col-xs-12;
-			}
-
-			.field{
-				@extend .col-xs-12;
-				@extend .col-sm-6;
-			}
-
-			.fieldbox.textbox#buscar{
-				@extend .col-sm-9;
-			}
-
-			.button#filtro{
-				@extend .col-sm-3;
-			}
-		
+		.field#iconview{
+			@extend .col-xs-12;
 		}
+		
+		.field#nombre{
+			@extend .col-xs-12;
+		}
+
+		.field{
+			@extend .col-xs-12;
+			@extend .col-sm-6;
+		}
+
+		.fieldbox.textbox#buscar{
+			@extend .col-sm-9;
+		}
+
+		.button#filtro{
+			@extend .col-sm-3;
+		}
+
+	
+
+	}
 
 	.contenedor.show{
 

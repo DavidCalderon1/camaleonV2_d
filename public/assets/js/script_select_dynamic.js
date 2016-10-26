@@ -65,6 +65,7 @@ $(document).on('change','select.select_dynamic',function(event){
 	var thisVal = $(this).val();
 	var thisText = $(this).find('option:selected').text();
 	var thisParent =  $(this).parents('.formModalSelect').attr('id');
+	var modulo = $(this).parents('.formModalSelect').attr('modulo');
 	if(thisParent == undefined ){
 		thisParent =  $(this).parents('form').attr('id');
 	}

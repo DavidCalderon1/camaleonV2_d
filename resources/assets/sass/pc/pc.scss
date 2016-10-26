@@ -1,0 +1,215 @@
+#pc{
+
+	/*crear general*/
+	overflow-y: auto !important; 
+
+	.contenedor{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-8;
+		@extend .col-lg-8;
+
+		.fieldbox.select{
+			@extend .col-sm-8;
+		}
+
+		.button{
+			@extend .col-xs-12;
+			@extend .col-sm-4;
+		}
+
+		.fieldbox.textbox{
+			@extend .col-sm-6;
+		}
+		
+	}
+
+	/*crear Clase, Grupo, cuenta, subcuenta y cuenta auxiliar*/
+
+	.contenedor.crear{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-8;
+		@extend .col-lg-8;
+
+		.fieldbox.textbox,.fieldbox.select{
+			@extend .col-sm-6;
+		}
+
+		#textarea{
+			@extend .col-sm-12;
+			
+		}
+
+		.fieldbox.field_a{
+			@extend .col-xs-12;
+			@extend .col-md-6;
+		}
+
+		.fieldbox.field_a{
+			@extend .col-xs-12;
+		}
+
+		.fieldbox.radiobutton{
+			@extend .col-md-6;
+			text-align: left;
+		}
+
+		.button{
+			@extend .col-sm-4;
+		}
+
+		#save{
+			@extend .col-sm-offset-2;
+		}
+
+		/*select_dynamic*/
+
+		.fieldbox.dynamic{
+			@extend .col-xs-12;
+
+			.select_dynamic{
+				height: 100%;
+				background-color: transparent;
+		        @extend .shadowfield;
+				@extend .col-xs-12;
+				padding: 0;
+
+				label{
+			        font-weight: 300;
+			        margin: 0;
+			        @extend .col-xs-10;
+			        border: none;
+					border-radius: 0;
+					overflow-x: hidden;
+					overflow-y: auto;
+		    	}
+
+		    	button{
+		    		border: none;
+					border-radius: 0;
+					height: 100%;
+		    		@extend .col-xs-2;
+
+		    		i{font-size:1.3em;}
+		    	}
+
+			}
+
+		}
+		
+
+
+
+	    .button-form{
+	    	@extend .col-xs-2;
+	    	font-size: 1.3em;
+	    	color:#5cb85c;
+	    	padding-top: 8px; padding-bottom: 8px;
+	    }
+
+	    /*botón seleccionar  y  cancelar de la ventana modal*/
+	    .modal-title{
+	    	font-family:$century;
+			color:#9e9e9e;
+	    }
+
+	    .modal-footer{
+	    	.button.seleccionar{
+	    		@extend .col-sm-offset-2;
+	    	}
+
+	    }
+		
+	}
+
+	/*index */
+
+	.contenedor.index{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+
+		.field#codigo{
+			@extend .col-sm-12;
+		}
+
+
+		.field#nombre{
+			@extend .col-xs-12;
+			@extend .col-sm-9;
+		}
+
+		.field#tipo{
+			@extend .col-xs-12;
+			@extend .col-sm-3;
+		}
+
+		/*Buscador*/
+
+		.buscador{
+			@extend .col-xs-12;
+
+			.field{
+				@extend .col-sm-4;
+				@extend .col-md-3;
+				@extend .fieldbox;
+		        font-weight: 300;
+		        font-size: 0.9em;
+		        color:#9e9e9e;
+		        background-color: #FFF;
+
+		        a:hover{
+		        	text-decoration: none;
+		        }
+		    }
+		}
+
+		.opciones_filtro{
+
+			.fieldbox{
+				select,input{
+					width: 100%;
+				}
+			}
+			
+			.fieldbox.select{
+				@extend .col-sm-6;
+				@extend .col-md-4;
+			}
+
+			.fieldbox.textbox{
+				@extend .col-xs-12;
+				@extend .col-sm-12;
+				@extend .col-md-4;
+			}
+
+			#filtrar{
+				@extend .col-sm-6;
+				@extend .col-md-4;
+				@extend .col-sm-offset-3;
+				@extend .col-md-offset-4;
+			}
+		}
+
+		
+	}
+	
+
+	/*vista*/
+	.contenedor.show{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-7;
+		@extend .col-lg-7;
+
+		.field{
+			@extend .col-sm-6;
+		}
+
+		.field.importante{
+			@extend .col-sm-12;
+		}
+		
+	}	
+
+}

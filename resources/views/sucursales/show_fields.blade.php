@@ -45,7 +45,7 @@
     <a href="{!! route('sucursales.edit', [$sucursal->id]) !!}" class=' btn btn-primary'><i class="iconfont icon-edit"></i> Editar</a>
 </div>
 <div class='button'>
-    {!! Form::button('<i class="iconfont icon-trash"></i> Eliminar', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('Are you sure?')"]) !!}
+    {!! Form::button('<i class="iconfont icon-trash"></i> Eliminar', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('Esta seguro de eliminar el registro?')"]) !!}
     
 </div>
 {!! Form::close() !!}

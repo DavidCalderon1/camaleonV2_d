@@ -3,7 +3,7 @@
 @section('content') 
     <div class="row">
         <div class="col-sm-12">
-            <h1 class="pull-left">Crear usuario</h1>
+            <h1 class="pull-left">{{ $title_page='Crear usuario' }}</h1>
         </div>
     </div>
 

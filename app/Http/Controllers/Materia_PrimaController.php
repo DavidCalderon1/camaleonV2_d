@@ -63,8 +63,8 @@ class Materia_PrimaController extends InfyOmBaseController
      */
     public function create()
     {
-        $empresas = $this->tercero::leftJoin('tercero_empresa', 'tercero.id', '=', 'tercero_empresa.tercero_id')->leftJoin('empresa','tercero_empresa.empresa_id', '=', 'empresa.id')->whereNull('tercero.deleted_at')->whereNull('empresa.deleted_at')->whereNotNull('empresa.razon_social')->select('empresa.razon_social AS nombre','tercero.id')->get();
-        $personas = $this->tercero::leftJoin('tercero_persona', 'tercero.id', '=', 'tercero_persona.tercero_id')->leftJoin('persona','tercero_persona.persona_id', '=', 'persona.id')->whereNull('tercero.deleted_at')->whereNull('persona.deleted_at')->whereNotNull('persona.nombre')->select(DB::raw('CONCAT(persona.nombre, \' \', persona.apellido) AS nombre'), 'tercero.id')->get();
+        $empresas = $this->tercero->leftJoin('tercero_empresa', 'tercero.id', '=', 'tercero_empresa.tercero_id')->leftJoin('empresa','tercero_empresa.empresa_id', '=', 'empresa.id')->whereNull('tercero.deleted_at')->whereNull('empresa.deleted_at')->whereNotNull('empresa.razon_social')->select('empresa.razon_social AS nombre','tercero.id')->get();
+        $personas = $this->tercero->leftJoin('tercero_persona', 'tercero.id', '=', 'tercero_persona.tercero_id')->leftJoin('persona','tercero_persona.persona_id', '=', 'persona.id')->whereNull('tercero.deleted_at')->whereNull('persona.deleted_at')->whereNotNull('persona.nombre')->select(DB::raw('CONCAT(persona.nombre, \' \', persona.apellido) AS nombre'), 'tercero.id')->get();
         $proveedores = $empresas->merge($personas)->lists('nombre','id');
         return view('materiaPrima.create')->with('proveedores', $proveedores);
     }
@@ -132,8 +132,8 @@ class Materia_PrimaController extends InfyOmBaseController
     {
         $materiaPrima = $this->materiaPrima->find($id);
 
-        $empresas = $this->tercero::leftJoin('tercero_empresa', 'tercero.id', '=', 'tercero_empresa.tercero_id')->leftJoin('empresa','tercero_empresa.empresa_id', '=', 'empresa.id')->whereNull('tercero.deleted_at')->whereNull('empresa.deleted_at')->whereNotNull('empresa.razon_social')->select('empresa.razon_social AS nombre','tercero.id')->get();
-        $personas = $this->tercero::leftJoin('tercero_persona', 'tercero.id', '=', 'tercero_persona.tercero_id')->leftJoin('persona','tercero_persona.persona_id', '=', 'persona.id')->whereNull('tercero.deleted_at')->whereNull('persona.deleted_at')->whereNotNull('persona.nombre')->select(DB::raw('CONCAT(persona.nombre, \' \', persona.apellido) AS nombre'), 'tercero.id')->get();
+        $empresas = $this->tercero->leftJoin('tercero_empresa', 'tercero.id', '=', 'tercero_empresa.tercero_id')->leftJoin('empresa','tercero_empresa.empresa_id', '=', 'empresa.id')->whereNull('tercero.deleted_at')->whereNull('empresa.deleted_at')->whereNotNull('empresa.razon_social')->select('empresa.razon_social AS nombre','tercero.id')->get();
+        $personas = $this->tercero->leftJoin('tercero_persona', 'tercero.id', '=', 'tercero_persona.tercero_id')->leftJoin('persona','tercero_persona.persona_id', '=', 'persona.id')->whereNull('tercero.deleted_at')->whereNull('persona.deleted_at')->whereNotNull('persona.nombre')->select(DB::raw('CONCAT(persona.nombre, \' \', persona.apellido) AS nombre'), 'tercero.id')->get();
         $proveedores = $empresas->merge($personas)->lists('nombre','id');
         $materiaPrima['tercero_id'] = $materiaPrima->terceros[0]->id;
         $sendtoview = array('materiaPrima' => $materiaPrima, 'proveedores' => $proveedores);

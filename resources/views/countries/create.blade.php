@@ -13,8 +13,15 @@
             <div class="panel-body">
 
                 <div class="collapse" id="collapseExample">
-                    <div class="well">
-                        Texto de ayuda
+                    <div class="help well">
+                       <ul>
+                            <h5>¿Como crear un País?</h5>
+                            <li>Diligencie el nombre del País en el campo 'País'.</li>
+                            <li>Diligencie el código de referencia con el cual reconocerá el país desde el campo 'Código Ref'.</li>
+                            <li>De click en el botón “Guardar”.</li>
+                            <a href="#">Para obetener una guia detallada de este formulario consulte el manual en este link</a>
+
+                        </ul>     
                     </div>
                 </div>
                 

@@ -2,8 +2,7 @@
 $("#find_form_create").submit(function(e){
 	e.preventDefault();
 	var route = "/admin/pc/" + $("#subtipo_cuenta").val() + "/create";
-	var results = $(".load_form_create #results");
-	CargaForm(route,results);
+	$(location).attr('href',route);
 });
 
 
@@ -63,7 +62,7 @@ function CargaForm(route,results,search){
 	});
 }
 
-// realiza la carga automatica y dinamica de los select en la pestaña lista de la busqueda de cuentas
+// realiza la carga automatica y dinamica de los select en la pestaña 'Lista' de la busqueda de cuentas
 $("#lista select").each(function(){
 	$(this).change(function(event){
 		var para = $(this).attr('para');
@@ -78,6 +77,15 @@ $("#lista select").each(function(){
 		//guarda el nombre de la lista que se selecciono para enviarla como busqueda 
 		$("#lista #cuenta_busqueda").val(para).attr("llave",thisValue);
 		
+
+		//para cambiar la url	
+		var cuenta_tipo = $(this).parents('form').find('#cuenta_tipo').val();
+		var parametrosInput = 'tab=lista' + '&cuenta_tipo=' + cuenta_tipo + '&cuenta_busqueda=' + para + '&llave=' + thisValue;
+		var nombrePath = window.location.pathname;
+
+		$(this).parents('form').find('#parametrosUrl').val(parametrosInput);
+		window.history.replaceState("object", nombrePath, nombrePath +'?'+ parametrosInput);
+
 	});
 });
 
@@ -141,78 +149,58 @@ function formEnviar(form,results,type,mostrarMsg){
     return false;
 }
 
-//se usa para el formulario de creacion, envia los parametros a la funcion formEnviar() para el envio de la informacion del formulario
-$(document).on('submit','.form_create',function(e){
-    e.preventDefault();
-    var form = $(this).parents('#results').attr('name');
-    var results = '#results.' + form ;
-    form = '#results.' + form +  ' .form_create';
-    var type = "Creación";
-    formEnviar(form,results,type);
+
+
+//ejecuta la funcion de cambiarUrl enviando el elemento que ha cambiado de valor
+$("#search_param select, #search_param input[type='text']").each(function(){
+	$(this).change(function(event){
+		if ($(this).is("input[type='text']") ) {
+			$(this).val(($(this).val()).toUpperCase());
+		}
+		cambiarUrl( $(this) );
+	});
 });
 
+//recibe el elemento que ha cambiado de valor para agregarlo a la url
+function cambiarUrl(thisObj){
+	var campo = thisObj.attr('name');
+	var valor = thisObj.val();
+	var nombrePath = window.location.pathname;
+	var parametrosInput = thisObj.parents('form').find('#parametrosUrl').val();
 
-// realiza la carga del formulario de vista del registro
-$(document).on('click','a#link_ver',function(e){
-	e.preventDefault();
-	var route = $(this).attr('href')+ "?peticion=ajax";
-	var results = $(this).parents('#results').attr('name');
-	results = $('#results.' +results);
-	CargaForm(route, results);
-	//console.log('CargaForm('+route+', '+results+');');
-	return false;
-});
+	
+	window.history.replaceState("object", nombrePath, nombrePath +'?'+ parametrosInput);
 
-// realiza la carga del formulario de vista del registro, al darle click en el boton cancelar
-$(document).on('click','.form_update a.cancelar',function(e){
-    e.preventDefault();
-    $(this).parents('div#results').empty();
-/*
-    var route = $(this).attr('href')+ "?peticion=ajax";
-	var results = $(this).parents('#results').attr('name');
-	results = $('#results.' +results);
-	CargaForm(route, results);
-	//console.log('CargaForm('+route+', '+results+');');
-	*/
-    return false;
-});
+	thisObj.parents('form').find('#parametrosUrl').val(parametrosInput);
 
-//se usa para el formulario de actualizacion, envia los parametros a la funcion formEnviar() para el envio de la informacion del formulario
-$(document).on('submit','.form_update',function(e){
-    //esta validacion se realiza debido a que se requiere el script asi no se este usando ajax para el envio de datos
-    if( $('.form_update input.enviar').attr('peticion') != 'normal'){
-        e.preventDefault();
-        var form = $(this).parents('#results').attr('name');
-        var results = '#results.' + form ;
-        form = '#results.' + form +  ' .form_update';
-        var type = "Actualización";
-        formEnviar(form,results,type);
-    }
-});
+	var parametrosUrl = {};
+	var campoCambiado = false;
 
-// realiza la carga del formulario de edicion del registro
-$(document).on('click','a#link_editar',function(e){
-	//esta validacion se realiza debido a que se requiere el script asi no se este usando ajax para el envio de datos
-	if( $(this).attr('peticion') != 'normal'){
-		e.preventDefault();
-		var route = $(this).attr('href')+ "?peticion=ajax";
-		var results = $(this).parents('#results').attr('name');
-		results = $('#results.' +results);
-		CargaForm(route, results);
-		console.log('CargaForm('+route+', '+results+');');
-		return false;
+	if (location.search) {
+	    var parts = location.search.substring(1).split('&');
+	    parametrosInput = '';
+	    for (var i = 0; i < parts.length; i++) {
+	        var nv = parts[i].split('=');
+	        if (!nv[0]) continue;
+	        if(nv[0] == campo){
+	        	nv[1] = valor;
+	        	campoCambiado = true;
+	        }
+	        parametrosInput = parametrosInput + ((parametrosInput)? '&' : '') + nv[0] +'='+ nv[1];
+	        //guarda los parametros en un array
+	        parametrosUrl[nv[0]] = nv[1] || true;
+	        if (campoCambiado) {
+	        	if ( thisObj.hasClass('select_dynamic') ) { break; }
+	        }
+	        
+	    }
 	}
-});
-
-//envia los parametros a la funcion formEnviar() para el envio de la informacion del formulario
-$(document).on('submit','.form_delete',function(e){
-	//esta validacion se realiza debido a que se requiere el script asi no se este usando ajax para el envio de datos
-	if( $('.form_delete button#eliminar').attr('peticion') != 'normal'){
-		e.preventDefault();
-		var form = $(this).parents('#results').attr('name');
-		var results = '#results.' + form ;
-		form = '#results.' + form +  ' .form_delete';
-		var type = "Eliminación";
-		formEnviar(form,results,type);
+	if (!campoCambiado) {
+		parametrosInput = parametrosInput + ((parametrosInput)? '&' : '') + campo +'='+ valor;
 	}
-});
+    
+    thisObj.parents('form').find('#parametrosUrl').val(parametrosInput);
+
+	window.history.replaceState("object", nombrePath, nombrePath +'?'+ parametrosInput);
+	
+};

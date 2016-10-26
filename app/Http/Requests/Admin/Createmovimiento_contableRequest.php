@@ -25,6 +25,13 @@ class Createmovimiento_contableRequest extends Request
      */
     public function rules()
     {
-        return movimiento_contable::$rules;
+        if( Request::get('debe') != '0' && Request::get('haber') != '0' )
+        {
+            return [
+                'debe' => 'max:0'
+            ];
+        }else{
+            return movimiento_contable::$rules;
+        }
     }
 }

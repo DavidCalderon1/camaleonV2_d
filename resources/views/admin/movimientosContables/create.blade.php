@@ -12,8 +12,8 @@
     @endif
 
     <div class="row">
-        {!! Form::model($movimientoContable, ['route' => 'admin.transacciones.movimientosContables.store', 'id' => 'form_update', 'class' => 'form_update']) !!}
-
+        {!! Form::model($movimientoContable, ['route' => ['admin.transacciones.movimientosContables.store', $movimientoContable['trs_id'] ], 'id' => 'form_create', 'class' => 'form_create movimiento_contable']) !!}
+            
             @include('admin.movimientosContables.fields')
 
         {!! Form::close() !!}
@@ -22,4 +22,5 @@
 
 @section('scripts')
     {!! Html::script('/assets/js/script_tercero_activo_load.js') !!}
+    {!! Html::script('/assets/js/script_buscar_crear_transaccion_load.js') !!}
 @endsection

@@ -23,9 +23,10 @@ class CreateMovimientoContableTable extends Migration
 
             $table->integer('cntaux_id')->unsigned();
             $table->foreign('cntaux_id')->references('id')->on('pc_cuentaauxiliar');
-            $table->double('debe');
-            $table->double('haber');
+            $table->double('debe')->default(0);
+            $table->double('haber')->default(0);
             $table->text('detalle');
+            $table->boolean('auto')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

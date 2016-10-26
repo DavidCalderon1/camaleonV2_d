@@ -101,7 +101,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => 'aut
 		Route::get('/crear', ['as' => 'admin.transacciones.crear','uses' => 'transaccionController@crear']);
 
         //modulo movimientos Contables
-		Route::get('movimientosContables/lista', ['as' => 'admin.transacciones.movimientosContables.lista','uses' => 'movimiento_contableController@lista']);
+		Route::get('{transacciones}/movimientosContables/lista', ['as' => 'admin.transacciones.movimientosContables.lista','uses' => 'movimiento_contableController@lista']);
     });
 		
 	//modulo Transacciones

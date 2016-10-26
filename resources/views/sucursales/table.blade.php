@@ -8,8 +8,7 @@
         <div class="field" id="iconview">
             {!! Form::open(['route' => ['sucursales.destroy', $sucursal->id], 'method' => 'delete']) !!}
             <a href="{!! route('sucursales.show', [$sucursal->id]) !!}" class="iconfont icon-view"></a>
-            <!-- <a href="{!! route('sucursales.edit', [$sucursal->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
-            {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}-->
+            
             {!! Form::close() !!}
 
         </div>

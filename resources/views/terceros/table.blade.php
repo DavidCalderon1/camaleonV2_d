@@ -1,31 +1,40 @@
 @include('terceros.filter')
-<table class="table table-responsive" id="terceros-table">
-    <thead>
-        <th>Tipo</th>
-        <th>Nombre/Razon Social</th>
-        <th>Documento/Nit</th>
-        <th>Action</th>
-    </thead>
-    <tbody>
+<div class="clearfix"></div>
+<div class="result">
+    <h6>RESULTADOS</h6>
     @foreach($terceros as $tercero)
-        <tr>
-            <td>{!! $tercero->tipo !!}</td>
-            @if($tercero->tipo == 'NATURAL')
-                <td>{!! $tercero->nombre . ' ' . $tercero->apellido !!}</td>
-                <td>{!! $tercero->documento !!}</td>
-            @else
-                <td>{!! $tercero->razon_social !!}</td>
-                <td>{!! $tercero->nit !!}</td>
-            @endif
-            <td>
+        <div class="resultbox">
+            <div class="field" id="iconview">
                 {!! Form::open(['route' => ['terceros.destroy', $tercero->id], 'method' => 'delete']) !!}
-                <div class='btn-group'>
-                    <a href="{!! route('terceros.show', [$tercero->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
-                </div>
+                <a href="{!! route('terceros.show', [$tercero->id]) !!}" class="iconfont icon-view"></a>
                 {!! Form::close() !!}
-            </td>
-        </tr>
+            </div>
+            <div class="field" id="tipo">
+                <label>Tipo</label>
+                {!! $tercero->tipo !!}
+            </div>
+            @if($tercero->tipo == 'NATURAL')
+                <div class="field" id="nombre">
+                    <label>Nombre</label>
+                    {!! $tercero->nombre . ' ' . $tercero->apellido !!}
+                </div>
+                <div class="field" id="documento">
+                    <label>Documento</label>
+                    {!! $tercero->documento !!}
+                </div>
+            @else
+                <div class="field" id="razon">
+                    <label>Razon social</label>
+                    {!! $tercero->razon_social !!}
+                </div>
+                <div class="field" id="nit">
+                    <label>Nit</label>
+                    {!! $tercero->nit !!}
+                </div>
+            @endif
+        </div>
     @endforeach
-    </tbody>
-</table>
+</div>
+
 {!! $terceros->appends(Input::except('page'))->render() !!}
+

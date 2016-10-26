@@ -16,11 +16,13 @@ $century: gothic;
 @import "auth/password.scss";
 @import "auth/reset.scss";
 
-
+@import "terceros/terceros.scss";
 @import "sucursales/sucursales.scss";
-
-@import "materiaPrima/materiaPrima.scss";
 
 @import "cities/cities.scss";
 @import "countries/countries.scss";
 @import "states/states.scss";
+
+@import "materiaPrima/materiaPrima.scss";
+
+@import "pc/pc.scss";

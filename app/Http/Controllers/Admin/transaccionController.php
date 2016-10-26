@@ -12,8 +12,10 @@ use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
+use App\Models\Admin\transaccion;
 use App\Models\Admin\Tipodoc_contable;
 use App\Models\Admin\movimiento_contable;
+use App\Models\Tercero;
 
 // esta libreria va a dar la facilidad de obtener parametros que se encuentran en nuestra ruta
 use Illuminate\Routing\Route;
@@ -45,7 +47,14 @@ class transaccionController extends InfyOmBaseController
     //metodo find ejecutado por el metodo beforeFilter dentro del constructor
     public function find(Route $route){
         //va a buscar los parametros que estan el esta ruta y que son enviados por el recurso, que en este caso es 'transacciones' el configurado en las rutas
-        $this->transaccion = $this->transaccionRepository->findWithoutFail( intval( $route->getParameter('transacciones') ) );
+        $action = explode('@', $route->getActionName());
+        
+        if( in_array ($action[1], ['edit','update','destroy'] ) ){
+            $this->transaccion = transaccion::where('id', intval( $route->getParameter('transacciones') ) );
+            $this->transaccion = $this->transaccion->where('auto',false)->firstOrFail();
+        }else{
+            $this->transaccion = $this->transaccionRepository->findWithoutFail( intval( $route->getParameter('transacciones') ) );
+        }
     }
     //metodo selection ejecutado por el metodo beforeFilter dentro del constructor
     public function selection(){
@@ -54,11 +63,9 @@ class transaccionController extends InfyOmBaseController
 
     }
     //metodo selection ejecutado por el metodo beforeFilter dentro del constructor
-    public function listMovimientos(Route $route){
-        //se lista el nombre y el id correspondiente a todos los movimiento_contable
-        $campo="trs_id";
-        //$this->listMovimiento =  movimiento_contable::Movimientos($campo ."='". $request->id."'");
-        $this->listMovimiento =  movimiento_contable::Movimientos($campo ."='". intval( $route->getParameter('transacciones') ) ."'");
+    public function listMovimientos(Route $route, Request $request){
+        //se listan los datos necesarios de los movimientos con la cuenta, sucursal y tercero/activo
+        $this->listMovimiento =  movimiento_contable::ListaMovimientos( intval( $route->getParameter('transacciones') ) )->paginate(4);
         
     }
 
@@ -104,9 +111,11 @@ class transaccionController extends InfyOmBaseController
      */
     public function buscar(Request $request)
     {
-
-        //if($request->ajax() && $request->busqueda){
-        if($request->busqueda){
+        $vista = 'admin.transacciones.buscar';
+        if( $request->ajax() ){
+            $vista = 'admin.transacciones.index';
+        }
+        if( isset($request->busqueda) ){
             $this->transaccionRepository->pushCriteria(new RequestCriteria($request));
             $transacciones = $this->transaccionRepository;
             $transacciones = $transacciones->Busqueda("CAST(" .$request->tipo. " AS varchar(255) ) LIKE '%".$request->busqueda."%'")->orderBy('id', 'asc')->paginate(15);
@@ -120,7 +129,7 @@ class transaccionController extends InfyOmBaseController
                 Log::info('transacciones, buscar, Mostrando resultado de busqueda de transacciones: '.$request->fullUrl() );
             }
 
-            return view('admin.transacciones.index', ['peticion' => $this->peticion, 'ruta' => 'transacciones', 'nombre' => 'transacci&oacute;n', 'transacciones' => $transacciones]);
+            return view($vista, ['peticion' => $this->peticion, 'ruta' => 'transacciones', 'nombre' => 'transacci&oacute;n', 'transacciones' => $transacciones, 'listTipoDocC' => $this->listTipoDocC]);
         }
         // guarda un mensaje en el archivo de log
         Log::info('transacciones, buscar, Mostrando formulario de busqueda de transacciones');

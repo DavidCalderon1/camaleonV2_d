@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-
+        
         $this->call(UserTableSeeder::class);
         $this->call(RoleTableSeeder::class);
         $this->call(RoleUserTableSeeder::class);
@@ -29,8 +29,13 @@ class DatabaseSeeder extends Seeder
         $this->call('PcCuentaTableSeeder');
         $this->call('PcSubcuentaTableSeeder');
         $this->call('PcCuentaauxiliarTableSeeder');
-	
+    
         $this->call('TipodocContableTableSeeder');
+        
+        
+
+        //siempre dejar este llamado al final, es para las secuencias de las tablas
+        $this->call('ExecuteFunctionResetSequenceSeeder');
         
         Model::reguard();
     }

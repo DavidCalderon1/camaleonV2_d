@@ -11,6 +11,7 @@
 |
 */
 
+/* tabla user */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
@@ -20,6 +21,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+/* tabla sucursal */
 $factory->define(App\Models\Sucursal::class, function (Faker\Generator $faker) {
     return [
         'nombre' => $faker->company,
@@ -29,6 +31,7 @@ $factory->define(App\Models\Sucursal::class, function (Faker\Generator $faker) {
     ];
 });
 
+/* tabla activo_fijo */
 $factory->define(App\Models\Admin\activo_fijo::class, function (Faker\Generator $faker) {
     return [
         'descripcion' => $faker->text(250),
@@ -40,14 +43,73 @@ $factory->define(App\Models\Admin\activo_fijo::class, function (Faker\Generator 
     ];
 });
 
-$factory->define(App\Models\Tercero::class, function (Faker\Generator $faker) {
+/* tabla transaccion */
+$factory->define(App\Models\Admin\transaccion::class, function (Faker\Generator $faker) {
     return [
-        'tipo' => $faker->text(10),
-        'regimen' => $faker->text(15),
-        'gran_contribuyente' => $faker->boolean($chanceOfGettingTrue = 50)
+        'fecha' => $faker->dateTime($max = 'now', $timezone = date_default_timezone_get()),
+        'tdc_id' => $faker->numberBetween($min = 1, $max = 4),
+        'descripcion' => $faker->text(250),
+        'auto' => $faker->boolean($chanceOfGettingTrue = 50),
     ];
 });
 
+/* tabla movimiento_contable */
+$factory->define(App\Models\Admin\movimiento_contable::class, function (Faker\Generator $faker) {
+    return [
+        //'trs_id' => $faker->numberBetween($min = 1, $max = 20),
+        'suc_id' => $faker->numberBetween($min = 1, $max = 20),
+        'cntaux_id' => $faker->numberBetween($min = 1, $max = 100),
+        'debe' => $faker->numberBetween($min = 0, $max = 100000),
+        'haber' => $faker->numberBetween($min = 0, $max = 100000),
+        'detalle' => $faker->text(250),
+        'auto' => $faker->boolean($chanceOfGettingTrue = 50),
+    ];
+});
+
+/* tabla persona */
+$factory->define(App\Models\Persona::class, function (Faker\Generator $faker) {
+    return [
+        'nombre' => $faker->firstName($gender = null|'male'|'female'),
+        'apellido' => $faker->lastName,
+        'tipo_documento' => $faker->randomElement($array = array ('CEDULA CIUDADANIA','CEDULA EXTRANJERIA','PASAPORTE')),
+        'documento' => $faker->numberBetween($min = 1000000, $max = 100000000),
+        'ciudad_id' => $faker->numberBetween($min = 1, $max = 1000),
+        'direccion' => $faker->streetAddress,
+        'telefono' => $faker->tollFreePhoneNumber,
+    ];
+});
+
+/* tabla empresa */
+$factory->define(App\Models\Empresa::class, function (Faker\Generator $faker) {
+    return [
+        'nit' => $faker->numberBetween($min = 10000000, $max = 9000000000),
+        'razon_social' => $faker->company,
+        'naturaleza' => $faker->randomElement($array = array ('PUBLICA','MIXTA','PRIVADA')),
+        'fecha_constitucion' => $faker->dateTime($max = 'now', $timezone = date_default_timezone_get()),
+        'ciudad_id' => $faker->numberBetween($min = 1, $max = 1000),
+        'direccion' => $faker->streetAddress,
+        'telefono' => $faker->tollFreePhoneNumber,
+    ];
+});
+
+/* tabla tercero */
+$factory->define(App\Models\Tercero::class, function (Faker\Generator $faker) {
+    return [
+        'tipo' => $faker->randomElement($array = array ('NATURAL','JURIDICA')),
+        'regimen' => $faker->randomElement($array = array ('SIMPLIFICADO','COMUN')),
+        'gran_contribuyente' => $faker->boolean($chanceOfGettingTrue = 50),
+    ];
+});
+
+/* tabla materia_prima */
+$factory->define(App\Models\Materia_Prima::class, function (Faker\Generator $faker) {
+    return [
+        'codigo' => $faker->swiftBicNumber,
+        'nombre' => $faker->colorName,
+        'caracteristicas' => $faker->text(250),
+        'unidad_medida' => $faker->locale,
+    ];
+});
 /*
 $factory->define(App\Widget::class, function ($faker) {
    return [

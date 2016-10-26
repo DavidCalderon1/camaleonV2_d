@@ -13,8 +13,15 @@
             <div class="panel-body">
 
                 <div class="collapse" id="collapseExample">
-                    <div class="well">
-                        Texto de ayuda
+                    <div class="help well">
+                       <ul>
+                            <h5>¿Como editar un País?</h5>
+                            <li>Puede editar el nombre del País desde el campo 'País'.</li>
+                            <li>Puede editar el código de referencia desde el campo 'Código Ref'.</li>
+                            <li>De click en el botón “Guardar”.</li>
+                            <a href="#">Para obetener una guia detallada de este formulario consulte el manual en este link</a>
+
+                        </ul>     
                     </div>
                 </div>
 

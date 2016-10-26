@@ -14,8 +14,17 @@
             <div class="panel-body">
 
                 <div class="collapse" id="collapseExample">
-                    <div class="well">
-                        Texto de ayuda
+                    <div class="help well">
+                        <ul>
+                            <h5>¿Como consultar Materia Prima?</h5>
+                            <li>Diligencie los campos de texto con el código y el nombre de la Materia Prima.</li>
+                            <li>De click en el botón “Filtrar”.</li>
+                        </ul>     
+                        <h5>Aquí usted puede:</h5>
+                        <p><i class="iconfont icon-add"></i> Crear Materia Prima</p>
+                        <p><i class="iconfont icon-view"></i> Visualizar Materia Prima</p>
+                        <br>
+                        <a href="#">Ingrese al manual de usuario Módulo Materia Prima</a>
                     </div>
                 </div>
 

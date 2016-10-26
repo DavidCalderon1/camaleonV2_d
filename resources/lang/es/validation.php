@@ -102,6 +102,9 @@ return [
         'TerceroActivo' => [
             'required' => 'Seleccione un elemento de la lista del requerimiento de tercero/activo',
         ],
+        'debe' => [
+            'max' => 'Si el valor de Debe es diferente de 0 el de Haber debe ser 0 y viceversa',
+        ],
     ],
 
     /*

@@ -56,13 +56,13 @@ class TerceroController extends InfyOmBaseController
             $documento_nit = $request->documento_nit;
             if ($tipo == "TODOS") {
                 $_SESSION['documento_nit'] = $documento_nit;
-                $terceros = $this->tercero::leftJoin('tercero_persona', 'tercero.id', '=', 'tercero_persona.tercero_id')->leftJoin('persona','tercero_persona.persona_id', '=', 'persona.id')->leftJoin('tercero_empresa', 'tercero.id', '=', 'tercero_empresa.tercero_id')->leftJoin('empresa','tercero_empresa.empresa_id', '=', 'empresa.id')->whereNull('tercero.deleted_at')->whereNull('persona.deleted_at')->whereNull('empresa.deleted_at')->where(function($q){ $q->where('persona.documento', 'LIKE', $_SESSION['documento_nit'] . '%')->orWhere('empresa.nit', 'LIKE', $_SESSION['documento_nit'] . '%'); })->select('tercero.id', 'tercero.tipo', 'persona.nombre', 'persona.apellido', 'persona.documento', 'empresa.razon_social', 'empresa.nit')->paginate(20);
+                $terceros = $this->tercero->leftJoin('tercero_persona', 'tercero.id', '=', 'tercero_persona.tercero_id')->leftJoin('persona','tercero_persona.persona_id', '=', 'persona.id')->leftJoin('tercero_empresa', 'tercero.id', '=', 'tercero_empresa.tercero_id')->leftJoin('empresa','tercero_empresa.empresa_id', '=', 'empresa.id')->whereNull('tercero.deleted_at')->whereNull('persona.deleted_at')->whereNull('empresa.deleted_at')->where(function($q){ $q->where('persona.documento', 'LIKE', $_SESSION['documento_nit'] . '%')->orWhere('empresa.nit', 'LIKE', $_SESSION['documento_nit'] . '%'); })->select('tercero.id', 'tercero.tipo', 'persona.nombre', 'persona.apellido', 'persona.documento', 'empresa.razon_social', 'empresa.nit')->paginate(20);
             }else {
                 $_SESSION['documento_nit'] = $documento_nit;
-                $terceros = $this->tercero::leftJoin('tercero_persona', 'tercero.id', '=', 'tercero_persona.tercero_id')->leftJoin('persona','tercero_persona.persona_id', '=', 'persona.id')->leftJoin('tercero_empresa', 'tercero.id', '=', 'tercero_empresa.tercero_id')->leftJoin('empresa','tercero_empresa.empresa_id', '=', 'empresa.id')->whereNull('tercero.deleted_at')->whereNull('persona.deleted_at')->whereNull('empresa.deleted_at')->where('tercero.tipo', '=', $tipo)->where(function ($q){ $q->where('persona.documento', 'LIKE', $_SESSION['documento_nit'] . '%')->orWhere('empresa.nit', 'LIKE', $_SESSION['documento_nit'] . '%');})->select('tercero.id', 'tercero.tipo', 'persona.nombre', 'persona.apellido', 'persona.documento', 'empresa.razon_social', 'empresa.nit')->paginate(20);
+                $terceros = $this->tercero->leftJoin('tercero_persona', 'tercero.id', '=', 'tercero_persona.tercero_id')->leftJoin('persona','tercero_persona.persona_id', '=', 'persona.id')->leftJoin('tercero_empresa', 'tercero.id', '=', 'tercero_empresa.tercero_id')->leftJoin('empresa','tercero_empresa.empresa_id', '=', 'empresa.id')->whereNull('tercero.deleted_at')->whereNull('persona.deleted_at')->whereNull('empresa.deleted_at')->where('tercero.tipo', '=', $tipo)->where(function ($q){ $q->where('persona.documento', 'LIKE', $_SESSION['documento_nit'] . '%')->orWhere('empresa.nit', 'LIKE', $_SESSION['documento_nit'] . '%');})->select('tercero.id', 'tercero.tipo', 'persona.nombre', 'persona.apellido', 'persona.documento', 'empresa.razon_social', 'empresa.nit')->paginate(20);
             }
         }else{
-            $terceros = $this->tercero::leftJoin('tercero_persona', 'tercero.id', '=', 'tercero_persona.tercero_id')->leftJoin('persona','tercero_persona.persona_id', '=', 'persona.id')->leftJoin('tercero_empresa', 'tercero.id', '=', 'tercero_empresa.tercero_id')->leftJoin('empresa','tercero_empresa.empresa_id', '=', 'empresa.id')->whereNull('tercero.deleted_at')->whereNull('persona.deleted_at')->whereNull('empresa.deleted_at')->select('tercero.id', 'tercero.tipo', 'persona.nombre', 'persona.apellido', 'persona.documento', 'empresa.razon_social', 'empresa.nit')->paginate(20);
+            $terceros = $this->tercero->leftJoin('tercero_persona', 'tercero.id', '=', 'tercero_persona.tercero_id')->leftJoin('persona','tercero_persona.persona_id', '=', 'persona.id')->leftJoin('tercero_empresa', 'tercero.id', '=', 'tercero_empresa.tercero_id')->leftJoin('empresa','tercero_empresa.empresa_id', '=', 'empresa.id')->whereNull('tercero.deleted_at')->whereNull('persona.deleted_at')->whereNull('empresa.deleted_at')->select('tercero.id', 'tercero.tipo', 'persona.nombre', 'persona.apellido', 'persona.documento', 'empresa.razon_social', 'empresa.nit')->paginate(20);
         }
 
         if (count($terceros) == 0) {
@@ -186,10 +186,10 @@ class TerceroController extends InfyOmBaseController
         $tipo = $tercero->tipo;
         $sendtoview;
         if (count($tercero->personas) > 0) {
-            $persona = $this->persona::with('city.state.country')->find($tercero->personas[0]->id);
+            $persona = $this->persona->with('city.state.country')->find($tercero->personas[0]->id);
             $sendtoview = array('tercero' => $tercero, 'persona' => $persona, 'tipo' => $tipo);
         }elseif (count($tercero->empresas) > 0) {
-            $empresa = $this->empresa::with('city.state.country')->find($tercero->empresas[0]->id);
+            $empresa = $this->empresa->with('city.state.country')->find($tercero->empresas[0]->id);
             $sendtoview = array('tercero' => $tercero, 'empresa' => $empresa, 'tipo' => $tipo);
         }
 
@@ -212,10 +212,10 @@ class TerceroController extends InfyOmBaseController
      */
     public function edit($id)
     {
-        $tercero = $this->tercero::find($id);
+        $tercero = $this->tercero->find($id);
         $relation;
         if(count($tercero->personas)  > 0){
-            $relation = $this->persona::with('city.state.country')->find($tercero->personas[0]->id);
+            $relation = $this->persona->with('city.state.country')->find($tercero->personas[0]->id);
             $tercero['nombre'] = $tercero->personas[0]->nombre;
             $tercero['apellido'] = $tercero->personas[0]->apellido;
             $tercero['tipo_documento'] = $tercero->personas[0]->tipo_documento;
@@ -223,7 +223,7 @@ class TerceroController extends InfyOmBaseController
             $tercero['direccion'] = $tercero->personas[0]->direccion;
             $tercero['telefono'] = $tercero->personas[0]->telefono;
         }elseif(count($tercero->empresas)  > 0){
-            $relation = $this->empresa::with('city.state.country')->find($tercero->empresas[0]->id);
+            $relation = $this->empresa->with('city.state.country')->find($tercero->empresas[0]->id);
             $tercero['razon_social'] = $tercero->empresas[0]->razon_social;
             $tercero['nit'] = $tercero->empresas[0]->nit;
             $tercero['naturaleza'] = $tercero->empresas[0]->naturaleza;
@@ -288,8 +288,8 @@ class TerceroController extends InfyOmBaseController
      */
     public function updatePersona($tercero_id, UpdatePersonaRequest $request, $attributes)
     {
-        $tercero = $this->tercero::find($tercero_id);
-        $persona = $this->persona::find($tercero->personas[0]->id);
+        $tercero = $this->tercero->find($tercero_id);
+        $persona = $this->persona->find($tercero->personas[0]->id);
         if (empty($tercero)) {
             Flash::error('Tercero not found');
 
@@ -323,8 +323,8 @@ class TerceroController extends InfyOmBaseController
      */
     public function updateEmpresa($tercero_id, UpdateEmpresaRequest $request, $attributes)
     {
-        $tercero = $this->tercero::find($tercero_id);
-        $empresa = $this->empresa::find($tercero->empresas[0]->id);
+        $tercero = $this->tercero->find($tercero_id);
+        $empresa = $this->empresa->find($tercero->empresas[0]->id);
         if (empty($tercero)) {
             Flash::error('Tercero not found');
 
@@ -356,14 +356,14 @@ class TerceroController extends InfyOmBaseController
      */
     public function destroy($id)
     {
-        $tercero = $this->tercero::find($id);
+        $tercero = $this->tercero->find($id);
         $relation;
         $id_related;
         if(count($tercero->personas)  > 0){
-            $relation = $this->persona::find($tercero->personas[0]->id);
+            $relation = $this->persona->find($tercero->personas[0]->id);
             $id_related = $tercero->personas[0]->id;
         }elseif (count($tercero->empresas)  > 0) {
-            $relation = $this->empresa::find($tercero->empresas[0]->id);
+            $relation = $this->empresa->find($tercero->empresas[0]->id);
             $id_related = $tercero->empresas[0]->id;
         }
 

@@ -21,10 +21,10 @@
 
 {!! Form::open(['route' => ['countries.destroy', $country->id], 'method' => 'delete']) !!}
 <div class='button'>
-    <a href="{!! route('countries.edit', [$country->id]) !!}" class='btn btn-primary'><i class="glyphicon glyphicon-edit"></i> Editar</a>
+    <a href="{!! route('countries.edit', [$country->id]) !!}" class='btn btn-primary'><i class="iconfont icon-edit"></i> Editar</a>
 </div>
 <div class='button'>
-    {!! Form::button('<i class="glyphicon glyphicon-trash"></i> Eliminar', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('Are you sure?')"]) !!}
+    {!! Form::button('<i class="iconfont icon-trash"></i> Eliminar', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('Are you sure?')"]) !!}
 </div>
 {!! Form::close() !!}
 

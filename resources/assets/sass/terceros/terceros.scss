@@ -1,0 +1,119 @@
+#terceros{
+
+	.contenedor{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-8;
+		@extend .col-lg-9;
+
+		.fieldbox#regimen{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-12;
+			@extend .col-lg-12;
+		}
+
+		.fieldbox#tipo{
+			font-family:$century;
+			color:#808080;
+		}
+
+		.fieldbox#gran{
+			font-family:$century;
+			color:#808080;
+		}
+
+		.fieldbox.field_a{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-6;
+			@extend .col-lg-6;
+		}
+
+		.fieldbox.field_b{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-4;
+			@extend .col-lg-4;
+		}
+
+		.fieldbox.radiobutton{
+			text-align: left;
+		}
+
+		.button{
+			@extend .col-xs-12;
+			@extend .col-sm-3;
+		}
+
+		.button#guardar{
+			@extend .col-xs-offset-0;
+			@extend .col-sm-offset-3;
+		}
+
+	}
+
+
+	.contenedor.index{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-10;
+		@extend .col-lg-10;
+
+		.field#tipo, .field#nombre, .field#documento, .field#razon, .field#nit{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-4;
+			@extend .col-lg-4;
+		}
+
+		.fieldbox.label{
+			color:#808080;
+		}
+
+		.fieldbox.textbox#buscar{
+			@extend .col-sm-9;
+		}
+
+		.button#filtro{
+			@extend .col-sm-3;
+		}
+
+	}	
+
+	.contenedor.show{
+		@extend .col-xs-12;
+		@extend .col-sm-10;
+		@extend .col-md-7;
+		@extend .col-lg-7;
+
+
+
+		.field_1{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-12;
+			@extend .col-lg-12;
+		}
+		
+		.field_a{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-6;
+			@extend .col-lg-6;
+		}
+
+		.field_b{
+			@extend .col-xs-12;
+			@extend .col-sm-12;
+			@extend .col-md-4;
+			@extend .col-lg-4;
+		}
+		
+		.button{
+			@extend .col-sm-4;
+		}	
+
+	}
+
+}

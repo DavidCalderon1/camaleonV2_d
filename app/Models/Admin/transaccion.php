@@ -52,7 +52,8 @@ class transaccion extends Model
         'fecha',
         'tdc_id',
         'descripcion',
-        'deleted_at'
+        'deleted_at',
+        'auto'
     ];
 
     /**
@@ -64,7 +65,8 @@ class transaccion extends Model
         'id' => 'integer',
         'tdc_id' => 'integer',
         'descripcion' => 'string',
-        'deleted_at' => 'datetime'
+        'deleted_at' => 'datetime',
+        'auto' => 'boolean'
     ];
 
     /**
@@ -75,7 +77,8 @@ class transaccion extends Model
     public static $rules = [
         'fecha' => 'required|date',
         'tdc_id' => 'required|integer',
-        'descripcion' => 'required'
+        'descripcion' => 'required',
+        'auto' => 'boolean'
     ];
 
 
@@ -90,11 +93,15 @@ class transaccion extends Model
     }
 
     //realiza el join y devuelve el query
-    public function scopeIdFechaTipo($query)
+    public function scopeIdFechaTipo($query,$id ='')
     {
-        $query->join('tipodoc_contable', 'transaccion.tdc_id', '=', 'tipodoc_contable.id')
-            ->select(DB::raw("CONCAT(transaccion.id, ' - ', transaccion.fecha, ' - ', tipodoc_contable.descripcion) as tipo, transaccion.id as id"))
+        $query = $query->join('tipodoc_contable', 'transaccion.tdc_id', '=', 'tipodoc_contable.id')
+            ->select(DB::raw("CONCAT(transaccion.id, ' - ', transaccion.fecha, ' - ', tipodoc_contable.descripcion) as tipo_transaccion, transaccion.id as id_transaccion"))
             ->orderBy('transaccion.id', 'asc');
+
+        if($id != ''){
+            $query = $query->where('transaccion.id', $id);
+        }
         return $query;
     }
 }
